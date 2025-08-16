@@ -337,5 +337,5 @@ client.on("ready", () => {
 
 client.login(process.env.PRIDEBOT_TOKEN);
 
-app.listen(3000);
+app.listen(process.env.PORT);
 console.log("Server running");
