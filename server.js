@@ -1,5 +1,6 @@
 const dotenv = require("dotenv");
 dotenv.config();
+
 const express = require("express");
 const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
 
@@ -75,7 +76,6 @@ async function fetchAllMessages(id) {
   const channel = client.channels.cache.get(id);
   let messages = [];
 
-  // Create message pointer
   let message = await channel.messages
     .fetch({ limit: 1 })
     .then((messagePage) => (messagePage.size === 1 ? messagePage.at(0) : null));
@@ -95,7 +95,7 @@ async function fetchAllMessages(id) {
 }
 
 app.get("/", function (req, res) {
-  res.send("Hello World");
+  res.send("Hello World! Pride Island backend server is running!");
 });
 
 app.get("/listNumbers", async function (req, res) {
@@ -166,23 +166,22 @@ app.get("/getNumber", async function (req, res) {
 app.get("/getUserIdViaNumber", async function (req, res) {
   const userID = req.query.number;
 
+  if (!userID) {
+    console.log("no userID provided");
+    res.status(400).send("Bad Request");
+    return;
+  }
+
+  console.log("got request!", userID);
   fs.readFile("./data/phone.json", "utf8", function (err, data) {
     var json = JSON.parse(data);
-
-    for (var i = 0; i < json.phoneData.length; i++) {
-      if (json.phoneData[i]) {
-        var p = json.phoneData[i];
-
-        for (var key in p) {
-          var value = p[key];
-          if (value == userID) {
-            console.log("found");
-            res.send(key);
-            return;
-          }
-        }
+    Object.keys(json.phoneData).forEach((key) => {
+      if (json.phoneData[key] == userID) {
+        console.log("found");
+        res.send(key);
+        return;
       }
-    }
+    });
   });
 });
 
@@ -212,6 +211,49 @@ app.get("/announcements", async function (req, res) {
     console.error(error);
     res.status(500).send("An error occurred while fetching announcements.");
   }
+});
+
+app.get("/time", function (req, res) {
+  const timezone = req.query.timezone;
+
+  if (!timezone) {
+    res.status(400).send("No timezone specified.");
+  }
+
+  const date = new Date();
+
+  var options;
+
+  options = {
+    timeZone: timezone,
+  };
+
+  let d = date.toLocaleDateString("en-US", options);
+  let s1 = d.split("/");
+  let t = date.toLocaleTimeString("en-US", options);
+  let s2 = t.split(":");
+  let AMPM = s2[2].split(" ")[1].replace(/\\s+/g, "");
+  let second = s2[2].split(" ")[0];
+
+  let data = {
+    data: {
+      date: {
+        month: s1[0],
+        day: s1[1],
+        year: s1[2],
+      },
+      time: {
+        hour: s2[0],
+        minute: s2[1],
+        second: second,
+        AMPM: AMPM,
+      },
+      timeZone: timezone,
+      requestFufilled: Math.floor(Date.now() / 1000),
+    },
+  };
+
+  res.send(data);
 });
 
 app.get("/latestChangelogs", async (req, res) => {
