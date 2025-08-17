@@ -72,25 +72,29 @@ function writeDataToFile(data, filename) {
   });
 }
 
-async function fetchAllMessages(id) {
+async function fetchAnnouncements(id) {
   const channel = client.channels.cache.get(id);
   let messages = [];
-
-  let message = await channel.messages
-    .fetch({ limit: 1 })
-    .then((messagePage) => (messagePage.size === 1 ? messagePage.at(0) : null));
-
-  while (message) {
-    await channel.messages
-      .fetch({ limit: 100, before: message.id })
-      .then((messagePage) => {
-        messagePage.forEach((msg) => messages.push(msg));
-
-        message =
-          0 < messagePage.size ? messagePage.at(messagePage.size - 1) : null;
+  await channel.messages.fetch({ limit: 10 }).then((msgs) => {
+    msgs
+      .filter((msg) => {
+        return (
+          msg.content.includes("<@&1194080682197131304>") &&
+          msg.author.id == process.env.OWNER_ID
+        );
+      })
+      .forEach((msg) => {
+        let content = msg.content;
+        (content = content.replace(
+          /(?:https?|ftp):\/\/[\n\S]+/g,
+          "(Link has been removed for Roblox)"
+        )),
+          (content = content.replace(/<@.?[0-9]*?>+/g, ""));
+        content = content.replace(/<#.?[0-9]*?>+/g, "");
+        content = content.replace(/[#|]+/g, "");
+        messages.push([content, msg.createdTimestamp]);
       });
-  }
-
+  });
   return messages;
 }
 
@@ -113,8 +117,8 @@ app.get("/rules", async function (req, res) {
   res.send(await fsPromises.readFile("./data/pride-island-rules.json", "utf8"));
 });
 
-app.get("/getNumber", async function (req, res) {
-  const userID = req.query.userID;
+app.get("/getNumber/:userID", async function (req, res) {
+  const userID = req.params.userID;
 
   if (!userID) {
     res
@@ -163,8 +167,8 @@ app.get("/getNumber", async function (req, res) {
   });
 });
 
-app.get("/getUserIdViaNumber", async function (req, res) {
-  const userID = req.query.number;
+app.get("/getUserID/:number", async function (req, res) {
+  const userID = req.params.number;
 
   if (!userID) {
     console.log("no userID provided");
@@ -187,36 +191,21 @@ app.get("/getUserIdViaNumber", async function (req, res) {
 
 app.get("/announcements", async function (req, res) {
   try {
-    const messages = await fetchAllMessages("1194079970662809650");
-    let announcements = [];
-
-    await Promise.all(
-      messages.map(async (msg) => {
-        if (msg.content.includes("<@&1194080682197131304>")) {
-          let content = msg.content;
-          (content = content.replace(
-            /(?:https?|ftp):\/\/[\n\S]+/g,
-            "(Link has been removed for Roblox)"
-          )),
-            (content = content.replace(/<@.?[0-9]*?>+/g, ""));
-          content = content.replace(/<#.?[0-9]*?>+/g, "");
-          content = content.replace(/[#|]+/g, "");
-          announcements.push([content, msg.createdTimestamp]);
-        }
-      })
+    const announcements = await fetchAnnouncements(
+      process.env.ANNOUNCEMENTS_CHANNEL_ID
     );
 
     res.send(announcements);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("An error occurred while fetching announcements.");
-  }
+  } catch (err) {}
 });
 
-app.get("/time", function (req, res) {
-  const timezone = req.query.timezone;
+app.get("/time/:region/:city", function (req, res) {
+  const region = req.params.region;
+  const city = req.params.city;
 
-  if (!timezone) {
+  timezone = `${region}/${city}`;
+
+  if (!region || !city || (!region && !city)) {
     res.status(400).send("No timezone specified.");
   }
 
@@ -303,7 +292,23 @@ app.get("/latestChangelogs", async (req, res) => {
     });
 });
 
-app.post("/changelogs", async (req, res) => {
+app.get("/launch/server/:jobId", (req, res) => {
+  let jobId = req.params["jobId"];
+
+  if (jobId) {
+    console.log(jobId);
+    res.redirect(
+      301,
+      `roblox://experiences/start?placeId=10234861304&gameInstanceId=${jobId}`
+    );
+  }
+});
+
+app.get("/launch", (req, res) => {
+  res.redirect(301, `roblox://experiences/start?placeId=10234861304`);
+});
+
+app.post("/addChangelog", async (req, res) => {
   try {
     const changelogData = JSON.parse(req.body.data);
     console.log(changelogData);
@@ -337,5 +342,5 @@ client.on("ready", () => {
 
 client.login(process.env.PRIDEBOT_TOKEN);
 
-app.listen(process.env.PORT);
+app.listen(process.env.PORT || 80);
 console.log("Server running");
