@@ -218,25 +218,44 @@ app.get("/time/:region/:city", function (req, res) {
   };
 
   let d = date.toLocaleDateString("en-US", options);
-  let s1 = d.split("/");
+  let dateSplit = d.split("/");
   let t = date.toLocaleTimeString("en-US", options);
-  let s2 = t.split(":");
-  let AMPM = s2[2].split(" ")[1].replace(/\\s+/g, "");
-  let second = s2[2].split(" ")[0];
+  let timeSplit = t.split(":");
+  let AMPM = timeSplit[2].split(" ")[1].replace(/\\s+/g, "");
+  let second = timeSplit[2].split(" ")[0];
 
+  let northernHemisphereSeason
+  let southernHemisphereSeason
+
+  if (dateSplit[0] == "12" || dateSplit[0] == "1" || dateSplit[0] == "2") {
+      northernHemisphereSeason = "Winter"
+      southernHemisphereSeason = "Summer"
+  } else if (dateSplit[0] == "3" || dateSplit[0] == "4" || dateSplit[0] == "5") {
+      northernHemisphereSeason = "Spring"
+      southernHemisphereSeason = "Fall"
+  } else if (dateSplit[0] == "6" || dateSplit[0] == "7" || dateSplit[0] == "8") {
+      northernHemisphereSeason = "Summer"
+      southernHemisphereSeason = "Winter"
+  }  else if (dateSplit[0] == "9" || dateSplit[0] == "10" || dateSplit[0] == "11") {
+      northernHemisphereSeason = "Fall"
+      southernHemisphereSeason = "Spring"
+  }
+  
   let data = {
     data: {
       date: {
-        month: s1[0],
-        day: s1[1],
-        year: s1[2],
+        month: dateSplit[0],
+        day: dateSplit[1],
+        year: dateSplit[2],
       },
       time: {
-        hour: s2[0],
-        minute: s2[1],
+        hour: timeSplit[0],
+        minute: timeSplit[1],
         second: second,
         AMPM: AMPM,
       },
+      seasonNH: northernHemisphereSeason,
+      seasonSH: southernHemisphereSeason,
       timeZone: timezone,
       requestFufilled: Math.floor(Date.now() / 1000),
     },
