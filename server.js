@@ -98,93 +98,93 @@ async function fetchAnnouncements(id) {
   });
   return messages;
 }
+//stuff related to in game numbers in the api has been retired since i can just save that on roblox through datastores
+// app.get("/pride-island/listNumbers", async function (req, res) {
+//   fs.readFile("./data/phone.json", "utf8", function (err, data) {
+//     if (err) {
+//       console.err(err);
+//     }
 
-app.get("/pride-island/listNumbers", async function (req, res) {
-  fs.readFile("./data/phone.json", "utf8", function (err, data) {
-    if (err) {
-      console.err(err);
-    }
-
-    res.send(JSON.parse(data));
-  });
-});
+//     res.send(JSON.parse(data));
+//   });
+// });
 
 app.get("/pride-island/rules", async function (req, res) {
   res.setHeader("Content-Type", "application/json");
   res.send(await fsPromises.readFile("./data/pride-island-rules.json", "utf8"));
 });
 
-app.get("/pride-island/getNumber/:userID", async function (req, res) {
-  const userID = req.params.userID;
+// app.get("/pride-island/getNumber/:userID", async function (req, res) {
+//   const userID = req.params.userID;
 
-  if (!userID) {
-    res
-      .status(400)
-      .send(
-        "<!DOCTYPE html> <html> <body> <h1>400 Bad Request</h1> <hr> <h3>UserID isn't valid! (userID query wasn't passed)</h3> </html> </body>"
-      );
-    return;
-  }
+//   if (!userID) {
+//     res
+//       .status(400)
+//       .send(
+//         "<!DOCTYPE html> <html> <body> <h1>400 Bad Request</h1> <hr> <h3>UserID isn't valid! (userID query wasn't passed)</h3> </html> </body>"
+//       );
+//     return;
+//   }
 
-  if (Number(userID) < 1) {
-    res
-      .status(400)
-      .send(
-        "<!DOCTYPE html> <html> <body> <h1>400 Bad Request</h1> <hr> <h3>UserID isn't valid! (smaller than 1)</h3> </html> </body>"
-      );
-    return;
-  }
+//   if (Number(userID) < 1) {
+//     res
+//       .status(400)
+//       .send(
+//         "<!DOCTYPE html> <html> <body> <h1>400 Bad Request</h1> <hr> <h3>UserID isn't valid! (smaller than 1)</h3> </html> </body>"
+//       );
+//     return;
+//   }
 
-  fs.readFile("./data/phone.json", "utf8", function (err, data) {
-    var json = JSON.parse(data);
+//   fs.readFile("./data/phone.json", "utf8", function (err, data) {
+//     var json = JSON.parse(data);
 
-    if (json.phoneData[userID]) {
-      res.send(json.phoneData[userID]);
-      return;
-    }
+//     if (json.phoneData[userID]) {
+//       res.send(json.phoneData[userID]);
+//       return;
+//     }
 
-    console.log(
-      `no number exists for userId ${userID}. regestering new number!`
-    );
+//     console.log(
+//       `no number exists for userId ${userID}. regestering new number!`
+//     );
 
-    var numberExists = true;
-    do {
-      //updated range of random numbers from 99 to 999 on 6/23/2024 3:56 pm
-      //changing the amount of valid phone numbers from 970,299
-      //to 997,002,999
-      //unless we somehow get almost 1 billion unique players we're
-      //not going to run out anytime soon 😝
-      var number = generateNumber();
-      numberExists = checkPhoneNumberValueExists(json, number);
-    } while (numberExists);
+//     var numberExists = true;
+//     do {
+//       //updated range of random numbers from 99 to 999 on 6/23/2024 3:56 pm
+//       //changing the amount of valid phone numbers from 970,299
+//       //to 997,002,999
+//       //unless we somehow get almost 1 billion unique players we're
+//       //not going to run out anytime soon 😝
+//       var number = generateNumber();
+//       numberExists = checkPhoneNumberValueExists(json, number);
+//     } while (numberExists);
 
-    addPhoneNumberToList(json, userID, number);
-    writeDataToFile(json, "./data/phone.json");
-    res.send(number);
-  });
-});
+//     addPhoneNumberToList(json, userID, number);
+//     writeDataToFile(json, "./data/phone.json");
+//     res.send(number);
+//   });
+// });
 
-app.get("/pride-island/getUserID/:number", async function (req, res) {
-  const userID = req.params.number;
+// app.get("/pride-island/getUserID/:number", async function (req, res) {
+//   const userID = req.params.number;
 
-  if (!userID) {
-    console.log("no userID provided");
-    res.status(400).send("Bad Request");
-    return;
-  }
+//   if (!userID) {
+//     console.log("no userID provided");
+//     res.status(400).send("Bad Request");
+//     return;
+//   }
 
-  console.log("got request!", userID);
-  fs.readFile("./data/phone.json", "utf8", function (err, data) {
-    var json = JSON.parse(data);
-    Object.keys(json.phoneData).forEach((key) => {
-      if (json.phoneData[key] == userID) {
-        console.log("found");
-        res.send(key);
-        return;
-      }
-    });
-  });
-});
+//   console.log("got request!", userID);
+//   fs.readFile("./data/phone.json", "utf8", function (err, data) {
+//     var json = JSON.parse(data);
+//     Object.keys(json.phoneData).forEach((key) => {
+//       if (json.phoneData[key] == userID) {
+//         console.log("found");
+//         res.send(key);
+//         return;
+//       }
+//     });
+//   });
+// });
 
 app.get("/pride-island/announcements", async function (req, res) {
   try {
