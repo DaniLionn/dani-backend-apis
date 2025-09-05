@@ -207,7 +207,7 @@ app.get("/pride-island/latestChangelogs", async (req, res) => {
   let channel = client.channels.cache.get("1214304064830177330");
   let key = 1;
   channel.messages
-    .fetch({ limit: 5 })
+    .fetch({ limit: req.query.limit })
     .then((messages) => {
       messages.forEach((message) => {
         let embeddedMessage = message.embeds[0];
