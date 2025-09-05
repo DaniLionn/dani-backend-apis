@@ -81,6 +81,6 @@ module.exports = function start() {
     res.send(data);
   });
 
-  app.listen(process.env.PORT || 3000);
+  app.listen(3000);
   console.log("General API Module running");
 };

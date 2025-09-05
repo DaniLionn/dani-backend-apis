@@ -296,6 +296,6 @@ module.exports = function start() {
 
   client.login(process.env.PRIDEBOT_TOKEN);
 
-  app.listen(process.env.PORT + 1 || 3001);
+  app.listen(3001);
   console.log("Pride Island API Module running");
 };
