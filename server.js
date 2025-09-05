@@ -264,7 +264,6 @@ app.get("/", async function (_, res) {
     <h1>Dani's API Server</h1>
     <img src="https://danilionn.github.io/dani-cdn/assets/general/images/fish.gif" alt="funny fish gif" class="center">
     <p>APIs for my various projects</p>
-      
     <p>Uptime (as of page load): ${new Date(timePassed)
       .toISOString()
       .slice(11, 19)}</p>
