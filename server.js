@@ -246,30 +246,30 @@ app.get("/", async function (_, res) {
 
   res.send(
     `<!DOCTYPE html>
-    <html>
-      <head>
-        <style>
-          h1 {text-align: center;}
-          p {text-align: center;}
-          img {text-align: center;}
-          .center {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: 10%;
-          }
-        </style>
-      </head>
-      <body>
-        <h1>Dani's API Server</h1>
-        <img src="https://danilionn.github.io/dani-cdn/assets/general/images/fish.gif" alt="funny fish gif" class="center">
-        <p>APIs for my various projects</p>
+<html>
+  <head>
+    <style>
+      h1 {text-align: center;}
+      p {text-align: center;}
+      img {text-align: center;}
+      .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 10%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Dani's API Server</h1>
+    <img src="https://danilionn.github.io/dani-cdn/assets/general/images/fish.gif" alt="funny fish gif" class="center">
+    <p>APIs for my various projects</p>
       
-        <p>Uptime (as of page load): ${new Date(timePassed)
-          .toISOString()
-          .slice(11, 19)}</p>
-      </body>
-    </html>`
+    <p>Uptime (as of page load): ${new Date(timePassed)
+      .toISOString()
+      .slice(11, 19)}</p>
+  </body>
+</html>`
   );
 });
 
