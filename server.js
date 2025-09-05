@@ -99,10 +99,6 @@ async function fetchAnnouncements(id) {
   return messages;
 }
 
-app.get("/pride-island", function (req, res) {
-  res.send("Hello World! Pride Island API Module is running!");
-});
-
 app.get("/pride-island/listNumbers", async function (req, res) {
   fs.readFile("./data/phone.json", "utf8", function (err, data) {
     if (err) {
@@ -298,8 +294,8 @@ client.on("ready", () => {
 client.login(process.env.PRIDEBOT_TOKEN);
 //end pride island apis
 
-//start general apis
-app.get("/general/time/:region/:city", function (req, res) {
+//start main apis
+app.get("/main/time/:region/:city", function (req, res) {
   const region = req.params.region;
   const city = req.params.city;
 
@@ -376,7 +372,7 @@ app.get("/general/time/:region/:city", function (req, res) {
   res.send(data);
 });
 
-//end general apis
+//end main apis
 
 app.get("/", async function (req, res) {
   res.send("Hello World! Dani's API is running!");
