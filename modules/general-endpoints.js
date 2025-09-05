@@ -4,6 +4,10 @@ module.exports = function start() {
   const app = express();
   app.use(express.json({ limit: "25mb" }));
 
+  app.get("/general", function (req, res) {
+    res.send("Hello World! General API Module is running!");
+  });
+
   app.get("/general/time/:region/:city", function (req, res) {
     const region = req.params.region;
     const city = req.params.city;
