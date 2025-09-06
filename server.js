@@ -6,9 +6,8 @@ const express = require("express");
 const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
 
 const fsPromises = require("fs/promises");
-const fs = require("fs");
-const { start } = require("repl");
-const { time } = require("console");
+const { Webhook } = require('discord-webhook-node');
+const websiteHook = new Webhook("https://discordapp.com/api/webhooks/1413724529192079490/D-VQzIHbW2CY-DVbJiKd1hrsaTnRnGnkwOtZJA0n9rHETZ0R39wELUPUeEDhmdLoKvS1")
 
 const app = express();
 app.use(express.json({ limit: "512kb" }));
@@ -240,6 +239,19 @@ app.get("/main/time/:region/:city", function (req, res) {
 });
 
 //end main apis
+
+//start website apis
+app.get("/website/message", async function (req, res) {
+
+  const sender = req.query.name
+  
+  const message = req.query.message
+
+  await websiteHook.send(`${sender} says: "${message}"`)
+
+  res.send("sent webhook")
+})
+//end website apis
 
 app.get("/", async function (_, res) {
   const timePassed = new Date().getTime() - started;
