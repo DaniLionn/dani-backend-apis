@@ -12,7 +12,7 @@ const { Webhook } = require("discord-webhook-node");
 const websiteHook = new Webhook(
   "https://discordapp.com/api/webhooks/1413724529192079490/D-VQzIHbW2CY-DVbJiKd1hrsaTnRnGnkwOtZJA0n9rHETZ0R39wELUPUeEDhmdLoKvS1"
 );
-
+const { getAverageColor } = require("fast-average-color-node");
 const app = express();
 app.use(express.json({ limit: "512kb" }));
 
@@ -256,7 +256,11 @@ app.get("/website/message", async function (req, res) {
 });
 
 app.get("/website/steamgames", async function (req, res) {
-  var html = `<div class="steam games">`;
+  var html = `<!DOCTYPE html><html><head><script>
+function redir(id) {
+ window.top.location.href = "https://store.steampowered.com/app/"+id;
+}
+</script></head><body><div class="steam games">`;
 
   axios
     .get(
@@ -280,11 +284,17 @@ app.get("/website/steamgames", async function (req, res) {
             const data = info[appdata[0]]?.data;
 
             if (data) {
-              return `<img src="${data.capsule_image}" alt="Game" title="${
-                data.name
-              }\n\n${data.short_description}\n\n(My Playtime: ${(
-                appdata[1] / 60
-              ).toFixed(1)} Hours)"/>`;
+              const colour = await getAverageColor(data.capsule_image);
+
+              return `<img style="border-style: outset; border-color: ${
+                colour.hex
+              }; margin: 3px 3px 3px 3px;" src="${
+                data.capsule_image
+              }" alt="Game" title="${data.name}\n\n${
+                data.short_description
+              }\n\n(My Playtime: ${(appdata[1] / 60).toFixed(
+                1
+              )} Hours)" onclick="redir(${appdata[0]})"/>`;
             } else {
               return "";
             }
