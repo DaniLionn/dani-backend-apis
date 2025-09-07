@@ -252,7 +252,7 @@ app.get("/website/message", async function (req, res) {
 
   await websiteHook.send(`${sender} says: "${message}"`);
 
-  res.send("sent webhook");
+  res.redirect("https://danilionn.github.io/about-me-info-site/");
 });
 
 app.get("/website/steamgames", async function (req, res) {
