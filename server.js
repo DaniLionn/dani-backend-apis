@@ -288,8 +288,8 @@ function redir(id) {
 
               return `<img style="border-style: outset; border-color: ${
                 colour.hex
-              }; margin: 3px 3px 3px 3px;" src="${
-                data.capsule_image
+              }; margin: 3px 3px 3px 3px; width: 12%; height: auto;" src="${
+                data.capsule_imagev5
               }" alt="Game" title="${data.name}\n\n${
                 data.short_description
               }\n\nMy Playtime: ${(appdata[1] / 60).toFixed(
