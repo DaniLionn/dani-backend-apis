@@ -280,13 +280,11 @@ app.get("/website/steamgames", async function (req, res) {
             const data = info[appdata[0]]?.data;
 
             if (data) {
-              return `<a href="https://store.steampowered.com/app/${
-                appdata[0]
-              }"><img src="${data.capsule_image}" alt="Game" title="${
+              return `<img src="${data.capsule_image}" alt="Game" title="${
                 data.name
               }\n\n${data.short_description}\n\n(My Playtime: ${(
                 appdata[1] / 60
-              ).toFixed(1)} Hours)"/></a>`;
+              ).toFixed(1)} Hours)"/>`;
             } else {
               return "";
             }
