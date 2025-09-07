@@ -260,7 +260,7 @@ app.get("/website/steamgames", async function (req, res) {
 function redir(id) {
  window.top.location.href = "https://store.steampowered.com/app/"+id;
 }
-</script></head><body><div class="steam games">`;
+</script></head><body style="background-color: #ffffff;"><div class="steam games">`;
 
   axios
     .get(
