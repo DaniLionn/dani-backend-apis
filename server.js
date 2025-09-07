@@ -1,13 +1,17 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
+const axios = require("axios");
+
 const started = new Date().getTime();
 const express = require("express");
 const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
 
 const fsPromises = require("fs/promises");
-const { Webhook } = require('discord-webhook-node');
-const websiteHook = new Webhook("https://discordapp.com/api/webhooks/1413724529192079490/D-VQzIHbW2CY-DVbJiKd1hrsaTnRnGnkwOtZJA0n9rHETZ0R39wELUPUeEDhmdLoKvS1")
+const { Webhook } = require("discord-webhook-node");
+const websiteHook = new Webhook(
+  "https://discordapp.com/api/webhooks/1413724529192079490/D-VQzIHbW2CY-DVbJiKd1hrsaTnRnGnkwOtZJA0n9rHETZ0R39wELUPUeEDhmdLoKvS1"
+);
 
 const app = express();
 app.use(express.json({ limit: "512kb" }));
@@ -242,15 +246,65 @@ app.get("/main/time/:region/:city", function (req, res) {
 
 //start website apis
 app.get("/website/message", async function (req, res) {
+  const sender = req.query.name;
 
-  const sender = req.query.name
-  
-  const message = req.query.message
+  const message = req.query.message;
 
-  await websiteHook.send(`${sender} says: "${message}"`)
+  await websiteHook.send(`${sender} says: "${message}"`);
 
-  res.send("sent webhook")
-})
+  res.send("sent webhook");
+});
+
+app.get("/website/steamgames", async function (req, res) {
+  var html = `<div class="steam games">`;
+
+  axios
+    .get(
+      `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${process.env.STEAM_ID}&format=json`
+    )
+    .then((data) => data.data)
+    .then(async (ownedGames) => {
+      var appinfo = [];
+
+      ownedGames["response"]["games"].forEach((game) => {
+        appinfo.push([game.appid, game.playtime_forever]);
+      });
+
+      try {
+        const responses = await Promise.all(
+          appinfo.map(async (appdata) => {
+            const response = await axios.get(
+              `https://store.steampowered.com/api/appdetails?appids=${appdata[0]}`
+            );
+            const info = response.data;
+            const data = info[appdata[0]]?.data;
+
+            if (data) {
+              return `<a href="https://store.steampowered.com/app/${
+                appdata[0]
+              }"><img src="${data.capsule_image}" alt="Game" title="${
+                data.name
+              }\n\n${data.short_description}\n\n(My Playtime: ${(
+                appdata[1] / 60
+              ).toFixed(1)} Hours)"/></a>`;
+            } else {
+              return "";
+            }
+          })
+        );
+
+        // Add all game info to HTML
+        responses.forEach((game) => {
+          html += game;
+        });
+
+        res.send(html + "</div>");
+      } catch (err) {
+        console.error("Error fetching game info:", err);
+        res.status(500).send("Failed to fetch game information.");
+      }
+    });
+});
 //end website apis
 
 app.get("/", async function (_, res) {
