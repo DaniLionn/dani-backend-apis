@@ -292,9 +292,11 @@ function redir(id) {
                 data.capsule_image
               }" alt="Game" title="${data.name}\n\n${
                 data.short_description
-              }\n\n(My Playtime: ${(appdata[1] / 60).toFixed(
+              }\n\nMy Playtime: ${(appdata[1] / 60).toFixed(
                 1
-              )} Hours)" onclick="redir(${appdata[0]})"/>`;
+              )} Hours\n(Click to view on Steam!)" onclick="redir(${
+                appdata[0]
+              })"/>`;
             } else {
               return "";
             }
