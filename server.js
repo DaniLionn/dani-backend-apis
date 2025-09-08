@@ -156,7 +156,7 @@ app.post("/pride-island/addChangelog", async (req, res) => {
   }
 });
 
-client.on("ready", () => {
+client.on("clientReady", () => {
   console.log(`Logged in as ${client.user.tag}!`);
   clientReady = true;
 });
@@ -256,7 +256,17 @@ app.get("/website/message", async function (req, res) {
 });
 
 app.get("/website/steamgames", async function (req, res) {
-  var html = `<!DOCTYPE html><html><head><script>
+  var html = `<!DOCTYPE html><html><head><style>
+  @font-face {
+  font-family: Nunito;
+  src: url(https://danilionn.github.io/about-me-info-site/assets/fonts/Nunito-Regular.ttf);
+}
+
+div {
+  font-family: Nunito;
+}
+  
+  </style><script>
 function redir(id) {
  window.top.location.href = "https://store.steampowered.com/app/"+id;
 }
@@ -278,10 +288,13 @@ function redir(id) {
     )
     .then((data) => data.data)
     .then(async (ownedGames) => {
+      const gameCount = ownedGames.response.game_count
+      var totalTime = 0
       var appinfo = [];
 
       ownedGames["response"]["games"].forEach((game) => {
         appinfo.push([game.appid, game.playtime_forever]);
+        totalTime+=game.playtime_forever
       });
 
       try {
@@ -321,6 +334,7 @@ function redir(id) {
         res.send(
           html +
             `
+            <h2>Total playtime for all ${gameCount} games: ${(totalTime / 60).toFixed(1)} hours.</h2>
           </div>
           </body>
           </html>`
