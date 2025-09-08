@@ -260,7 +260,6 @@ app.get("/website/steamgames", async function (req, res) {
 function redir(id) {
  window.top.location.href = "https://store.steampowered.com/app/"+id;
 }
-    
     function brightenImage(image) {
       image.style.filter = "brightness(1.15)";
     }
@@ -312,7 +311,6 @@ function redir(id) {
           })
         );
 
-        // Add all game info to HTML
         responses.forEach((game) => {
           html += game;
         });
