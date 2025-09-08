@@ -260,6 +260,14 @@ app.get("/website/steamgames", async function (req, res) {
 function redir(id) {
  window.top.location.href = "https://store.steampowered.com/app/"+id;
 }
+    
+    function brightenImage(image) {
+      image.style.filter = "brightness(1.15)";
+    }
+
+    function resetImage(image) {
+      image.style.filter = "brightness(1)";
+    }
 </script></head><body style="background-color: #ffffff;"><div class="steam games">`;
 
   axios
@@ -288,7 +296,7 @@ function redir(id) {
 
               return `<img style="border-style: outset; border-color: ${
                 colour.hex
-              }; margin: 3px 3px 3px 3px; width: 12%; height: auto;" src="${
+              }; margin: 3px 3px 3px 3px; width: 12%; height: auto; transition: filter 0s ease;" src="${
                 data.capsule_imagev5
               }" alt="Game" title="${data.name}\n\n${
                 data.short_description
@@ -296,7 +304,8 @@ function redir(id) {
                 1
               )} Hours\n(Click to view on Steam!)" onclick="redir(${
                 appdata[0]
-              })"/>`;
+              })"     onmouseover="brightenImage(this)" 
+    onmouseout="resetImage(this)"/>`;
             } else {
               return "";
             }
@@ -310,8 +319,9 @@ function redir(id) {
 
         res.send(html + "</div>");
       } catch (err) {
-        console.error("Error fetching game info:", err);
-        res.status(500).send("Failed to fetch game information.");
+        const errmessage = err.message;
+        console.error("Error fetching game info:", errmessage);
+        res.status(500).send("Failed to fetch game information: " + errmessage);
       }
     });
 });
