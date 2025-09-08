@@ -267,7 +267,10 @@ function redir(id) {
     function resetImage(image) {
       image.style.filter = "brightness(1)";
     }
-</script></head><body style="background-color: #ffffff;"><div class="steam games">`;
+</script>
+</head>
+<body style="background-color: #ffffff;">
+<div class="steam games">`;
 
   axios
     .get(
@@ -315,7 +318,13 @@ function redir(id) {
           html += game;
         });
 
-        res.send(html + "</div>");
+        res.send(
+          html +
+            `
+          </div>
+          </body>
+          </html>`
+        );
       } catch (err) {
         const errmessage = err.message;
         console.error("Error fetching game info:", errmessage);
