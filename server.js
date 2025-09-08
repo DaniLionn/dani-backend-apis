@@ -311,7 +311,7 @@ function redir(id) {
 
               return `<img style="border-style: outset; border-color: ${
                 colour.hex
-              }; margin: 3px 3px 3px 3px; width: 12%; height: auto; transition: filter 0s ease;" src="${
+              }; margin-down: 3px; margin-right: 3px; width: 12%; height: auto; transition: filter 0s ease;" src="${
                 data.capsule_imagev5
               }" alt="Game" title="${data.name}\n\n${
                 data.short_description
