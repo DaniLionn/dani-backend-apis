@@ -1,5 +1,6 @@
-const dotenv = require("dotenv");
-dotenv.config();
+if (!process.env.PORT) {
+  require("dotenv").config();
+}
 
 const axios = require("axios");
 
@@ -9,9 +10,7 @@ const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
 
 const fsPromises = require("fs/promises");
 const { Webhook } = require("discord-webhook-node");
-const websiteHook = new Webhook(
-  "https://discordapp.com/api/webhooks/1413724529192079490/D-VQzIHbW2CY-DVbJiKd1hrsaTnRnGnkwOtZJA0n9rHETZ0R39wELUPUeEDhmdLoKvS1"
-);
+const websiteHook = new Webhook(process.env.WEBHOOK_URL);
 const { getAverageColor } = require("fast-average-color-node");
 const app = express();
 app.use(express.json({ limit: "512kb" }));
@@ -288,14 +287,16 @@ function redir(id) {
     )
     .then((data) => data.data)
     .then(async (ownedGames) => {
-      const gameCount = ownedGames.response.game_count
-      var totalTime = 0
+      const gameCount = ownedGames.response.game_count;
+      var totalTime = 0;
       var appinfo = [];
 
       ownedGames["response"]["games"].forEach((game) => {
         appinfo.push([game.appid, game.playtime_forever]);
-        totalTime+=game.playtime_forever
+        totalTime += game.playtime_forever;
       });
+
+      appinfo.sort((a, b) => b[1] - a[1]);
 
       try {
         const responses = await Promise.all(
@@ -334,7 +335,9 @@ function redir(id) {
         res.send(
           html +
             `
-            <h3>Total playtime for all ${gameCount} games: ${(totalTime / 60).toFixed(1)} hours.</h3>
+            <h3>Total playtime for all ${gameCount} games: ${(
+              totalTime / 60
+            ).toFixed(1)} hours.</h3>
           </div>
           </body>
           </html>`
