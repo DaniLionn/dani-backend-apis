@@ -289,45 +289,65 @@ function redir(id) {
     .then(async (ownedGames) => {
       const gameCount = ownedGames.response.game_count;
       var totalTime = 0;
-      var appinfo = [];
 
-      ownedGames["response"]["games"].forEach((game) => {
-        if (game.appid !== 1725640) {
-          //exclude sudocats (thanks sudofox but i don't even know how to play sudoku lmao)
-          appinfo.push([game.appid, game.playtime_forever]);
-        }
-        totalTime += game.playtime_forever;
-      });
-
-      appinfo.sort((a, b) => b[1] - a[1]);
+      // Use Promise.all to wait for all game info to be fetched before responding
+      const filteredGames = ownedGames["response"]["games"].filter(
+        (game) => game.appid !== 1725640
+      );
 
       try {
+        const appinfo = await Promise.all(
+          filteredGames.map(async (game) => {
+            const extraDataRequest = await axios.get(
+              `https://store.steampowered.com/api/appdetails?appids=${game.appid}`
+            );
+            const extraData = extraDataRequest.data[game.appid].data;
+            totalTime += game.playtime_forever;
+            return [
+              game.appid,
+              game.playtime_forever,
+              extraData.name,
+              extraData.capsule_imagev5,
+              extraData.short_description,
+            ];
+          })
+        );
+
+        // Sort appinfo once before mapping
+        if (req.query.sort === "playtime") {
+          appinfo.sort((a, b) => b[1] - a[1]);
+        } else if (req.query.sort === "name") {
+          appinfo.sort((a, b) => {
+            const nameA = a[2] || "";
+            const nameB = b[2] || "";
+            return nameA.localeCompare(nameB);
+          });
+        } //default is unsorted (as per steam api)
+
         const responses = await Promise.all(
           appinfo.map(async (appdata) => {
-            const response = await axios.get(
-              `https://store.steampowered.com/api/appdetails?appids=${appdata[0]}`
-            );
-            const info = response.data;
-            const data = info[appdata[0]]?.data;
-
-            if (data) {
-              const colour = await getAverageColor(data.capsule_image);
-
-              return `<img style="border-style: outset; border-color: ${
-                colour.hex
-              }; margin-down: 3px; margin-right: 3px; width: 12%; height: auto; transition: filter 0s ease;" src="${
-                data.capsule_imagev5
-              }" alt="Game" title="${data.name}\n\n${
-                data.short_description
-              }\n\nMy Playtime: ${(appdata[1] / 60).toFixed(
-                1
-              )} Hours\n(Click to view on Steam!)" onclick="redir(${
-                appdata[0]
-              })"     onmouseover="brightenImage(this)" 
-    onmouseout="resetImage(this)"/>`;
-            } else {
-              return "";
+            let colour = { hex: "#cccccc" };
+            if (appdata[3]) {
+              try {
+                colour = await getAverageColor(appdata[3]);
+              } catch (e) {
+                // fallback color if image fails
+                colour = { hex: "#cccccc" };
+              }
             }
+
+            return `<img style="border-style: outset; border-color: ${
+              colour.hex
+            }; margin-down: 3px; margin-right: 3px; width: 12%; height: auto; transition: filter 0s ease;" src="${
+              appdata[3]
+            }" alt="Game" title="${appdata[2]}\n\n${
+              appdata[4]
+            }\n\nMy Playtime: ${(appdata[1] / 60).toFixed(
+              1
+            )} Hours\n(Click to view on Steam!)" onclick="redir(${
+              appdata[0]
+            })"     onmouseover="brightenImage(this)" 
+    onmouseout="resetImage(this)"/>`;
           })
         );
 
