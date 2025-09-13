@@ -292,7 +292,10 @@ function redir(id) {
       var appinfo = [];
 
       ownedGames["response"]["games"].forEach((game) => {
-        appinfo.push([game.appid, game.playtime_forever]);
+        if (game.appid !== 1725640) {
+          //exclude sudocats (thanks sudofox but i don't even know how to play sudoku lmao)
+          appinfo.push([game.appid, game.playtime_forever]);
+        }
         totalTime += game.playtime_forever;
       });
 
@@ -335,7 +338,7 @@ function redir(id) {
         res.send(
           html +
             `
-            <h3>Total playtime for all ${gameCount} games: ${(
+            <h3>Total playtime for all ${gameCount - 1} games: ${(
               totalTime / 60
             ).toFixed(1)} hours.</h3>
           </div>
