@@ -14,7 +14,7 @@ const websiteHook = new Webhook(process.env.WEBHOOK_URL);
 const { getAverageColor } = require("fast-average-color-node");
 
 const app = express();
-app.use(express.json({ limit: "512kb" }));
+app.use(express.json({ limit: "128kb" }));
 
 //start pride island apis
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -77,7 +77,7 @@ app.get("/pride-island/latestChangelogs", async (req, res) => {
   let channel = client.channels.cache.get("1214304064830177330");
   let key = 1;
   channel.messages
-    .fetch({ limit: req.query.limit })
+    .fetch({ limit: req.query.limit || 5 })
     .then((messages) => {
       messages.forEach((message) => {
         let embeddedMessage = message.embeds[0];
@@ -113,7 +113,7 @@ app.get("/pride-island/latestChangelogs", async (req, res) => {
     });
 });
 
-app.get("/pride-island//launch/server/:jobId", (req, res) => {
+app.get("/pride-island/launch/server/:jobId", (req, res) => {
   let jobId = req.params["jobId"];
 
   if (jobId) {
