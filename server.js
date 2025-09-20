@@ -12,6 +12,8 @@ const fsPromises = require("fs/promises");
 const { Webhook } = require("discord-webhook-node");
 const websiteHook = new Webhook(process.env.WEBHOOK_URL);
 const { getAverageColor } = require("fast-average-color-node");
+const { Downloader } = require("nodejs-file-downloader");
+
 const app = express();
 app.use(express.json({ limit: "512kb" }));
 
@@ -313,7 +315,6 @@ function redir(id) {
           })
         );
 
-        // Sort appinfo once before mapping
         if (req.query.sort === "playtime") {
           appinfo.sort((a, b) => b[1] - a[1]);
         } else if (req.query.sort === "name") {
@@ -322,7 +323,7 @@ function redir(id) {
             const nameB = b[2] || "";
             return nameA.localeCompare(nameB);
           });
-        } //default is unsorted (as per steam api)
+        }
 
         const responses = await Promise.all(
           appinfo.map(async (appdata) => {
