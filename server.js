@@ -12,7 +12,6 @@ const fsPromises = require("fs/promises");
 const { Webhook } = require("discord-webhook-node");
 const websiteHook = new Webhook(process.env.WEBHOOK_URL);
 const { getAverageColor } = require("fast-average-color-node");
-const { Downloader } = require("nodejs-file-downloader");
 
 const app = express();
 app.use(express.json({ limit: "512kb" }));
