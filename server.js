@@ -5,9 +5,9 @@ if (!process.env.PORT) {
 }
 const started = new Date().getTime();
 const express = require("express");
-
 const fs = require("fs");
 const app = express();
+
 app.use(express.json({ limit: "128kb" }));
 
 function deployEndpoints(endpoint) {
@@ -35,6 +35,7 @@ function deployEndpoints(endpoint) {
 }
 
 console.log("Loading endpoint modules...");
+
 fs.readdir("./endpoints", (err, files) => {
   if (err) {
     console.error("Error loading endpoint modules! " + err);
