@@ -1,5 +1,14 @@
 const axios = require("axios");
 
+const isValidJSON = (str) => {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
 module.exports = {
   "post/proxy/post": function (Request, Res) {
     if (!Request.body.url) {
