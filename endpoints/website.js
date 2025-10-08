@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { Webhook } = require("discord-webhook-node");
-const websiteHook = new Webhook(process.env.WEBHOOK_URL);
+const websiteHook = new Webhook(process.env.WEBSITE_WEBHOOK_URL);
 const { getAverageColor } = require("fast-average-color-node");
 
 module.exports = {
@@ -97,7 +97,7 @@ function redir(id) {
 
               return `<img style="border-style: outset; border-color: ${
                 colour.hex
-              }; margin-down: 3px; margin-right: 3px; width: 12%; height: auto; transition: filter 0s ease;" src="${
+              }; margin-down: 3px; margin-right: 3px; width: 20%; height: auto; transition: filter 0s ease;" src="${
                 appdata[3]
               }" alt="Game" title="${appdata[2]}\n\n${
                 appdata[4]
