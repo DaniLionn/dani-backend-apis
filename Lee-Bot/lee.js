@@ -130,25 +130,15 @@ module.exports = {
         if (message.channel.id === "1417504755319701644") {
           if (message.content.toLowerCase().includes("f")) {
             await message.delete();
-            var phixedMessage = message.content.replaceAll("f", "ph");
+            // Replace all 'f' and 'F' with 'ph' or 'Ph' depending on case
+            let isAllCaps = message.content === message.content.toUpperCase();
+            let phixedMessage = message.content.replace(/f/gi, (match) => {
+              if (isAllCaps) return "PH";
+              if (match === "F") return "Ph";
+              return "ph";
+            });
 
-            const firstLetter = phixedMessage.split("")[0];
-            const secondLetter = phixedMessage.split("")[1];
-            if (
-              firstLetter === firstLetter.toUpperCase() &&
-              secondLetter === secondLetter.toLowerCase()
-            ) {
-              phixedMessage =
-                "Ph" + phixedMessage.substring(2, phixedMessage.length);
-            } else if (
-              firstLetter === firstLetter.toUpperCase() &&
-              secondLetter === secondLetter.toUpperCase()
-            ) {
-              phixedMessage =
-                "PH" + phixedMessage.substring(2, phixedMessage.length);
-            }
-
-            message.channel.send({
+            await message.channel.send({
               content: `<@${message.author.id}> You broke the "replace f with ph" rule! Did you mean to say "${phixedMessage}"?`,
             });
           }
