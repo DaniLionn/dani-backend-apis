@@ -7,14 +7,12 @@ module.exports = {
       "generates a random name. can be used for character names.",
     ),
   async execute(interaction) {
-    if (!interaction.deferred) {
-      console.log("[random-name.js:11] Deferring reply...");
-      await interaction.deferReply();
-    }
-    console.log("[random-name.js:14] Fetching random name...");
+    console.log("[random-name.js:10] Deferring reply...");
+    await interaction.deferReply();
+    console.log("[random-name.js:12] Fetching random name...");
     await axios
       .get(
-        `https://api.parser.name/?api_key=${NAME_API_KEY}&endpoint=generate`,
+        `https://api.parser.name/?api_key=${process.env.NAME_API_KEY}&endpoint=generate`,
         {
           headers: {
             Accept: "application/json",
@@ -22,8 +20,12 @@ module.exports = {
         },
       )
       .then(async (response) => {
-        console.log("[random-name.js:22] Response received.");
+        console.log("[random-name.js:23] Response received.");
         const nameData = response.data;
+        console.log(
+          nameData,
+          `${nameData.data[0].name.firstname.name} ${nameData.data[0].name.lastname.name}`,
+        );
         // console.log(
         //   nameData.results[0].name,
         //   `${nameData.results[0].name.first} ${nameData[0].results.name.last}`,
