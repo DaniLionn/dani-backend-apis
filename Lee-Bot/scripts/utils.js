@@ -5,8 +5,6 @@ const { Downloader } = require("nodejs-file-downloader");
 
 const randomStatuses = [
   [ActivityType.Playing, "Lee Wars 2007"],
-  [ActivityType.Watching, "over the server"],
-  [ActivityType.Listening, "your commands"],
   [
     ActivityType.Competing,
     "hottest bot championships " + new Date().getFullYear(),
