@@ -13,11 +13,14 @@ module.exports = {
     }
     console.log("[random-name.js:14] Fetching random name...");
     await axios
-      .get("https://randomuser.me/api/", {
-        headers: {
-          Accept: "application/json",
+      .get(
+        `https://api.parser.name/?api_key=${NAME_API_KEY}&endpoint=generate`,
+        {
+          headers: {
+            Accept: "application/json",
+          },
         },
-      })
+      )
       .then(async (response) => {
         console.log("[random-name.js:22] Response received.");
         const nameData = response.data;
@@ -26,7 +29,7 @@ module.exports = {
         //   `${nameData.results[0].name.first} ${nameData[0].results.name.last}`,
         // );
         await interaction.editReply(
-          `${nameData.results[0].name.first} ${nameData[0].results.name.last}`,
+          `${nameData.data[0].name.firstname.name} ${nameData.data[0].name.lastname.name}`,
         );
       });
   },
