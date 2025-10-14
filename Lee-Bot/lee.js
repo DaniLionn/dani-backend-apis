@@ -6,16 +6,11 @@ const {
   Collection,
   Events,
   GatewayIntentBits,
-  ActivityType,
   AttachmentBuilder,
 } = require("discord.js");
 const { download } = require("./scripts/utils");
 
 const token = process.env.LEE_TOKEN;
-
-const statsTemplate = {
-  commands_executed: 0,
-};
 
 // Create a new client instance
 const client = new Client({
@@ -29,12 +24,7 @@ const client = new Client({
 module.exports = {
   startLee: function () {
     async function main() {
-      console.log("starting lee");
-      async function readStats() {
-        const read = await fsPromises.readFile("./Lee-Bot/stats.json", "utf-8");
-
-        return JSON.parse(read);
-      }
+      console.log("[lee.js:32] Starting lee bot!");
 
       async function writeStats(statistic, increment) {
         const read = await fsPromises.readFile("./Lee-Bot/stats.json", "utf-8");
@@ -52,22 +42,6 @@ module.exports = {
       client.once(Events.ClientReady, async (readyClient) => {
         console.log(`[lee.js:53] Ready! Logged in as ${readyClient.user.tag}`);
         require("./scripts/deploy-commands");
-        // async function setStatus() {
-        //   var executedCommands = await readStats();
-
-        //   client.user.setActivity(
-        //     "for commands | " +
-        //       executedCommands["commands_executed"].toLocaleString("en-US") +
-        //       " commands executed so far",
-        //     { type: ActivityType.Watching },
-        //   );
-        // }
-
-        // await setStatus();
-
-        // setInterval(async () => {
-        //   await setStatus();
-        // }, 180_000);
       });
 
       client.commands = new Collection();
@@ -85,12 +59,12 @@ module.exports = {
         for (const file of commandFiles) {
           const filePath = path.join(commandsPath, file);
           const command = require(filePath);
-          // Set a new item in the Collection with the key as the command name and the value as the exported module
+
           if ("data" in command && "execute" in command) {
             client.commands.set(command.data.name, command);
           } else {
             console.log(
-              `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`,
+              `[lee.js:93] [WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`,
             );
           }
         }
@@ -214,23 +188,8 @@ module.exports = {
             return;
           }
 
-          console.log("created temp directory!");
+          console.log("[lee.js:217]created temp directory!");
         });
-      }
-
-      if (!fs.existsSync(path.join(__dirname, "./Lee-Bot/stats.json"))) {
-        fs.writeFileSync(
-          "./Lee-Bot/stats.json",
-          JSON.stringify(statsTemplate),
-          function (err) {
-            if (err) {
-              console.err(err);
-              return;
-            }
-
-            console.log("created temp directory!");
-          },
-        );
       }
 
       process.on("unhandledRejection", async (error) => {
@@ -240,21 +199,13 @@ module.exports = {
         });
       });
 
-      // Log in to Discord with your client's token
-
-      const files = await fsPromises.readdir("./Lee-Bot/temp");
-
-      files.forEach(async (file) => {
-        await fsPromises.unlink(path.join("./Lee-Bot/temp", file));
-      });
-
       client.login(token);
     }
 
     try {
       main();
     } catch (err) {
-      console.error(err);
+      console.error("[lee.js:257] " + err);
       fsPromises
         .writeFile("./Lee-Bot/temp/errorDetails.txt", err, "utf-8")
         .then(async () => {
