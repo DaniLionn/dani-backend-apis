@@ -127,6 +127,14 @@ module.exports = {
           return;
         }
 
+        if (message.channel.id === "1417504755319701644") {
+          if (message.content.includes("f")) {
+            await message.delete();
+            message.channel.send({
+              content: `<@${message.author.id}> You broke the "replace f with ph" rule! Did you mean to say "${message.content.replaceAll("f", "ph")}"?`,
+            });
+          }
+        }
         if (
           /*message.member.roles.cache.has(process.env.modID) &&*/
           message.content.startsWith("lee:")
