@@ -9,7 +9,7 @@ const randomStatuses = [
   [ActivityType.Listening, "your commands"],
   [
     ActivityType.Competing,
-    "in hottest bot championships " + new Date().getFullYear(),
+    "hottest bot championships " + new Date().getFullYear(),
   ],
   [ActivityType.Listening, "🪵"],
   [ActivityType.Playing, "🪵"],
