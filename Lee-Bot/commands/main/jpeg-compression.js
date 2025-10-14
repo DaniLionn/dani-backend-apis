@@ -14,7 +14,7 @@ module.exports = {
     async function convert(jpegpath) {
       //console.log(jpegpath);
       const crunchification = spawn(
-        path.join(process.env.LEEBOT_ROOT_DIR, "/bin/jpegoptim"),
+        path.join(process.env.LEE_ROOT_DIR, "/bin/jpegoptim"),
         ["--size=1k", jpegpath, "--overwrite"],
       );
 
