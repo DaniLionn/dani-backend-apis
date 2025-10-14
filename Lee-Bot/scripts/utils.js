@@ -1,13 +1,18 @@
 const fs = require("node:fs");
 const path = require("node:path");
-const { Collection } = require("discord.js");
+const { Collection, ActivityType } = require("discord.js");
 const { Downloader } = require("nodejs-file-downloader");
 
 const randomStatuses = [
-  "Lee Wars 2007",
-  "Playing Playing Playing",
-  "🪵",
-  "in hottest bot championships " + new Date().getFullYear(),
+  [ActivityType.Playing, "Lee Wars 2007"],
+  [ActivityType.Watching, "over the server"],
+  [ActivityType.Listening, "to your commands"],
+  [
+    ActivityType.Competing,
+    "in hottest bot championships " + new Date().getFullYear(),
+  ],
+  [ActivityType.Listening, "to 🪵"],
+  [ActivityType.Custom, "i am lee bot"],
 ];
 
 exports.download = async function (url, dir, name) {
@@ -48,7 +53,11 @@ exports.downloadAlt = async function (url, dir) {
 };
 
 exports.status = async function (client) {
-  await client.user.setActivity(exports.randomSelect(randomStatuses));
+  const randomStatus = exports.randomSelect(randomStatuses);
+  await client.user.setPresence({
+    activities: [{ name: randomStatus[1], type: randomStatus[0] }],
+    status: "online",
+  });
 
   setInterval(function () {
     exports.status(client);
