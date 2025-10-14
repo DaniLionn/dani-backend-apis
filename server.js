@@ -87,3 +87,7 @@ app.get("/", async function (_, res) {
 });
 
 app.listen(process.env.PORT || 3000);
+
+const { startLee } = require("./Lee-Bot/lee.js");
+
+startLee();
