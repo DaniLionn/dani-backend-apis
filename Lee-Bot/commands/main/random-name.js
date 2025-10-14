@@ -7,8 +7,6 @@ module.exports = {
       "generates a random name. can be used for character names.",
     ),
   async execute(interaction) {
-    await interaction.deferReply();
-
     async function obtainName() {
       await axios
         .get("https://randomuser.me/api/", {
@@ -18,9 +16,8 @@ module.exports = {
         })
         .then(async (response) => {
           const nameData = response.data;
-          console.log(nameData.results);
-          await interaction.editReply(
-            `${nameData.results.name.first} ${nameData.results.name.last}`,
+          await interaction.reply(
+            `${nameData.results[0].name.first} ${nameData[0].results.name.last}`,
           );
         });
     }
