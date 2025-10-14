@@ -31,7 +31,7 @@ module.exports = {
         //   `${nameData.results[0].name.first} ${nameData[0].results.name.last}`,
         // );
         await interaction.editReply(
-          `${nameData.data[0].name.firstname.name} ${nameData.data[0].name.lastname.name}`,
+          `${nameData.data[0].name.firstname.name} ${nameData.data[0].name.lastname.name}\n -# please don't use this command too much i only get 250 api calls per day`,
         );
       });
   },
