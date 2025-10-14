@@ -19,8 +19,11 @@ module.exports = {
         })
         .then(async (response) => {
           const nameData = response.data;
-          console.log(nameData.results[0].name);
-          await interaction.reply(
+          console.log(
+            nameData.results[0].name,
+            `${nameData.results[0].name.first} ${nameData[0].results.name.last}`,
+          );
+          await interaction.editReply(
             `${nameData.results[0].name.first} ${nameData[0].results.name.last}`,
           );
         });
