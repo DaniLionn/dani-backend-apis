@@ -23,6 +23,10 @@ const randomStatuses = [
   [ActivityType.Competing, "in the biggest fart competition"],
   [ActivityType.Watching, "air"],
   [ActivityType.Custom, "hello world"],
+  [
+    ActivityType.Custom,
+    "is it just me or is it hot in here? *fade to picture of carrot*",
+  ],
 ];
 
 exports.download = async function (url, dir, name) {
