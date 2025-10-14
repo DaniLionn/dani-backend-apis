@@ -28,7 +28,7 @@ const randomStatuses = [
 
 exports.download = async function (url, dir, name) {
   if (!dir) {
-    dir = path.join("./", "temp");
+    dir = process.env.LEE_ROOT_DIR + "/temp";
   }
 
   var downloader;

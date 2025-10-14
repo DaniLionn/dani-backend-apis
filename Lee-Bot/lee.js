@@ -23,7 +23,6 @@ const client = new Client({
 
 module.exports = {
   startLee: function () {
-    console.log(__dirname);
     async function main() {
       console.log("[lee.js:32] Starting lee bot!");
 

@@ -27,7 +27,7 @@ module.exports = {
     const mp3Attachment = interaction.options.getAttachment("mp3");
     const showExtraInfo = interaction.options.getBoolean("extra-info");
 
-    const downloadedMP3 = await download(mp3Attachment.url, "./temp");
+    const downloadedMP3 = await download(mp3Attachment.url);
 
     const originalSize = (await fs.stat(downloadedMP3)).size;
 

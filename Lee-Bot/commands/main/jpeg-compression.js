@@ -13,11 +13,10 @@ module.exports = {
   async execute(interaction) {
     async function convert(jpegpath) {
       //console.log(jpegpath);
-      const crunchification = spawn("Lee-Bot/bin/jpegoptim", [
-        "--size=1k",
-        jpegpath,
-        "--overwrite",
-      ]);
+      const crunchification = spawn(
+        path.join(process.env.LEEBOT_ROOT_DIR, "/bin/jpegoptim"),
+        ["--size=1k", jpegpath, "--overwrite"],
+      );
 
       //crunchification.on("error", (msg) => console.log(msg));
 
