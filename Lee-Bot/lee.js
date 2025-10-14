@@ -167,15 +167,14 @@ module.exports = {
         }
       });
 
-      if (!fs.existsSync(path.join(leedir, "temp"))) {
-        fs.mkdir(path.join(leedir, "temp"), function (err) {
-          if (err) {
-            console.error(err);
-            return;
-          }
-
+      const tempDirPath = path.join(leedir, "temp");
+      try {
+        if (!fs.existsSync(tempDirPath)) {
+          fs.mkdirSync(tempDirPath, { recursive: true });
           console.log("[lee.js:217]created temp directory!");
-        });
+        }
+      } catch (err) {
+        console.error("Failed to create temp directory:", err);
       }
 
       process.on("unhandledRejection", async (error) => {
