@@ -18,7 +18,7 @@ module.exports = {
         })
         .then(async (response) => {
           const nameData = response.data;
-
+          console.log(nameData.results);
           await interaction.editReply(
             `${nameData.results.name.first} ${nameData.results.name.last}`,
           );
