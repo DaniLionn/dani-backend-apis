@@ -8,8 +8,10 @@ module.exports = {
     ),
   async execute(interaction) {
     if (!interaction.deferred) {
+      console.log("[random-name.js:11] Deferring reply...");
       await interaction.deferReply();
     }
+    console.log("[random-name.js:14] Fetching random name...");
     await axios
       .get("https://randomuser.me/api/", {
         headers: {
@@ -17,6 +19,7 @@ module.exports = {
         },
       })
       .then(async (response) => {
+        console.log("[random-name.js:22] Response received.");
         const nameData = response.data;
         console.log(
           nameData.results[0].name,
