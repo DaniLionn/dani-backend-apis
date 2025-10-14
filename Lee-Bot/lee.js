@@ -21,6 +21,8 @@ const client = new Client({
   ],
 });
 
+const leedir = process.env.LEE_ROOT_DIR;
+
 module.exports = {
   startLee: function () {
     async function main() {
@@ -83,7 +85,7 @@ module.exports = {
           // Safe write to file
           try {
             await fsPromises.writeFile(
-              "./Lee-Bot/temp/errorDetails.txt",
+              path.join(leedir, "temp/errorDetails.txt"),
               "Error Details:\n" +
                 (error?.stack || error?.message || String(error)),
             );
@@ -96,7 +98,7 @@ module.exports = {
             const response = {
               content:
                 "There was an error while executing this command!\n(Don't worry if you don't understand this, this is just here for debugging purposes.)",
-              files: ["./Lee-Bot/temp/errorDetails.txt"],
+              files: [path.join(leedir, "temp/errorDetails.txt")],
             };
 
             if (interaction.replied || interaction.deferred) {
@@ -110,7 +112,7 @@ module.exports = {
 
           // Safe file cleanup
           try {
-            await fsPromises.unlink("./Lee-Bot/temp/errorDetails.txt");
+            await fsPromises.unlink(path.join(leedir, "temp/errorDetails.txt"));
           } catch (fsDeleteError) {
             console.error(
               "Failed to delete error details file:",
@@ -165,8 +167,8 @@ module.exports = {
         }
       });
 
-      if (!fs.existsSync("./Lee-Bot/temp")) {
-        fs.mkdir("./Lee-Bot/temp", function (err) {
+      if (!fs.existsSync(path.join(leedir, "temp"))) {
+        fs.mkdir(path.join(leedir, "temp"), function (err) {
           if (err) {
             console.error(err);
             return;
@@ -179,7 +181,7 @@ module.exports = {
       process.on("unhandledRejection", async (error) => {
         await lastChannel.send({
           content: "An error occured!",
-          files: ["./Lee-Bot/temp/errorDetails.txt"],
+          files: [path.join(leedir, "temp/errorDetails.txt")],
         });
       });
 
@@ -194,14 +196,14 @@ module.exports = {
       );
       fsPromises
         .writeFile(
-          "./Lee-Bot/temp/errorDetails.txt",
+          path.join(leedir, "temp/errorDetails.txt"),
           err?.stack || err?.message || String(err),
           "utf-8",
         )
         .then(async () => {
           await lastChannel.send({
             content: "An error occured!",
-            files: ["./Lee-Bot/temp/errorDetails.txt"],
+            files: [path.join(leedir, "temp/errorDetails.txt")],
           });
         });
     }
