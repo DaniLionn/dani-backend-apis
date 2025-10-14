@@ -21,7 +21,7 @@ const client = new Client({
   ],
 });
 
-const leedir = process.env.LEE_ROOT_DIR;
+const leedir = process.env.LEEBOT_ROOT_DIR;
 
 module.exports = {
   startLee: function () {
