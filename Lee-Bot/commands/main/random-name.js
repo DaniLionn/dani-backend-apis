@@ -7,6 +7,9 @@ module.exports = {
       "generates a random name. can be used for character names.",
     ),
   async execute(interaction) {
+    if (!interaction.deferred) {
+      await interaction.deferReply();
+    }
     async function obtainName() {
       await axios
         .get("https://randomuser.me/api/", {
