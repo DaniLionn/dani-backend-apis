@@ -26,7 +26,7 @@ module.exports = {
       "emojiMix.png",
     ).then(async (filePath) => {
       await interaction.reply({
-        content: `${emoji1} ➕ ${emoji2}`,
+        content: `## ${emoji1}  ➕  ${emoji2}`,
         files: [filePath],
       });
       await fs.promises.unlink(filePath);
