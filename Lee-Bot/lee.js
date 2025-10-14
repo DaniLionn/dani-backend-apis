@@ -23,21 +23,9 @@ const client = new Client({
 
 module.exports = {
   startLee: function () {
+    console.log(__dirname);
     async function main() {
       console.log("[lee.js:32] Starting lee bot!");
-
-      async function writeStats(statistic, increment) {
-        const read = await fsPromises.readFile("./Lee-Bot/stats.json", "utf-8");
-        var stats = JSON.parse(read);
-
-        stats[statistic] += increment;
-
-        await fsPromises.writeFile(
-          "./stats.json",
-          JSON.stringify(stats),
-          "utf8",
-        );
-      }
 
       client.once(Events.ClientReady, async (readyClient) => {
         console.log(`[lee.js:53] Ready! Logged in as ${readyClient.user.tag}`);
