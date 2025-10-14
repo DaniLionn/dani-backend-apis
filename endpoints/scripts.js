@@ -39,4 +39,8 @@ module.exports = {
     await res.send(link);
     await fs.promises.unlink(file.path);
   },
+  "get/scripts/wiirpc": async function (req, res) {
+    const game = req.query.game;
+    console.log(game);
+  },
 };
