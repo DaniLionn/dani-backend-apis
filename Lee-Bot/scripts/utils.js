@@ -12,6 +12,9 @@ const randomStatuses = [
     "in hottest bot championships " + new Date().getFullYear(),
   ],
   [ActivityType.Listening, "🪵"],
+  [ActivityType.Playing, "🪵"],
+  [ActivityType.Competing, "🪵"],
+  [ActivityType.Custom, "🪵"],
   [ActivityType.Custom, "i am lee bot"],
   [
     ActivityType.Custom,
@@ -20,10 +23,6 @@ const randomStatuses = [
   [ActivityType.Competing, "in the biggest fart competition"],
   [ActivityType.Watching, "air"],
   [ActivityType.Custom, "hello world"],
-  [
-    ActivityType.Custom,
-    '"im gay!" "im straight!" ok??? im thinking miku??? miku??? oo ee oo???',
-  ],
 ];
 
 exports.download = async function (url, dir, name) {
