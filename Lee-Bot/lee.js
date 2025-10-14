@@ -8,7 +8,7 @@ const {
   GatewayIntentBits,
   AttachmentBuilder,
 } = require("discord.js");
-const { download } = require("./scripts/utils");
+const { download, status } = require("./scripts/utils");
 
 const token = process.env.LEE_TOKEN;
 
@@ -42,6 +42,7 @@ module.exports = {
       client.once(Events.ClientReady, async (readyClient) => {
         console.log(`[lee.js:53] Ready! Logged in as ${readyClient.user.tag}`);
         require("./scripts/deploy-commands");
+        await status(client);
       });
 
       client.commands = new Collection();

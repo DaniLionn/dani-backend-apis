@@ -21,11 +21,14 @@ module.exports = {
     const emoji1 = interaction.options.getString("emoji1");
     const emoji2 = interaction.options.getString("emoji2");
     download(
-      `https://emk.now.sh/s/${emoji1}_${emoji2}?size=128`,
+      `https://emk.now.sh/s/${emoji1}_${emoji2}?size=256`,
       "./temp",
       "emojiMix.png",
     ).then(async (filePath) => {
-      await interaction.reply({ files: [filePath] });
+      await interaction.reply({
+        content: `${emoji1} ➕ ${emoji2}`,
+        files: [filePath],
+      });
       await fs.promises.unlink(filePath);
     });
   },
