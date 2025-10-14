@@ -42,5 +42,6 @@ module.exports = {
   "get/scripts/wiirpc": async function (req, res) {
     const game = req.query.game;
     console.log(game);
+    res.status(200).send("Ok!");
   },
 };
