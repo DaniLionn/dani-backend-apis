@@ -13,6 +13,17 @@ const randomStatuses = [
   ],
   [ActivityType.Listening, "to 🪵"],
   [ActivityType.Custom, "i am lee bot"],
+  [
+    ActivityType.Custom,
+    "i fall asleep to the sound of a dial up modem dialing",
+  ],
+  [ActivityType.Competing, "in the biggest fart competition"],
+  [ActivityType.Watching, "air"],
+  [ActivityType.Custom, "hello world"],
+  [
+    ActivityType.Custom,
+    '"im gay!" "im straight!" ok??? im thinking miku??? miku??? oo ee oo???',
+  ],
 ];
 
 exports.download = async function (url, dir, name) {
