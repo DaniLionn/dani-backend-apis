@@ -128,7 +128,7 @@ module.exports = {
         }
 
         if (message.channel.id === "1417504755319701644") {
-          if (message.content.includes("f")) {
+          if (message.content.toLowerCase().includes("f")) {
             await message.delete();
             message.channel.send({
               content: `<@${message.author.id}> You broke the "replace f with ph" rule! Did you mean to say "${message.content.replaceAll("f", "ph")}"?`,
