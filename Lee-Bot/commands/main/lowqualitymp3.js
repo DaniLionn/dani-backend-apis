@@ -36,7 +36,7 @@ module.exports = {
       mp3Attachment.name,
     );
 
-    const ffmpegProcess = spawn("bin/ffmpeg/ffmpeg", [
+    const ffmpegProcess = spawn("ffmpeg", [
       "-i",
       downloadedMP3,
       "-y",
