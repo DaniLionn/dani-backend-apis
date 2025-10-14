@@ -10,24 +10,21 @@ module.exports = {
     if (!interaction.deferred) {
       await interaction.deferReply();
     }
-    async function obtainName() {
-      await axios
-        .get("https://randomuser.me/api/", {
-          headers: {
-            Accept: "application/json",
-          },
-        })
-        .then(async (response) => {
-          const nameData = response.data;
-          console.log(
-            nameData.results[0].name,
-            `${nameData.results[0].name.first} ${nameData[0].results.name.last}`,
-          );
-          await interaction.editReply(
-            `${nameData.results[0].name.first} ${nameData[0].results.name.last}`,
-          );
-        });
-    }
-    obtainName();
+    await axios
+      .get("https://randomuser.me/api/", {
+        headers: {
+          Accept: "application/json",
+        },
+      })
+      .then(async (response) => {
+        const nameData = response.data;
+        console.log(
+          nameData.results[0].name,
+          `${nameData.results[0].name.first} ${nameData[0].results.name.last}`,
+        );
+        await interaction.editReply(
+          `${nameData.results[0].name.first} ${nameData[0].results.name.last}`,
+        );
+      });
   },
 };

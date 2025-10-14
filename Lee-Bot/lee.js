@@ -93,7 +93,7 @@ module.exports = {
           // Safe write to file
           try {
             await fsPromises.writeFile(
-              "./temp/errorDetails.txt",
+              "./Lee-Bot/temp/errorDetails.txt",
               "Error Details:\n" +
                 (error?.stack || error?.message || String(error)),
             );
@@ -106,7 +106,7 @@ module.exports = {
             const response = {
               content:
                 "There was an error while executing this command!\n(Don't worry if you don't understand this, this is just here for debugging purposes.)",
-              files: ["./temp/errorDetails.txt"],
+              files: ["./Lee-Bot/temp/errorDetails.txt"],
             };
 
             if (interaction.replied || interaction.deferred) {
@@ -120,19 +120,12 @@ module.exports = {
 
           // Safe file cleanup
           try {
-            await fsPromises.unlink("./temp/errorDetails.txt");
+            await fsPromises.unlink("./Lee-Bot/temp/errorDetails.txt");
           } catch (fsDeleteError) {
             console.error(
               "Failed to delete error details file:",
               fsDeleteError,
             );
-          }
-        } finally {
-          // Always write stats, but catch if it fails
-          try {
-            await writeStats("commands_executed", 1);
-          } catch (statsError) {
-            console.error("Failed to write command stats:", statsError);
           }
         }
       });
