@@ -31,10 +31,7 @@ module.exports = {
 
     const originalSize = (await fs.stat(downloadedMP3)).size;
 
-    const outputPath = path.join(
-      process.env.LEE_ROOT_FOLDER,
-      mp3Attachment.name,
-    );
+    const outputPath = path.join(__dirname, mp3Attachment.name);
 
     const ffmpegProcess = spawn("ffmpeg", [
       "-i",
