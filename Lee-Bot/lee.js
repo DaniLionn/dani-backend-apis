@@ -89,7 +89,10 @@ module.exports = {
         try {
           await command.execute(interaction);
         } catch (error) {
-          console.error("Command execution error:", error);
+          console.error(
+            "Command execution error:",
+            error?.stack || error?.message || String(error),
+          );
           // Safe write to file
           try {
             await fsPromises.writeFile(
@@ -199,9 +202,15 @@ module.exports = {
     try {
       main();
     } catch (err) {
-      console.error("[lee.js:257] " + err);
+      console.error(
+        "[lee.js:257] " + err?.stack || err?.message || String(err),
+      );
       fsPromises
-        .writeFile("./Lee-Bot/temp/errorDetails.txt", err, "utf-8")
+        .writeFile(
+          "./Lee-Bot/temp/errorDetails.txt",
+          err?.stack || err?.message || String(err),
+          "utf-8",
+        )
         .then(async () => {
           await lastChannel.send({
             content: "An error occured!",

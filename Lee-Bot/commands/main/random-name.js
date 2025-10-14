@@ -21,10 +21,10 @@ module.exports = {
       .then(async (response) => {
         console.log("[random-name.js:22] Response received.");
         const nameData = response.data;
-        console.log(
-          nameData.results[0].name,
-          `${nameData.results[0].name.first} ${nameData[0].results.name.last}`,
-        );
+        // console.log(
+        //   nameData.results[0].name,
+        //   `${nameData.results[0].name.first} ${nameData[0].results.name.last}`,
+        // );
         await interaction.editReply(
           `${nameData.results[0].name.first} ${nameData[0].results.name.last}`,
         );
