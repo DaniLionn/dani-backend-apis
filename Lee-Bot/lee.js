@@ -123,6 +123,11 @@ module.exports = {
       });
 
       client.on(Events.MessageCreate, async (message) => {
+        if (message.channel.id === "1427756885154598973") {
+          if (message.author.bot && message.author.id !== client.user.id) {
+            await message.delete();
+          }
+        }
         if (message.author.bot) {
           return;
         }
