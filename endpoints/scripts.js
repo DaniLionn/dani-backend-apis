@@ -52,10 +52,8 @@ module.exports = {
     await websiteHook.send(game.toString());
     res.status(200).send("Ok!");
   },
-  "get/scripts/wiirpc-read": async function (req, res) {
-    const game = fs
-      .readFileSync(path.join(process.env.ROOT_DIR, "game_id.txt"))
-      .toString();
-    res.status(200).send(game);
+  "get/scripts/wiirpc-reset": async function (req, res) {
+    await websiteHook.send("RESET");
+    res.status(200).send("Ok!");
   },
 };
