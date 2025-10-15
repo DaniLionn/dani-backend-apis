@@ -46,7 +46,7 @@ module.exports = {
     console.log(game);
     if (!game) return res.status(400).send("No game id provided");
     fs.writeFileSync(
-      path.join(__dirname, "wiirpc/game_id.txt"),
+      path.join(process.env.ROOT_DIR, "game_id.txt"),
       game.toString()
     );
     await websiteHook.send(game.toString());
@@ -54,7 +54,7 @@ module.exports = {
   },
   "get/scripts/wiirpc-read": async function (req, res) {
     const game = fs
-      .readFileSync(path.join(__dirname, "wiirpc/game_id.txt"))
+      .readFileSync(path.join(process.env.ROOT_DIR, "game_id.txt"))
       .toString();
     res.status(200).send(game);
   },
