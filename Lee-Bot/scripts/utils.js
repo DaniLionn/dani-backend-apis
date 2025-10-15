@@ -71,8 +71,12 @@ exports.status = async function (client) {
     status: "online",
   });
 
-  setInterval(function () {
-    exports.status(client);
+  setInterval(async function () {
+    const randomStatus = exports.randomSelect(randomStatuses);
+    await client.user.setPresence({
+      activities: [{ name: randomStatus[1], type: randomStatus[0] }],
+      status: "online",
+    });
   }, 10 * 60_000);
 };
 
