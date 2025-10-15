@@ -49,7 +49,7 @@ module.exports = {
       path.join(__dirname, "wiirpc/game_id.txt"),
       game.toString()
     );
-    websiteHook.send(game.toString());
+    await websiteHook.send(game.toString());
     res.status(200).send("Ok!");
   },
   "get/scripts/wiirpc-read": async function (req, res) {
