@@ -49,17 +49,13 @@ module.exports = {
       path.join(__dirname, "wiirpc/game_id.txt"),
       game.toString()
     );
+    websiteHook.send(game.toString());
     res.status(200).send("Ok!");
   },
   "get/scripts/wiirpc-read": async function (req, res) {
-    const game = req.query.game_id;
-    console.log(game);
-    if (!game) return res.status(400).send("No game id provided");
-    fs.writeFileSync(
-      path.join(__dirname, "wiirpc/game_id.txt"),
-      game.toString()
-    );
-    websiteHook.send(game.toString());
-    res.status(200).send("Ok!");
+    const game = fs
+      .readFileSync(path.join(__dirname, "wiirpc/game_id.txt"))
+      .toString();
+    res.status(200).send(game);
   },
 };
