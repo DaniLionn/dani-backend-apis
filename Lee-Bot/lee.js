@@ -7,6 +7,7 @@ const {
   Events,
   GatewayIntentBits,
   AttachmentBuilder,
+  ActivityType,
 } = require("discord.js");
 const { download, status } = require("./scripts/utils");
 
