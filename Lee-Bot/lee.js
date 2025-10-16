@@ -42,10 +42,10 @@ var randomStatuses = [
     ActivityType.Custom,
     "i fall asleep to the sound of a dial up modem dialing",
   ],
-  [ActivityType.Competing, "in the biggest fart competition (and winning)"],
+  [ActivityType.Competing, "the biggest fart competition (and winning)"],
   [
     ActivityType.Competing,
-    `in the biggest fart competition (and losing to PLACEHOLDER)`,
+    `the biggest fart competition (and losing to PLACEHOLDER)`,
   ],
   [ActivityType.Watching, "air"],
   [ActivityType.Custom, "hello world"],
@@ -66,7 +66,7 @@ module.exports = {
         async function setStatus() {
           const randomStatus = randomSelect(randomStatuses);
           if (randomStatus === randomStatuses[9]) {
-            randomStatus[1] = `in the biggest fart competition (and losing to ${await randomUser(client).user.displayName})`;
+            randomStatus[1] = `the biggest fart competition (and losing to ${await randomUser(client).user.displayName})`;
           }
           client.user.setPresence({
             activities: [{ name: randomStatus[1], type: randomStatus[0] }],
