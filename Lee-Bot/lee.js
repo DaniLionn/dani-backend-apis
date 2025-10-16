@@ -9,7 +9,7 @@ const {
   AttachmentBuilder,
   ActivityType,
 } = require("discord.js");
-const { download, status } = require("./scripts/utils");
+const { download, status, randomSelect } = require("./scripts/utils");
 
 const token = process.env.LEE_TOKEN;
 
@@ -19,6 +19,7 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.MessageContent,
     GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMembers,
   ],
 });
 var randomStatuses = [
@@ -37,10 +38,7 @@ var randomStatuses = [
     "i fall asleep to the sound of a dial up modem dialing",
   ],
   [ActivityType.Competing, "in the biggest fart competition (and winning)"],
-  [
-    ActivityType.Competing,
-    `in the biggest fart competition (and losing to ${client.users.cache.random().displayName})`,
-  ],
+  [ActivityType.Competing, `in the biggest fart competition (and losing to )`],
   [ActivityType.Watching, "air"],
   [ActivityType.Custom, "hello world"],
   [
@@ -58,15 +56,23 @@ module.exports = {
 
       client.once(Events.ClientReady, async (readyClient) => {
         async function setStatus() {
-          console.log(randomStatuses[9]);
+          async function randomUser() {
+            const server = client.guilds.cache.random();
+            const members = await server.members.fetch();
+            const member = members.random();
+            return member.user.displayName;
+          }
+
           randomStatuses[9] = [
             ActivityType.Competing,
-            `in the biggest fart competition (and losing to ${client.users.cache.random().displayName})`,
+            `in the biggest fart competition (and losing to ${await randomUser()})`,
           ];
 
-          const randomStatus = exports.randomSelect(randomStatuses);
+          console.log(randomStatuses[9]);
 
-          await client.user.setPresence({
+          const randomStatus = randomSelect(randomStatuses);
+
+          client.user.setPresence({
             activities: [{ name: randomStatus[1], type: randomStatus[0] }],
             status: "online",
           });
@@ -74,7 +80,7 @@ module.exports = {
 
         console.log(`[lee.js:53] Ready! Logged in as ${readyClient.user.tag}`);
         require("./scripts/deploy-commands");
-        await setstStatus();
+        await setStatus();
         setInterval(setStatus, 10 * 60_000);
       });
 

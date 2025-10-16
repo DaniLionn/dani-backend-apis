@@ -43,7 +43,7 @@ exports.downloadAlt = async function (url, dir) {
 exports.status = async function (client) {};
 
 exports.randomSelect = function (array) {
-  return array[Math.floor(Math.random() * randomStatuses.length)];
+  return array[Math.floor(Math.random() * array.length)];
 };
 
 exports.loadCommands = async function (client) {
