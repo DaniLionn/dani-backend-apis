@@ -14,6 +14,7 @@ const {
   status,
   randomSelect,
   randomUser,
+  random,
 } = require("./scripts/utils");
 
 const token = process.env.LEE_TOKEN;
@@ -77,7 +78,7 @@ module.exports = {
         console.log(`[lee.js:74] Ready! Logged in as ${readyClient.user.tag}`);
         require("./scripts/deploy-commands");
         await setStatus();
-        setInterval(setStatus, 10 * 60_000);
+        setInterval(setStatus, 5 * 60_000);
       });
 
       client.commands = new Collection();
