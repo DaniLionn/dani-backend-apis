@@ -46,12 +46,13 @@ exports.randomSelect = function (array) {
   return array[Math.floor(Math.random() * array.length)];
 };
 exports.randomUser = async function (client, serverId) {
+  // If serverId is provided, fetch from that server; otherwise, pick a random server
   const server =
     (serverId != undefined && client.guilds.cache.get(serverId)) ||
     client.guilds.cache.random();
   const members = await server.members.fetch();
   const member = members.random();
-  return member.user.displayName;
+  return member;
 };
 exports.loadCommands = async function (client) {
   client.commands = new Collection();
