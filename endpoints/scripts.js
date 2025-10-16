@@ -43,7 +43,7 @@ module.exports = {
   },
   "get/scripts/wiirpc-register": async function (req, res) {
     const game = req.query.game_id;
-    console.log(game);
+    console.log("Started playing game!", game);
     if (!game) return res.status(400).send("No game id provided");
     fs.writeFileSync(
       path.join(process.env.ROOT_DIR, "game_id.txt"),
@@ -55,5 +55,12 @@ module.exports = {
   "get/scripts/wiirpc-reset": async function (req, res) {
     await websiteHook.send("RESET");
     res.status(200).send("Ok!");
+  },
+  "get/scripts/wiirpc-read": async function (req, res) {
+    const info = fs.readFileSync(
+      path.join(process.env.ROOT_DIR, "game_id.txt"),
+      "utf-8"
+    );
+    res.status(200).send(info);
   },
 };
