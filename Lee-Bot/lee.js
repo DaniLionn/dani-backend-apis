@@ -57,7 +57,7 @@ const leedir = process.env.LEE_ROOT_DIR;
 module.exports = {
   startLee: function () {
     async function main() {
-      console.log("[lee.js:32] Starting lee bot!");
+      console.log("[lee.js:60] Starting lee bot!");
 
       client.once(Events.ClientReady, async (readyClient) => {
         async function setStatus() {
@@ -71,7 +71,7 @@ module.exports = {
           });
         }
 
-        console.log(`[lee.js:53] Ready! Logged in as ${readyClient.user.tag}`);
+        console.log(`[lee.js:74] Ready! Logged in as ${readyClient.user.tag}`);
         require("./scripts/deploy-commands");
         await setStatus();
         setInterval(setStatus, 10 * 60_000);
@@ -97,7 +97,7 @@ module.exports = {
             client.commands.set(command.data.name, command);
           } else {
             console.log(
-              `[lee.js:93] [WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`,
+              `[lee.js:100] [WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`,
             );
           }
         }
@@ -235,7 +235,7 @@ module.exports = {
       try {
         if (!fs.existsSync(tempDirPath)) {
           fs.mkdirSync(tempDirPath, { recursive: true });
-          console.log("[lee.js:217]created temp directory!");
+          console.log("[lee.js:238]created temp directory!");
         }
       } catch (err) {
         console.error("Failed to create temp directory:", err);
@@ -255,7 +255,7 @@ module.exports = {
       main();
     } catch (err) {
       console.error(
-        "[lee.js:257] " + err?.stack || err?.message || String(err),
+        "[lee.js:258] " + err?.stack || err?.message || String(err),
       );
       fsPromises
         .writeFile(
