@@ -63,15 +63,10 @@ module.exports = {
             return member.user.displayName;
           }
 
-          randomStatuses[9] = [
-            ActivityType.Competing,
-            `in the biggest fart competition (and losing to ${await randomUser()})`,
-          ];
-
-          console.log(randomStatuses[9]);
-
-          const randomStatus = randomSelect(randomStatuses);
-
+          const randomStatus = randomSelect(randomStatuses); //randomSelect(randomStatuses);
+          if (randomStatus === randomStatuses[9]) {
+            randomStatus[1] = `in the biggest fart competition (and losing to ${await randomUser()})`;
+          }
           client.user.setPresence({
             activities: [{ name: randomStatus[1], type: randomStatus[0] }],
             status: "online",
