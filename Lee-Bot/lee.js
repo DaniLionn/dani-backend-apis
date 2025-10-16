@@ -9,7 +9,12 @@ const {
   AttachmentBuilder,
   ActivityType,
 } = require("discord.js");
-const { download, status, randomSelect } = require("./scripts/utils");
+const {
+  download,
+  status,
+  randomSelect,
+  randomUser,
+} = require("./scripts/utils");
 
 const token = process.env.LEE_TOKEN;
 
@@ -56,16 +61,9 @@ module.exports = {
 
       client.once(Events.ClientReady, async (readyClient) => {
         async function setStatus() {
-          async function randomUser() {
-            const server = client.guilds.cache.random();
-            const members = await server.members.fetch();
-            const member = members.random();
-            return member.user.displayName;
-          }
-
           const randomStatus = randomSelect(randomStatuses); //randomSelect(randomStatuses);
           if (randomStatus === randomStatuses[9]) {
-            randomStatus[1] = `in the biggest fart competition (and losing to ${await randomUser()})`;
+            randomStatus[1] = `in the biggest fart competition (and losing to ${await randomUser(client)})`;
           }
           client.user.setPresence({
             activities: [{ name: randomStatus[1], type: randomStatus[0] }],
