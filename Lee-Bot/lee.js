@@ -61,7 +61,7 @@ module.exports = {
 
       client.once(Events.ClientReady, async (readyClient) => {
         async function setStatus() {
-          const randomStatus = randomSelect(randomStatuses); //randomSelect(randomStatuses);
+          const randomStatus = randomSelect(randomStatuses);
           if (randomStatus === randomStatuses[9]) {
             randomStatus[1] = `in the biggest fart competition (and losing to ${await randomUser(client)})`;
           }
