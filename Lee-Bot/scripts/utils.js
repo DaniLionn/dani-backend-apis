@@ -3,30 +3,6 @@ const path = require("node:path");
 const { Collection, ActivityType } = require("discord.js");
 const { Downloader } = require("nodejs-file-downloader");
 
-const randomStatuses = [
-  [ActivityType.Playing, "Lee Wars 2007"],
-  [
-    ActivityType.Competing,
-    "hottest bot championships " + new Date().getFullYear(),
-  ],
-  [ActivityType.Listening, "🪵"],
-  [ActivityType.Playing, "🪵"],
-  [ActivityType.Competing, "🪵"],
-  [ActivityType.Custom, "🪵"],
-  [ActivityType.Custom, "i am lee bot"],
-  [
-    ActivityType.Custom,
-    "i fall asleep to the sound of a dial up modem dialing",
-  ],
-  [ActivityType.Competing, "in the biggest fart competition"],
-  [ActivityType.Watching, "air"],
-  [ActivityType.Custom, "hello world"],
-  [
-    ActivityType.Custom,
-    "is it just me or is it hot in here? *fade to picture of carrot*",
-  ],
-];
-
 exports.download = async function (url, dir, name) {
   if (!dir) {
     dir = path.join(process.env.LEE_ROOT_DIR, "temp");
@@ -64,21 +40,7 @@ exports.downloadAlt = async function (url, dir) {
   return (await downloader.download()).filePath;
 };
 
-exports.status = async function (client) {
-  const randomStatus = exports.randomSelect(randomStatuses);
-  await client.user.setPresence({
-    activities: [{ name: randomStatus[1], type: randomStatus[0] }],
-    status: "online",
-  });
-
-  setInterval(async function () {
-    const randomStatus = exports.randomSelect(randomStatuses);
-    await client.user.setPresence({
-      activities: [{ name: randomStatus[1], type: randomStatus[0] }],
-      status: "online",
-    });
-  }, 10 * 60_000);
-};
+exports.status = async function (client) {};
 
 exports.randomSelect = function (array) {
   return array[Math.floor(Math.random() * randomStatuses.length)];

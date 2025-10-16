@@ -20,6 +20,33 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
   ],
 });
+var randomStatuses = [
+  [ActivityType.Playing, "Lee Wars 2007"],
+  [
+    ActivityType.Competing,
+    "hottest bot championships " + new Date().getFullYear(),
+  ],
+  [ActivityType.Listening, "🪵"],
+  [ActivityType.Playing, "🪵"],
+  [ActivityType.Competing, "🪵"],
+  [ActivityType.Custom, "🪵"],
+  [ActivityType.Custom, "i am lee bot"],
+  [
+    ActivityType.Custom,
+    "i fall asleep to the sound of a dial up modem dialing",
+  ],
+  [ActivityType.Competing, "in the biggest fart competition (and winning)"],
+  [
+    ActivityType.Competing,
+    `in the biggest fart competition (and losing to ${client.users.cache.random().displayName})`,
+  ],
+  [ActivityType.Watching, "air"],
+  [ActivityType.Custom, "hello world"],
+  [
+    ActivityType.Custom,
+    "is it just me or is it hot in here? *fade to picture of carrot*",
+  ],
+];
 
 const leedir = process.env.LEE_ROOT_DIR;
 
@@ -29,9 +56,25 @@ module.exports = {
       console.log("[lee.js:32] Starting lee bot!");
 
       client.once(Events.ClientReady, async (readyClient) => {
+        async function setStatus() {
+          console.log(randomStatuses[9]);
+          randomStatuses[9] = [
+            ActivityType.Competing,
+            `in the biggest fart competition (and losing to ${client.users.cache.random().displayName})`,
+          ];
+
+          const randomStatus = exports.randomSelect(randomStatuses);
+
+          await client.user.setPresence({
+            activities: [{ name: randomStatus[1], type: randomStatus[0] }],
+            status: "online",
+          });
+        }
+
         console.log(`[lee.js:53] Ready! Logged in as ${readyClient.user.tag}`);
         require("./scripts/deploy-commands");
-        await status(client);
+        await setstStatus();
+        setInterval(setStatus, 10 * 60_000);
       });
 
       client.commands = new Collection();
