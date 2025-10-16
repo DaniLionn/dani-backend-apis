@@ -43,7 +43,7 @@ module.exports = {
   },
   "get/scripts/wiirpc-register": async function (req, res) {
     const game = req.query.game_id;
-    console.log("Started playing game!", game);
+    console.log("Started playing game!", game || "No game id provided");
     if (!game) return res.status(400).send("No game id provided");
     fs.writeFileSync(
       path.join(process.env.ROOT_DIR, "game_id.txt"),
