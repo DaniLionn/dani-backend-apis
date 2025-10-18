@@ -181,8 +181,8 @@ module.exports = {
 
         if (message.channel.id === "1417504755319701644") {
           if (
-            message.content.toLowerCase().includes("f") &&
-            !message.beginsWith("http://") &&
+            (message.content.toLowerCase().includes("f") &&
+              !message.beginsWith("http://")) ||
             !message.beginsWith("https://")
           ) {
             await message.delete();
