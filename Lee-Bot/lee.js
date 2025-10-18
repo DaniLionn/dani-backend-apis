@@ -28,12 +28,11 @@ const client = new Client({
     GatewayIntentBits.GuildMembers,
   ],
 });
+const currentYear = new Date().getFullYear();
+
 var randomStatuses = [
   [ActivityType.Playing, "Lee Wars 2007"],
-  [
-    ActivityType.Competing,
-    "hottest bot championships " + new Date().getFullYear(),
-  ],
+  [ActivityType.Competing, "hottest bot championships " + currentYear],
   [ActivityType.Listening, "🪵"],
   [ActivityType.Playing, "🪵"],
   [ActivityType.Competing, "🪵"],
@@ -43,10 +42,13 @@ var randomStatuses = [
     ActivityType.Custom,
     "i fall asleep to the sound of a dial up modem dialing",
   ],
-  [ActivityType.Competing, "the biggest fart competition (and winning)"],
   [
     ActivityType.Competing,
-    `the biggest fart competition (and losing to PLACEHOLDER)`,
+    `the biggest fart competition ${currentYear} (and winning 😄)`,
+  ],
+  [
+    ActivityType.Competing,
+    `the biggest fart competition ${currentYear} (and losing to PLACEHOLDER)`,
   ],
   [ActivityType.Listening, "the voices"],
   [ActivityType.Custom, "hello world"],
@@ -67,7 +69,7 @@ module.exports = {
         async function setStatus() {
           const randomStatus = randomSelect(randomStatuses);
           if (randomStatus === randomStatuses[9]) {
-            randomStatus[1] = `the biggest fart competition (and losing to ${await randomUser(client).user.displayName})`;
+            randomStatus[1] = `the biggest fart competition ${currentYear} (and losing to ${await randomUser(client).user.displayName})`;
           }
           client.user.setPresence({
             activities: [{ name: randomStatus[1], type: randomStatus[0] }],
