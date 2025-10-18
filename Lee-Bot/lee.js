@@ -61,7 +61,7 @@ const leedir = process.env.LEE_ROOT_DIR;
 module.exports = {
   startLee: function () {
     async function main() {
-      console.log("[lee.js:60] Starting lee bot!");
+      console.log("[lee.js:64] Starting lee bot!");
 
       client.once(Events.ClientReady, async (readyClient) => {
         async function setStatus() {
@@ -180,7 +180,11 @@ module.exports = {
         }
 
         if (message.channel.id === "1417504755319701644") {
-          if (message.content.toLowerCase().includes("f")) {
+          if (
+            message.content.toLowerCase().includes("f") &&
+            !message.beginsWith("http://") &&
+            !message.beginsWith("https://")
+          ) {
             await message.delete();
             // Replace all 'f' and 'F' with 'ph' or 'Ph' depending on case
             let isAllCaps = message.content === message.content.toUpperCase();
