@@ -33,9 +33,6 @@ const currentYear = new Date().getFullYear();
 var randomStatuses = [
   [ActivityType.Playing, "Lee Wars 2007"],
   [ActivityType.Competing, "hottest bot championships " + currentYear],
-  [ActivityType.Listening, "🪵"],
-  [ActivityType.Playing, "🪵"],
-  [ActivityType.Competing, "🪵"],
   [ActivityType.Custom, "🪵"],
   [ActivityType.Custom, "i am lee bot"],
   [
@@ -51,7 +48,6 @@ var randomStatuses = [
     `the biggest fart competition ${currentYear} (and losing to PLACEHOLDER)`,
   ],
   [ActivityType.Listening, "the voices"],
-  [ActivityType.Custom, "hello world"],
   [
     ActivityType.Custom,
     "is it just me or is it hot in here? *fade to picture of carrot*",
@@ -68,15 +64,14 @@ module.exports = {
       client.once(Events.ClientReady, async (readyClient) => {
         async function setStatus() {
           const randomStatus = randomSelect(randomStatuses);
-          if (randomStatus === randomStatuses[9]) {
-            randomStatus[1] = randomStatuses[9][1].replace(
+          if (randomStatus === randomStatuses[6]) {
+            randomStatus[1] = randomStatuses[6][1].replace(
               "PLACEHOLDER",
               await randomUser(client).user.displayName,
             );
           }
           client.user.setPresence({
             activities: [{ name: randomStatus[1], type: randomStatus[0] }],
-            status: "online",
           });
         }
 
