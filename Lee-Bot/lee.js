@@ -48,7 +48,7 @@ var randomStatuses = [
     ActivityType.Competing,
     `the biggest fart competition (and losing to PLACEHOLDER)`,
   ],
-  [ActivityType.Watching, "air"],
+  [ActivityType.Listening, "the voices"],
   [ActivityType.Custom, "hello world"],
   [
     ActivityType.Custom,
