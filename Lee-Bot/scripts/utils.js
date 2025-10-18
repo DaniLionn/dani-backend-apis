@@ -1,6 +1,6 @@
 const fs = require("node:fs");
 const path = require("node:path");
-const { Collection, ActivityType } = require("discord.js");
+const { Collection } = require("discord.js");
 const { Downloader } = require("nodejs-file-downloader");
 
 exports.download = async function (url, dir, name) {
@@ -40,8 +40,6 @@ exports.downloadAlt = async function (url, dir) {
   return (await downloader.download()).filePath;
 };
 
-exports.status = async function (client) {};
-
 exports.randomSelect = function (array) {
   return array[Math.floor(Math.random() * array.length)];
 };
@@ -51,13 +49,13 @@ exports.random = function (min, max) {
 };
 
 exports.randomUser = async function (client, serverId) {
-  // If serverId is provided, fetch from that server; otherwise, pick a random server
   const server =
     (serverId != undefined && client.guilds.cache.get(serverId)) ||
     client.guilds.cache.random();
   const members = await server.members.fetch();
   const member = members.random();
-  return member;
+  const user = member.user;
+  return user;
 };
 exports.loadCommands = async function (client) {
   client.commands = new Collection();

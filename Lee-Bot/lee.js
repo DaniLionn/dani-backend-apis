@@ -1,5 +1,4 @@
 const fs = require("node:fs");
-const fsPromises = require("node:fs").promises;
 const path = require("node:path");
 const {
   Client,
@@ -9,13 +8,7 @@ const {
   AttachmentBuilder,
   ActivityType,
 } = require("discord.js");
-const {
-  download,
-  status,
-  randomSelect,
-  randomUser,
-  random,
-} = require("./scripts/utils");
+const { download, randomSelect, randomUser } = require("./scripts/utils");
 
 const token = process.env.LEE_TOKEN;
 
@@ -67,7 +60,7 @@ module.exports = {
           if (randomStatus === randomStatuses[6]) {
             randomStatus[1] = randomStatuses[6][1].replace(
               "PLACEHOLDER",
-              await randomUser(client).user.displayName,
+              await randomUser(client).displayName,
             );
           }
           client.user.setPresence({
@@ -131,7 +124,7 @@ module.exports = {
           );
 
           try {
-            await fsPromises.writeFile(
+            await fs.promises.writeFile(
               path.join(leedir, "temp/errorDetails.txt"),
               "Error Details:\n" +
                 (error?.stack || error?.message || String(error)),
@@ -157,7 +150,9 @@ module.exports = {
           }
 
           try {
-            await fsPromises.unlink(path.join(leedir, "temp/errorDetails.txt"));
+            await fs.promises.unlink(
+              path.join(leedir, "temp/errorDetails.txt"),
+            );
           } catch (fsDeleteError) {
             console.error(
               "Failed to delete error details file:",
@@ -211,10 +206,10 @@ module.exports = {
 
           attachmentsGrab.forEach(async (attachment) => {
             console.log(attachment);
-            await download(attachment.url).then((path) => {
+            await download(attachment.url).then(async (path) => {
               attachmentsSend[attachmentsSend.length + 1] =
-                new AttachmentBuilder(fsPromises.readFile(path));
-              fsPromises.unlink(path);
+                new AttachmentBuilder(await fs.promises.readFile(path));
+              await fs.promises.unlink(path);
             });
           });
           if (message.reference != undefined) {
@@ -265,7 +260,7 @@ module.exports = {
       console.error(
         "[lee.js:258] " + err?.stack || err?.message || String(err),
       );
-      fsPromises
+      fs.promises
         .writeFile(
           path.join(leedir, "temp/errorDetails.txt"),
           err?.stack || err?.message || String(err),
