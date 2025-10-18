@@ -69,7 +69,10 @@ module.exports = {
         async function setStatus() {
           const randomStatus = randomSelect(randomStatuses);
           if (randomStatus === randomStatuses[9]) {
-            randomStatus[1] = `the biggest fart competition ${currentYear} (and losing to ${await randomUser(client).user.displayName})`;
+            randomStatus[1] = randomStatuses[9][1].replace(
+              "PLACEHOLDER",
+              await randomUser(client).user.displayName,
+            );
           }
           client.user.setPresence({
             activities: [{ name: randomStatus[1], type: randomStatus[0] }],
