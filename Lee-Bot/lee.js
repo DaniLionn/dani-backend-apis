@@ -181,10 +181,12 @@ module.exports = {
 
         if (message.channel.id === "1417504755319701644") {
           if (
-            (message.content.toLowerCase().includes("f") &&
-              !message.content.startsWith("http://")) ||
-            !message.content.startsWith("https://")
+            message.content.startsWith("http://") ||
+            message.content.startsWith("https://")
           ) {
+            return;
+          }
+          if (message.content.toLowerCase().includes("f")) {
             await message.delete();
             // Replace all 'f' and 'F' with 'ph' or 'Ph' depending on case
             let isAllCaps = message.content === message.content.toUpperCase();
