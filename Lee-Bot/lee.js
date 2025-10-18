@@ -129,7 +129,7 @@ module.exports = {
             "Command execution error:",
             error?.stack || error?.message || String(error),
           );
-          // Safe write to file
+
           try {
             await fsPromises.writeFile(
               path.join(leedir, "temp/errorDetails.txt"),
@@ -140,7 +140,6 @@ module.exports = {
             console.error("Failed to write error details file:", fsWriteError);
           }
 
-          // Safe interaction response
           try {
             const response = {
               content:
@@ -157,7 +156,6 @@ module.exports = {
             console.error("Failed to reply to interaction:", interactionError);
           }
 
-          // Safe file cleanup
           try {
             await fsPromises.unlink(path.join(leedir, "temp/errorDetails.txt"));
           } catch (fsDeleteError) {
@@ -180,6 +178,7 @@ module.exports = {
         }
 
         if (message.channel.id === "1417504755319701644") {
+          //ignore links
           if (
             message.content.startsWith("http://") ||
             message.content.startsWith("https://")
@@ -188,7 +187,6 @@ module.exports = {
           }
           if (message.content.toLowerCase().includes("f")) {
             await message.delete();
-            // Replace all 'f' and 'F' with 'ph' or 'Ph' depending on case
             let isAllCaps = message.content === message.content.toUpperCase();
             let phixedMessage = message.content.replace(/f/gi, (match) => {
               if (isAllCaps) return "PH";
