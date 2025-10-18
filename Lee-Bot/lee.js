@@ -182,8 +182,8 @@ module.exports = {
         if (message.channel.id === "1417504755319701644") {
           if (
             (message.content.toLowerCase().includes("f") &&
-              !message.beginsWith("http://")) ||
-            !message.beginsWith("https://")
+              !message.content.startsWith("http://")) ||
+            !message.content.startsWith("https://")
           ) {
             await message.delete();
             // Replace all 'f' and 'F' with 'ph' or 'Ph' depending on case
