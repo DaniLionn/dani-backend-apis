@@ -58,9 +58,11 @@ module.exports = {
         async function setStatus() {
           const randomStatus = randomSelect(randomStatuses);
           if (randomStatus === randomStatuses[6]) {
+            const randomGuy = await randomUser(client);
+            console.log(randomGuy);
             randomStatus[1] = randomStatuses[6][1].replace(
               "PLACEHOLDER",
-              await randomUser(client).displayName,
+              randomGuy.displayName || randomGuy.username,
             );
           }
           client.user.setPresence({
