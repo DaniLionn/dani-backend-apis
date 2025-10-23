@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const { getTimestamp } = require("discord-snowflake");
+//const { getTimestamp } = require("discord-snowflake");
 const { getAverageColor } = require("fast-average-color-node");
 module.exports = {
   data: new SlashCommandBuilder()
@@ -9,7 +9,10 @@ module.exports = {
     await interaction.deferReply();
     const embed = new EmbedBuilder();
 
-    var members = interaction.guild.memberCount;
+    var members = await interaction.guild.members.fetch();
+
+    var bots = members.filter((member) => member.user.bot).map().length;
+    var humans = members.length - bots;
 
     getAverageColor(interaction.guild.iconURL()).then(async (color) => {
       embed
@@ -17,7 +20,9 @@ module.exports = {
         .setColor(color.hex)
         .setThumbnail(interaction.guild.iconURL())
         .addFields(
-          { name: "Member Count", value: members.toString() },
+          { name: "Member Count", value: members.length.toString() },
+          { name: "Bot Members", value: bots.toString(), inline: true },
+          { name: "Human Members", value: humans.toString(), inline: true },
           {
             name: "Created",
             value:
