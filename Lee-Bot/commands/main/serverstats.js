@@ -12,6 +12,12 @@ module.exports = {
     const embed = new EmbedBuilder();
 
     const channels = interaction.guild.channels.cache;
+    const textchannels = channels.filter(
+      (c) => c.type === ChannelType.GuildText,
+    );
+    const voicechannels = channels.filter(
+      (c) => c.type === ChannelType.GuildVoice,
+    );
 
     const members = await interaction.guild.members.fetch();
     const bots = members.filter((m) => m.user.bot).size;
@@ -45,16 +51,12 @@ module.exports = {
         },
         {
           name: "Text Channels",
-          value: channels
-            .filter((c) => c.type === ChannelType.GuildText)
-            .size.toString(),
+          value: textchannels.size.toString(),
           inline: true,
         },
         {
           name: "Voice Channels",
-          value: channels
-            .filter((c) => c.type === ChannelType.GuildVoice)
-            .size.toString(),
+          value: voicechannels.size.toString(),
           inline: true,
         },
         {
