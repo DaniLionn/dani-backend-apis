@@ -128,7 +128,7 @@ module.exports = {
             await fs.promises.writeFile(
               path.join(leedir, "temp/errorDetails.txt"),
               "Error Details:\n" +
-                /*error?.stack || error?.message ||*/ String(error),
+                (error?.stack || error?.message || String(error)),
             );
           } catch (fsWriteError) {
             console.error("Failed to write error details file:", fsWriteError);
@@ -258,13 +258,11 @@ module.exports = {
     try {
       main();
     } catch (err) {
-      console.error(
-        "[lee.js:258] " + /*err?.stack || err?.message ||*/ String(err),
-      );
+      console.error("[lee.js:258]", err);
       fs.promises
         .writeFile(
           path.join(leedir, "temp/errorDetails.txt"),
-          /*err?.stack || err?.message ||*/ String(err),
+          err?.stack || err?.message || String(err),
           "utf-8",
         )
         .then(async () => {
