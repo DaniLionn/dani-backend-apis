@@ -181,6 +181,10 @@ module.exports = {
           ) {
             return;
           }
+
+          if (message.content.toLowerCase() === ".fm") {
+            return;
+          }
           if (message.content.toLowerCase().includes("f")) {
             await message.delete();
             let isAllCaps = message.content === message.content.toUpperCase();
