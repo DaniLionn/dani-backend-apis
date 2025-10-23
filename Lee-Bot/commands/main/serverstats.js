@@ -23,6 +23,10 @@ module.exports = {
     const bots = members.filter((m) => m.user.bot).size;
     const humans = members.size - bots;
 
+    const serverOwner = await interaction.guild.members.fetch(
+      interaction.guild.ownerId,
+    );
+
     const iconUrl = interaction.guild.iconURL();
     const defaultColor = "#5865F2"; // Discord blurple fallback
 
@@ -61,9 +65,7 @@ module.exports = {
         },
         {
           name: "Server Owner",
-          value: await interaction.guild.members.fetch(
-            interaction.guild.ownerId,
-          ),
+          value: serverOwner.displayName + " (" + serverOwner.userName + ")",
         },
         {
           name: "Created",
