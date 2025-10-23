@@ -68,6 +68,7 @@ module.exports = {
           value: `<@${interaction.guild.ownerId}>`,
           inline: true,
         },
+        { name: "\u200B", value: "\u200B", inline: true },
         {
           name: "Created",
           value:
