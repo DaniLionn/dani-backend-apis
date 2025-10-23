@@ -6,13 +6,12 @@ module.exports = {
     .setName("server-stats")
     .setDescription("gets stats for the server!"),
   async execute(interaction) {
-    await interaction.deferReply();
+    //await interaction.deferReply();
     const embed = new EmbedBuilder();
 
-    var members = await interaction.guild.members.fetch();
-
-    var bots = members.filter((member) => member.user.bot).size;
-    var humans = members.length - bots;
+    const members = await interaction.guild.members.fetch();
+    const bots = members.filter((m) => m.user.bot).size;
+    const humans = members.size - bots;
 
     getAverageColor(interaction.guild.iconURL()).then(async (color) => {
       embed
