@@ -11,7 +11,7 @@ module.exports = {
 
     var members = await interaction.guild.members.fetch();
 
-    var bots = members.filter((member) => member.user.bot).map().length;
+    var bots = members.filter((member) => member.user.bot).size;
     var humans = members.length - bots;
 
     getAverageColor(interaction.guild.iconURL()).then(async (color) => {
