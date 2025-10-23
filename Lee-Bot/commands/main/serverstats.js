@@ -59,7 +59,9 @@ module.exports = {
         },
         {
           name: "Server Owner",
-          value: interaction.guild.members.fetch(interaction.guild.ownerId),
+          value: await interaction.guild.members.fetch(
+            interaction.guild.ownerId,
+          ),
         },
         {
           name: "Created",
