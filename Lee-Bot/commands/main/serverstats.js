@@ -1,4 +1,8 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const {
+  SlashCommandBuilder,
+  EmbedBuilder,
+  ChannelType,
+} = require("discord.js");
 const { getAverageColor } = require("fast-average-color-node");
 module.exports = {
   data: new SlashCommandBuilder()
@@ -6,6 +10,8 @@ module.exports = {
     .setDescription("gets stats for the server!"),
   async execute(interaction) {
     const embed = new EmbedBuilder();
+
+    const channels = interaction.guild.channels.cache;
 
     const members = await interaction.guild.members.fetch();
     const bots = members.filter((m) => m.user.bot).size;
@@ -33,6 +39,28 @@ module.exports = {
         { name: "Total Members", value: members.size.toString() },
         { name: "Bot Members", value: bots.toString(), inline: true },
         { name: "Human Members", value: humans.toString(), inline: true },
+        {
+          name: "Total Channels",
+          value: channels.size.toString(),
+        },
+        {
+          name: "Text Channels",
+          value: channels
+            .filter((c) => c.type === ChannelType.GuildText)
+            .size.toString(),
+          inline: true,
+        },
+        {
+          name: "Voice Channels",
+          value: channels
+            .filter((c) => c.type === ChannelType.GuildVoice)
+            .size.toString(),
+          inline: true,
+        },
+        {
+          name: "Server Owner",
+          value: interaction.guild.members.fetch(interaction.guild.ownerId),
+        },
         {
           name: "Created",
           value:
