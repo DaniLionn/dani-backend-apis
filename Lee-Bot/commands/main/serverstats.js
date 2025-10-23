@@ -48,12 +48,14 @@ module.exports = {
       .setColor(colorHex)
       .setThumbnail(iconUrl || undefined)
       .addFields(
-        { name: "Total Members", value: members.size.toString() },
+        { name: "Total Members", value: members.size.toString(), inline: true },
         { name: "Bot Members", value: bots.toString(), inline: true },
         { name: "Human Members", value: humans.toString(), inline: true },
+        { name: "\u200B", value: "\u200B" },
         {
           name: "Total Channels",
           value: channels.size.toString(),
+          inline: true,
         },
         {
           name: "Text Channels",
@@ -65,9 +67,10 @@ module.exports = {
           value: voicechannels.size.toString(),
           inline: true,
         },
+        { name: "\u200B", value: "\u200B" },
         {
           name: "Server Owner",
-          value: serverOwner.displayName + " (" + serverOwner.userName + ")",
+          value: serverOwner.displayName + " (" + serverOwner.name + ")",
         },
         {
           name: "Created",
