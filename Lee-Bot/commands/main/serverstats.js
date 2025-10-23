@@ -4,6 +4,7 @@ const {
   ChannelType,
 } = require("discord.js");
 const { getAverageColor } = require("fast-average-color-node");
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("server-stats")
@@ -23,9 +24,10 @@ module.exports = {
     const bots = members.filter((m) => m.user.bot).size;
     const humans = members.size - bots;
 
-    const serverOwner = await interaction.guild.members.fetch(
+    const serverOwner = await interaction.guild.members.cache.get(
       interaction.guild.ownerId,
     );
+    console.log(serverOwner);
 
     const iconUrl = interaction.guild.iconURL();
     const defaultColor = "#5865F2"; // Discord blurple fallback
