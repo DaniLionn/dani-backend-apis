@@ -20,7 +20,7 @@ module.exports = {
         .setColor(color.hex)
         .setThumbnail(interaction.guild.iconURL())
         .addFields(
-          { name: "Member Count", value: members.length.toString() },
+          { name: "Total Members", value: members.length.toString() },
           { name: "Bot Members", value: bots.toString(), inline: true },
           { name: "Human Members", value: humans.toString(), inline: true },
           {
