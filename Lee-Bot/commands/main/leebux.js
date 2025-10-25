@@ -27,6 +27,8 @@ module.exports = {
       data[interaction.user.id] ||
       registerUser(interaction.user.id, interaction.user.username);
 
+    console.log(userData);
+
     let subcommand = interaction.options.getSubcommand();
     if (subcommand === "balance") {
       interaction.reply(
