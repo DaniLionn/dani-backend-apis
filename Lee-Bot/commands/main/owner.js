@@ -8,6 +8,14 @@ module.exports = {
       subcommand.setName("storage").setDescription("disk usage of /var/data"),
     ),
   async execute(interaction) {
+    if (interaction.user.id !== process.env.OWNER_ID) {
+      await interaction.reply({
+        content: "You are not authorized to use this command.",
+        ephemeral: true,
+      });
+      return;
+    }
+
     let subcommand = interaction.options.getSubcommand();
     if (subcommand === "storage") {
       await interaction.deferReply();
