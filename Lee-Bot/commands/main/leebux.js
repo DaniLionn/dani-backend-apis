@@ -39,6 +39,7 @@ module.exports = {
     }
     if (subcommand === "daily") {
       const now = new Date().getTime() / 1000;
+      console.log(now, userData.daily_reset);
       if (now >= userData.daily_reset) {
         userData.daily_reset = now + 86400;
         userData.leebux += 300;
@@ -47,6 +48,7 @@ module.exports = {
         await interaction.reply("Daily 300 :leebux: obtained!");
       } else {
         const diff = userData.daily_reset - now;
+        console.log(diff);
         await interaction.reply(
           "You've already redeemed your daily LeeBux! You have " +
             new Date(diff * 1000).toISOString().substring(11, 16) +
