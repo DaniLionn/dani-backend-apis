@@ -90,6 +90,9 @@ exports.readUserData = function () {
   const data = fs.readFileSync("/var/data/userdata.json", "utf8");
   return JSON.parse(data);
 };
-exports.writeUserData = function (data) {
-  fs.writeFileSync("/var/data/userdata.json", JSON.stringify(data));
+exports.writeUserData = function (data, id) {
+  var read = fs.readFileSync("/var/data/userdata.json", "utf8");
+
+  read[id] = data;
+  fs.writeFileSync("/var/data/userdata.json", JSON.stringify(read));
 };

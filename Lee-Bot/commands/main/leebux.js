@@ -17,13 +17,13 @@ module.exports = {
       data[id] = {
         username: username,
         leebux: 0,
-        last_daily: 0,
+        daily_reset: 0,
       };
-      writeUserData(data);
+      writeUserData(data[id], id);
       return data[id];
     }
 
-    const userData =
+    var userData =
       data[interaction.user.id] ||
       registerUser(interaction.user.id, interaction.user.username);
 
@@ -35,6 +35,24 @@ module.exports = {
           userData.leebux +
           " :leebux:",
       );
+      return;
+    }
+    if (subcommand === "daily") {
+      const now = new Date().getTime() / 1000;
+      if (now >= userData.daily_reset) {
+        userData.daily_reset = now + 86400;
+        userData.leebux += 300;
+        console.log(userData);
+        writeUserData(userData, id);
+        await interaction.reply("Daily 300 :leebux: obtained!");
+      } else {
+        const diff = userData.daily_reset - now;
+        await interaction.reply(
+          "You've already redeemed your daily LeeBux! You have " +
+            new Date(diff * 1000).toISOString().substring(11, 16) +
+            " remaining until you can redeem again.",
+        );
+      }
     }
   },
 };
