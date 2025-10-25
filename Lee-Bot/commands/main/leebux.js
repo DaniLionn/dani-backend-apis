@@ -84,7 +84,7 @@ module.exports = {
       return;
     }
     if (subcommand === "daily") {
-      const now = new Date().getTime() / 1000;
+      const now = Math.floor(new Date().getTime() / 1000);
       console.log(now, userData.daily_reset);
       if (now >= userData.daily_reset) {
         userData.daily_reset = now + 86400;
