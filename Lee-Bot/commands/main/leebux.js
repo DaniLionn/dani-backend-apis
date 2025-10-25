@@ -11,7 +11,7 @@ module.exports = {
       subcommand.setName("daily").setDescription("daily leebux"),
     ),
   async execute(interaction) {
-    const data = readUserData();
+    var data = readUserData();
 
     function registerUser(id, username) {
       data[id] = {
@@ -20,6 +20,7 @@ module.exports = {
         last_daily: 0,
       };
       writeUserData(data);
+      return data[id];
     }
 
     const userData =
