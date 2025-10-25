@@ -33,7 +33,7 @@ module.exports = {
         interaction.user.username +
           "'s balance: " +
           userData.leebux +
-          " :leebux:",
+          " <:leebux:1431469715586416771>",
       );
       return;
     }
@@ -45,7 +45,9 @@ module.exports = {
         userData.leebux += 300;
         console.log(userData);
         writeUserData(userData, id);
-        await interaction.reply("Daily 300 :leebux: obtained!");
+        await interaction.reply(
+          "Daily 300 <:leebux:1431469715586416771> obtained!",
+        );
       } else {
         const diff = userData.daily_reset - now;
         console.log(diff);
