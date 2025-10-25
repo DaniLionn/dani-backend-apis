@@ -55,7 +55,9 @@ module.exports = {
         console.log(diff);
         await interaction.reply(
           "You've already redeemed your daily LeeBux! You have " +
-            new Date(diff * 1000).toISOString().substring(11, 16) +
+            new Date(userData.daily_reset * 1000)
+              .toISOString()
+              .substring(11, 16) +
             " remaining until you can redeem again.",
         );
       }
