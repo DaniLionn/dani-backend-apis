@@ -79,7 +79,9 @@ module.exports = {
       const amount = interaction.options.getNumber("amount");
 
       if (userData.leebux < amount) {
-        await interaction.reply("you don't have enough leebux idiot");
+        await interaction.reply(
+          "you don't have enough leebux<:leebux:1431469715586416771>  idiot",
+        );
         return;
       }
 
@@ -88,7 +90,11 @@ module.exports = {
       const win = random >= 0.5;
 
       if (win === true) {
-        await interaction.reply("You bet " + amount + " and flip a coin...");
+        await interaction.reply(
+          "You bet " +
+            amount +
+            "<:leebux:1431469715586416771>  and flip a coin...",
+        );
         setTimeout(async () => {
           await interaction.editReply(
             "You bet " +
