@@ -46,7 +46,7 @@ module.exports = {
         userData.daily_reset = now + 86400;
         userData.leebux += 300;
         console.log(userData);
-        writeUserData(userData, id);
+        writeUserData(userData, interaction.user.id);
         await interaction.reply(
           "Daily 300 <:leebux:1431469715586416771> obtained!",
         );
