@@ -9,6 +9,17 @@ module.exports = {
     )
     .addSubcommand((subcommand) =>
       subcommand.setName("daily").setDescription("daily leebux"),
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("cf")
+        .setDescription("coin flip")
+        .addStringOption((option) =>
+          option
+            .setName("amount")
+            .setDescription("how much you want to bet")
+            .setRequired(true),
+        ),
     ),
   async execute(interaction) {
     var data = readUserData();
@@ -60,6 +71,48 @@ module.exports = {
               .substring(11, 16) +
             " remaining until you can redeem again.",
         );
+      }
+      return;
+    }
+
+    if (subcommand === "cf") {
+      const amount = interaction.options.getNumber("amount");
+
+      if (userData.leebux < amount) {
+        await interaction.reply("you don't have enough leebux idiot");
+        return;
+      }
+
+      const random = Math.random();
+
+      const win = random >= 0.5;
+
+      if (win === true) {
+        await interaction.reply("You bet " + amount + " and flip a coin...");
+        setTimeout(async () => {
+          await interaction.editReply(
+            "You bet " +
+              amount +
+              " and flip a coin...\nAnd it lands on heads! You've won " +
+              amount * 2 +
+              "<:leebux:1431469715586416771>!",
+          );
+          userData.leebux = userData.leebux + amount;
+          writeUserData(userData, interaction.user.id);
+        }, 1500);
+      } else {
+        await interaction.reply("You bet " + amount + " and flip a coin...");
+        setTimeout(async () => {
+          await interaction.editReply(
+            "You bet " +
+              amount +
+              " and flip a coin...\nAnd it lands on tails... You've lost " +
+              amount +
+              "<:leebux:1431469715586416771>...",
+          );
+          userData.leebux = userData.leebux - amount;
+          writeUserData(userData, interaction.user.id);
+        }, 1500);
       }
     }
   },
