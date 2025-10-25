@@ -24,9 +24,7 @@ module.exports = {
     .addSubcommand((subcommand) =>
       subcommand
         .setName("weird-coin-flip")
-        .setDescription(
-          "coin flip but the coin likes to land on heads more often. you earn less leebux if you win because of this",
-        )
+        .setDescription("coin flip but weird")
         .addNumberOption((option) =>
           option
             .setName("amount")
