@@ -1,4 +1,4 @@
-const { readUserData } = require("../../scripts/utils");
+const { readUserData, writeUserData } = require("../../scripts/utils");
 const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
   data: new SlashCommandBuilder()
@@ -19,6 +19,7 @@ module.exports = {
         leebux: 0,
         last_daily: 0,
       };
+      writeUserData(data);
     }
 
     const userData =
