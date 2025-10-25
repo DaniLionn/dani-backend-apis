@@ -85,3 +85,11 @@ exports.loadCommands = async function (client) {
 exports.deployCommands = function () {
   require("./deploy-commands");
 };
+
+exports.readUserData = function () {
+  const data = fs.readFileSync("/var/data/userdata.json", "utf8");
+  return JSON.parse(data);
+};
+exports.writeUserData = function (data) {
+  fs.writeFileSync("/var/data/userdata.json", JSON.stringify(data));
+};
