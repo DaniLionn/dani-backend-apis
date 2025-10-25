@@ -93,7 +93,7 @@ module.exports = {
           await interaction.editReply(
             "You bet " +
               amount +
-              " and flip a coin...\nAnd it lands on heads! You've won " +
+              "<:leebux:1431469715586416771>! and flip a coin...\nAnd it lands on heads! You've won " +
               amount * 2 +
               "<:leebux:1431469715586416771>!",
           );
@@ -101,7 +101,11 @@ module.exports = {
           writeUserData(userData, interaction.user.id);
         }, 1500);
       } else {
-        await interaction.reply("You bet " + amount + " and flip a coin...");
+        await interaction.reply(
+          "You bet " +
+            amount +
+            "<:leebux:1431469715586416771>! and flip a coin...",
+        );
         setTimeout(async () => {
           await interaction.editReply(
             "You bet " +
