@@ -33,7 +33,7 @@ module.exports = {
         interaction.user.username +
           "'s balance: " +
           userData.leebux +
-          ":leebux:",
+          " :leebux:",
       );
     }
   },
