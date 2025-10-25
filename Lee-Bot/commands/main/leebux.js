@@ -14,7 +14,7 @@ module.exports = {
       subcommand
         .setName("cf")
         .setDescription("coin flip")
-        .addStringOption((option) =>
+        .addNumberOption((option) =>
           option
             .setName("amount")
             .setDescription("how much you want to bet")
