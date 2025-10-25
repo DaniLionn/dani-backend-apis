@@ -8,7 +8,13 @@ const {
   AttachmentBuilder,
   ActivityType,
 } = require("discord.js");
-const { download, randomSelect, randomUser } = require("./scripts/utils");
+const {
+  download,
+  randomSelect,
+  randomUser,
+  readUserData,
+  writeUserData,
+} = require("./scripts/utils");
 
 const token = process.env.LEE_TOKEN;
 
@@ -167,6 +173,7 @@ module.exports = {
         if (message.channel.id === "1427756885154598973") {
           if (message.author.bot && message.author.id !== client.user.id) {
             await message.delete();
+            return;
           }
         }
         if (message.author.bot) {
@@ -197,6 +204,7 @@ module.exports = {
             await message.channel.send({
               content: `<@${message.author.id}> You broke the "replace f with ph" rule! Did you mean to say "${phixedMessage}"?`,
             });
+            return;
           }
         }
         if (
@@ -236,7 +244,27 @@ module.exports = {
               files: attachmentsSend,
             });
           }
+          return;
         }
+
+        var data = readUserData();
+
+        function registerUser(id, username) {
+          data[id] = {
+            username: username,
+            leebux: 0,
+            daily_reset: 0,
+          };
+          writeUserData(data[id], id);
+          return data[id];
+        }
+
+        var userData =
+          data[message.member.user.id] ||
+          registerUser(message.member.user.id, message.member.user.username);
+
+        userData.leebux += 0.25;
+        writeUserData(userData, message.member.user.id);
       });
 
       const tempDirPath = path.join(leedir, "temp");

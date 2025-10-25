@@ -34,7 +34,7 @@ module.exports = {
       interaction.reply(
         interaction.user.username +
           "'s balance: " +
-          userData.leebux +
+          Math.floor(userData.leebux) +
           " <:leebux:1431469715586416771>",
       );
       return;
