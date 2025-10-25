@@ -45,6 +45,28 @@ module.exports = {
       return data[id];
     }
 
+    const convertSeconds = (seconds) => {
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const remainingSeconds = seconds % 60;
+
+      const hourString = hours > 0 ? `${hours} ${hours > 1 ? "" : ""}` : "";
+      const minuteString =
+        minutes > 0 ? `${minutes} ${minutes > 1 ? "" : ""}` : "";
+      const secondString =
+        remainingSeconds > 0
+          ? `${remainingSeconds} ${remainingSeconds > 1 ? "s" : ""}`
+          : "";
+
+      if (hours > 0) {
+        return `${hourString} : ${minuteString || "0 "} ${secondString && `: ${secondString}`}`;
+      } else if (!hours && minutes > 0) {
+        return `${minuteString} ${secondString && `: ${secondString}`}`;
+      }
+
+      return secondString;
+    };
+
     var userData =
       data[interaction.user.id] ||
       registerUser(interaction.user.id, interaction.user.username);
@@ -77,9 +99,7 @@ module.exports = {
         console.log(diff);
         await interaction.reply(
           "You've already redeemed your daily LeeBux! You have " +
-            new Date(userData.daily_reset * 1000)
-              .toISOString()
-              .substring(11, 16) +
+            convertSeconds(diff) +
             " remaining until you can redeem again.",
         );
       }
@@ -91,7 +111,7 @@ module.exports = {
 
       if (userData.leebux < amount) {
         await interaction.reply(
-          "you don't have enough leebux<:leebux:1431469715586416771>  idiot",
+          "you don't have enough leebux<:leebux:1431469715586416771>  :rofl:",
         );
         return;
       }
@@ -142,7 +162,7 @@ module.exports = {
 
       if (userData.leebux < amount) {
         await interaction.reply(
-          "you don't have enough leebux<:leebux:1431469715586416771>  idiot",
+          "you don't have enough leebux<:leebux:1431469715586416771> :rofl:",
         );
         return;
       }
