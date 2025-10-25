@@ -11,18 +11,23 @@ module.exports = {
     let subcommand = interaction.options.getSubcommand();
     if (subcommand === "storage") {
       await interaction.deferReply();
-      const diskUsage = spawn("df", [
-        "--output=pcent",
-        "/var/data",
-        "|",
-        "tail",
-        "-n",
-        "1",
-        "|",
-        "tr",
-        "-d",
-        "' %'",
+      const diskUsage = spawn("sh", [
+        "-c",
+        "df --output=pcent /var/data | tail -n 1 | tr -d ' %'",
       ]);
+
+      // ensure stdout emits strings (so the existing stdout 'data' handler will get a string)
+      diskUsage.stdout.setEncoding("utf8");
+
+      diskUsage.on("error", async (err) => {
+        await interaction.editReply(`Failed to run disk check: ${err.message}`);
+      });
+
+      // diskUsage.on("close", (code) => {
+      //   if (code !== 0) {
+      //     interaction.editReply(`df exited with code ${code}`);
+      //   }
+      // });
 
       diskUsage.stdout.on("data", async (data) => {
         await interaction.editReply(data);
