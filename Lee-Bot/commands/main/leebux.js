@@ -19,6 +19,19 @@ module.exports = {
             .setName("amount")
             .setDescription("how much you want to bet")
             .setRequired(true),
+        )
+        .addSubcommand((subcommand) =>
+          subcommand
+            .setName("weird-coin-flip")
+            .setDescription(
+              "coin flip but the coin likes to land on heads more often. you earn less leebux if you win because of this",
+            )
+            .addNumberOption((option) =>
+              option
+                .setName("amount")
+                .setDescription("how much you want to bet")
+                .setRequired(true),
+            ),
         ),
     ),
   async execute(interaction) {
@@ -117,6 +130,57 @@ module.exports = {
             "You bet " +
               amount +
               "<:leebux:1431469715586416771>  and flip a coin...\nAnd it lands on tails... You've lost " +
+              amount +
+              "<:leebux:1431469715586416771>...",
+          );
+          userData.leebux = userData.leebux - amount;
+          writeUserData(userData, interaction.user.id);
+        }, 1500);
+      }
+    }
+
+    if (subcommand === "weird-coin-flip") {
+      const amount = interaction.options.getNumber("amount");
+
+      if (userData.leebux < amount) {
+        await interaction.reply(
+          "you don't have enough leebux<:leebux:1431469715586416771>  idiot",
+        );
+        return;
+      }
+
+      const random = Math.random();
+
+      const win = random >= 0.25;
+
+      if (win === true) {
+        await interaction.reply(
+          "You bet " +
+            amount +
+            "<:leebux:1431469715586416771>  and flip a weirdly weighted coin...",
+        );
+        setTimeout(async () => {
+          await interaction.editReply(
+            "You bet " +
+              amount +
+              "<:leebux:1431469715586416771> and flip a weirdly weighted coin...\nAnd it lands on heads! You've won " +
+              Math.floor(amount * 1.5) +
+              "<:leebux:1431469715586416771>!",
+          );
+          userData.leebux = userData.leebux + Math.floor(amount * 1.5);
+          writeUserData(userData, interaction.user.id);
+        }, 1500);
+      } else {
+        await interaction.reply(
+          "You bet " +
+            amount +
+            "<:leebux:1431469715586416771> and flip a flip a weirdly weighted coin...",
+        );
+        setTimeout(async () => {
+          await interaction.editReply(
+            "You bet " +
+              amount +
+              "<:leebux:1431469715586416771>  and flip a flip a weirdly weighted coin...\nAnd it lands on tails... Unlucky! You've lost " +
               amount +
               "<:leebux:1431469715586416771>...",
           );
