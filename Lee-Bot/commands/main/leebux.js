@@ -19,19 +19,19 @@ module.exports = {
             .setName("amount")
             .setDescription("how much you want to bet")
             .setRequired(true),
+        ),
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("weird-coin-flip")
+        .setDescription(
+          "coin flip but the coin likes to land on heads more often. you earn less leebux if you win because of this",
         )
-        .addSubcommand((subcommand) =>
-          subcommand
-            .setName("weird-coin-flip")
-            .setDescription(
-              "coin flip but the coin likes to land on heads more often. you earn less leebux if you win because of this",
-            )
-            .addNumberOption((option) =>
-              option
-                .setName("amount")
-                .setDescription("how much you want to bet")
-                .setRequired(true),
-            ),
+        .addNumberOption((option) =>
+          option
+            .setName("amount")
+            .setDescription("how much you want to bet")
+            .setRequired(true),
         ),
     ),
   async execute(interaction) {
