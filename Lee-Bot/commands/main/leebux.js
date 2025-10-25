@@ -97,7 +97,7 @@ module.exports = {
               amount * 2 +
               "<:leebux:1431469715586416771>!",
           );
-          userData.leebux = userData.leebux + amount;
+          userData.leebux = userData.leebux + amount * 2;
           writeUserData(userData, interaction.user.id);
         }, 1500);
       } else {
