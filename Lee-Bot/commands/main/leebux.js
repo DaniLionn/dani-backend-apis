@@ -48,18 +48,19 @@ module.exports = {
     const convertSeconds = (seconds) => {
       const hours = Math.floor(seconds / 3600);
       const minutes = Math.floor((seconds % 3600) / 60);
-      const remainingSeconds = seconds % 60;
+      const remainingSeconds =
+        (seconds % 1 > 0 && Math.floor(seconds % 60)) || seconds % 60;
 
-      const hourString = hours > 0 ? `${hours} ${hours > 1 ? "" : ""}` : "";
+      const hourString = hours > 0 ? `${hours}hour ${hours > 1 ? "" : ""}` : "";
       const minuteString =
-        minutes > 0 ? `${minutes} ${minutes > 1 ? "" : ""}` : "";
+        minutes > 0 ? `${minutes}minute ${minutes > 1 ? "" : ""}` : "";
       const secondString =
         remainingSeconds > 0
-          ? `${remainingSeconds} ${remainingSeconds > 1 ? "s" : ""}`
+          ? `${remainingSeconds}second ${remainingSeconds > 1 ? "s" : ""}`
           : "";
 
       if (hours > 0) {
-        return `${hourString} : ${minuteString || "0 "} ${secondString && `: ${secondString}`}`;
+        return `${hourString} : ${minuteString || "0 "} ${secondString && ` : ${secondString}`}`;
       } else if (!hours && minutes > 0) {
         return `${minuteString} ${secondString && `: ${secondString}`}`;
       }
