@@ -30,7 +30,7 @@ module.exports = {
       // });
 
       diskUsage.stdout.on("data", async (data) => {
-        await interaction.editReply(data);
+        await interaction.editReply("/var/data is " + data + "% full");
       });
 
       return;
