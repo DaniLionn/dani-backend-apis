@@ -252,7 +252,10 @@ module.exports = {
       const card1 = cards[Math.floor(Math.random() * cards.length)];
       const card2 = cards[Math.floor(Math.random() * cards.length)];
 
-      interaction.reply({
+      const cardValue1 = cards.indexOf(card1) + 1;
+      const cardValue2 = cards.indexOf(card2) + 1;
+
+      await interaction.reply({
         content:
           "You bet " +
           amount +
@@ -279,9 +282,9 @@ module.exports = {
         let userChoice = i.customId; // "higher" or "lower"
 
         let result;
-        if (card2 > card1) {
+        if (cardValue2 > cardValue1) {
           result = "higher";
-        } else if (card2 < card1) {
+        } else if (cardValue2 < cardValue1) {
           result = "lower";
         } else {
           result = "equal";
