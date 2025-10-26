@@ -14,6 +14,9 @@ module.exports = {
       subcommand.setName("balance").setDescription("leebux balance"),
     )
     .addSubcommand((subcommand) =>
+      subcommand.setName("inventory").setDescription("leebux inventory"),
+    )
+    .addSubcommand((subcommand) =>
       subcommand.setName("daily").setDescription("daily leebux"),
     )
     .addSubcommand((subcommand) =>
@@ -168,6 +171,25 @@ module.exports = {
           await buyPlushie();
         }
       });
+    }
+
+    if (subcommand === "inventory") {
+      const icons = {
+        lee_plush: "<:lee_plush:1431871543914266725>",
+      };
+
+      let inventoryString = "Your LeeBux Inventory:\n";
+
+      if (!userData.inventory || Object.keys(userData.inventory).length === 0) {
+        inventoryString += "Your inventory is empty.";
+      } else {
+        for (const [item, quantity] of Object.entries(userData.inventory)) {
+          inventoryString += `- ${icons[item] || item}: ${quantity}\n`;
+        }
+      }
+
+      await interaction.reply(inventoryString);
+      return;
     }
 
     if (subcommand === "daily") {
