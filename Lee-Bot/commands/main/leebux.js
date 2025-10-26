@@ -17,6 +17,9 @@ module.exports = {
       subcommand.setName("daily").setDescription("daily leebux"),
     )
     .addSubcommand((subcommand) =>
+      subcommand.setName("shop").setDescription("buy goods"),
+    )
+    .addSubcommand((subcommand) =>
       subcommand
         .setName("cf")
         .setDescription("coin flip")
@@ -57,6 +60,7 @@ module.exports = {
         username: username,
         leebux: 0,
         daily_reset: 0,
+        inventory: {},
       };
       writeUserData(data[id], id);
       return data[id];
@@ -90,7 +94,9 @@ module.exports = {
       data[interaction.user.id] ||
       registerUser(interaction.user.id, interaction.user.username);
 
-    console.log(userData);
+    if (userData.inventory === undefined) {
+      userData.inventory = {};
+    }
 
     let subcommand = interaction.options.getSubcommand();
     if (subcommand === "balance") {
@@ -102,16 +108,71 @@ module.exports = {
       );
       return;
     }
+
+    if (subcommand === "shop") {
+      const yes1 = new ButtonBuilder()
+        .setCustomId("yes1")
+        .setLabel("Yes")
+        .setStyle(ButtonStyle.Primary);
+
+      const yes2 = new ButtonBuilder()
+        .setCustomId("yes2")
+        .setLabel("Yes")
+        .setStyle(ButtonStyle.Primary);
+      const row = new ActionRowBuilder().addComponents(yes1, yes2);
+
+      const filter = (i) => {
+        i.deferUpdate();
+        return i.user.id === interaction.user.id;
+      };
+
+      const collector = interaction.channel.createMessageComponentCollector({
+        filter,
+        time: 15000,
+        max: 1,
+      });
+
+      collector.on("collect", async (i) => {
+        userData.leebux = userData.leebux - 1000;
+        userData.inventory["lee_plush"] =
+          (userData.inventory["lee_plush"] || 0) + 1;
+
+        if (userData.leebux < 1000) {
+          await interaction.editReply({
+            content:
+              "Thank you! You are now in debt. (+1 <:lee_plush:1431871543914266725> added to inventory!)",
+            components: [],
+          });
+          return;
+        } else {
+          userData.inventory.push("lee_plush");
+          writeUserData(userData, interaction.user.id);
+          await interaction.editReply({
+            content:
+              "Thank you! (+1 <:lee_plush:1431871543914266725> added to inventory!)",
+            components: [],
+          });
+        }
+      });
+      await interaction.reply({
+        content:
+          "Currently, the only item in the shop is a plushie. Of me!!! Would you like to buy one for 1000<:leebux:1431469715586416771>?",
+        components: [row],
+      });
+    }
+
     if (subcommand === "daily") {
       const now = Math.floor(new Date().getTime() / 1000);
       console.log(now, userData.daily_reset);
       if (now >= userData.daily_reset) {
         userData.daily_reset = now + 86400;
-        userData.leebux += 300;
+        userData.leebux += 300 + userData.inventory["lee_plush"] * 5;
         console.log(userData);
         writeUserData(userData, interaction.user.id);
         await interaction.reply(
-          "Daily 300 <:leebux:1431469715586416771> obtained!",
+          "Daily " +
+            (300 + userData.inventory["lee_plush"] * 5) +
+            " <:leebux:1431469715586416771> obtained!",
         );
       } else {
         const diff = userData.daily_reset - now;
