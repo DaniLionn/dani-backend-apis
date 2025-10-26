@@ -1,4 +1,5 @@
 const fsPromises = require("fs/promises");
+const fs = require("fs");
 const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -22,17 +23,71 @@ async function fetchAnnouncements(id) {
       })
       .forEach((msg) => {
         let content = msg.content;
-        (content = content.replace(
+        ((content = content.replace(
           /(?:https?|ftp):\/\/[\n\S]+/g,
           "(Link has been removed for Roblox)"
         )),
-          (content = content.replace(/<@.?[0-9]*?>+/g, ""));
+          (content = content.replace(/<@.?[0-9]*?>+/g, "")));
         content = content.replace(/<#.?[0-9]*?>+/g, "");
         content = content.replace(/[#|]+/g, "");
         messages.push([content, msg.createdTimestamp]);
       });
   });
   return messages;
+}
+
+function checkPhoneNumberValueExists(data, newPhoneNumberValue) {
+  var valueExists = false;
+
+  for (const entry in data.phoneData) {
+    const phoneEntries = data.phoneData[entry];
+
+    for (const userId of Object.keys(phoneEntries)) {
+      const phoneEntries = data.phoneData[entry];
+
+      const phoneNumber = phoneEntries[userId];
+
+      if (phoneNumber === newPhoneNumberValue) {
+        valueExists = true;
+        break;
+      }
+    }
+    return valueExists;
+  }
+}
+
+function addPhoneNumberToList(data, userID, newPhoneNumber) {
+  data.phoneData[userID] = newPhoneNumber;
+}
+
+function generateNumber() {
+  let number1 = (Math.floor(Math.random() * 999) + 1).toString();
+
+  if (Number(number1) < 10) {
+    number1 = `0${number1}`;
+  }
+
+  let number2 = (Math.floor(Math.random() * 999) + 1).toString();
+
+  if (Number(number2) < 10) {
+    number2 = `0${number2}`;
+  }
+
+  let number3 = (Math.floor(Math.random() * 999) + 1).toString();
+
+  if (Number(number3) < 10) {
+    number3 = `0${number3}`;
+  }
+
+  let finalNumber = `${number1}-${number2}-${number3}`;
+  return finalNumber;
+}
+
+function writeDataToFile(data, filename) {
+  fss.writeFile(filename, JSON.stringify(data, null, 2), (err) => {
+    if (err) throw err;
+    console.log("Data has been updated and written to the file");
+  });
 }
 
 module.exports = {
@@ -119,6 +174,99 @@ module.exports = {
         `roblox://experiences/start?placeId=10234861304&gameInstanceId=${jobId}`
       );
     }
+  },
+
+  "get/pride-island/listNumbers": function (req, res) {
+    fss.readFile("/var/data/phone.json", "utf8", function (err, data) {
+      if (err) {
+        console.err(err);
+      }
+
+      res.send(JSON.parse(data));
+    });
+  },
+
+  "get/pride-island/getNumber": function (req, res) {
+    const userID = req.query.userID;
+
+    if (!userID) {
+      res
+        .status(400)
+        .send(
+          "<!DOCTYPE html> <html> <body> <h1>400 Bad Request</h1> <hr> <h3>UserID isn't valid! (userID query wasn't passed)</h3> </html> </body>"
+        );
+      return;
+    }
+
+    if (Number(userID) < 1) {
+      res
+        .status(400)
+        .send(
+          "<!DOCTYPE html> <html> <body> <h1>400 Bad Request</h1> <hr> <h3>UserID isn't valid! (smaller than 1)</h3> </html> </body>"
+        );
+      return;
+    }
+
+    let number;
+
+    fss.readFile("/var/data/phone.json", "utf8", function (err, data) {
+      var json = JSON.parse(data);
+
+      for (var i = 0; i < json.phoneData.length; i++) {
+        if (json.phoneData[i][userID]) {
+          console.log(
+            `number already exists for userId ${userID}. sending number...`
+          );
+          res.send(json.phoneData[i][userID]);
+          return;
+        }
+      }
+
+      console.log(
+        `no number exists for userId ${userID}. regestering new number!`
+      );
+
+      var numberExists = true;
+      do {
+        //updated range of random numbers from 99 to 999 on 6/23/2024 3:56 pm
+        //changing the amount of valid phone numbers from 970,299
+        //to 997,002,999
+        //unless we somehow get almost 1 billion unique players we're
+        //not going to run out anytime soon 😝
+        var number = generateNumber();
+        numberExists = checkPhoneNumberValueExists(json, number);
+      } while (numberExists);
+
+      addPhoneNumberToList(json, userID, number);
+      writeDataToFile(json, "/var/data/phone.json");
+      res.send(number);
+    });
+  },
+
+  "get/pride-island/getUserIDViaNumber": function (req, res) {
+    const userID = req.query.number;
+    let number;
+
+    fss.readFile("/var/data/phone.json", "utf8", function (err, data) {
+      var json = JSON.parse(data);
+
+      for (var i = 0; i < json.phoneData.length; i++) {
+        if (json.phoneData[i]) {
+          var p = json.phoneData[i];
+          //console.log(p)
+          for (var key in p) {
+            //console.log(key)
+            var value = p[key];
+            if (value == userID) {
+              // Corrected the comparison operation here
+              console.log("found");
+              res.send(key);
+              return;
+            }
+          }
+        }
+      }
+    });
   },
 
   "get/pride-island/launch": function (req, res) {
