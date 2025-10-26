@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   "get/main/time/:region/:city": function (req, res) {
     const region = req.params.region;
@@ -77,6 +79,6 @@ module.exports = {
   },
 
   "get/main/video-download": function (req, res) {
-    res.sendFile("./video.mp4");
+    res.sendFile(path.join(__dirname, "video.mp4"));
   },
 };
