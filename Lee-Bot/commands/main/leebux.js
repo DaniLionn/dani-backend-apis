@@ -178,7 +178,7 @@ module.exports = {
         lee_plush: "<:lee_plush:1431871543914266725>",
       };
 
-      let inventoryString = "Your LeeBux Inventory:\n";
+      let inventoryString = "Your Inventory:\n";
 
       if (!userData.inventory || Object.keys(userData.inventory).length === 0) {
         inventoryString += "Your inventory is empty.";
