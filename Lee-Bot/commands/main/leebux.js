@@ -259,7 +259,7 @@ module.exports = {
         content:
           "You bet " +
           amount +
-          "<:leebux:1431469715586416771>  on a high-low game!\nThe first card is " +
+          "<:leebux:1431469715586416771>  on a high-low game!\nThe first card is\n# " +
           card1 +
           "\nWill the next card be higher or lower?",
         components: [row],
@@ -292,7 +292,7 @@ module.exports = {
 
         if (result === "equal") {
           await interaction.editReply(
-            "The next card is " +
+            "The next card is \n# " +
               card2 +
               "!\nIt's a tie! You get your bet back of " +
               amount +
@@ -300,7 +300,7 @@ module.exports = {
           );
         } else if (userChoice === result) {
           await interaction.editReply(
-            "The next card is " +
+            "The next card is \n# " +
               card2 +
               "!\nYou guessed correctly! You've won " +
               amount * 2 +
@@ -310,7 +310,7 @@ module.exports = {
           writeUserData(userData, interaction.user.id);
         } else {
           await interaction.editReply(
-            "The next card is " +
+            "The next card is \n# " +
               card2 +
               "...\nUnlucky, you guessed wrong! You've lost " +
               amount +
