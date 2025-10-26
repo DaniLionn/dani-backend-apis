@@ -38,7 +38,9 @@ module.exports = {
       // });
 
       diskUsage.stdout.on("data", async (data) => {
-        await interaction.editReply("/var/data is " + data.trim() + "% full");
+        await interaction.editReply(
+          "Data partition is " + data.trim() + "% full",
+        );
       });
 
       return;

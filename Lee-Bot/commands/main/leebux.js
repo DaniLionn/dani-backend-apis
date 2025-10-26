@@ -1,5 +1,11 @@
 const { readUserData, writeUserData } = require("../../scripts/utils");
-const { SlashCommandBuilder } = require("discord.js");
+const {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  SlashCommandBuilder,
+} = require("discord.js");
+const cards = ["🂠", "🂡", "🂢", "🂣", "🂤", "🂥", "🂦", "🂧", "🂨", "🂩"];
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("leebux")
@@ -25,6 +31,17 @@ module.exports = {
       subcommand
         .setName("weird-coin-flip")
         .setDescription("coin flip but weird")
+        .addNumberOption((option) =>
+          option
+            .setName("amount")
+            .setDescription("how much you want to bet")
+            .setRequired(true),
+        ),
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("high-low")
+        .setDescription("high low game")
         .addNumberOption((option) =>
           option
             .setName("amount")
@@ -208,6 +225,98 @@ module.exports = {
           writeUserData(userData, interaction.user.id);
         }, 1500);
       }
+    }
+
+    if (subcommand === "high-low") {
+      const amount = interaction.options.getNumber("amount");
+
+      const higher = new ButtonBuilder()
+        .setCustomId("higher")
+        .setLabel("Higher")
+        .setStyle(ButtonStyle.Primary);
+
+      const lower = new ButtonBuilder()
+        .setCustomId("lower")
+        .setLabel("Lower")
+        .setStyle(ButtonStyle.Primary);
+
+      const row = new ActionRowBuilder().addComponents(lower, higher);
+
+      if (userData.leebux < amount) {
+        await interaction.reply(
+          "you don't have enough leebux<:leebux:1431469715586416771> :rofl:",
+        );
+        return;
+      }
+
+      const card1 = cards[Math.floor(Math.random() * cards.length)];
+      const card2 = cards[Math.floor(Math.random() * cards.length)];
+
+      interaction.reply({
+        content:
+          "You bet " +
+          amount +
+          "<:leebux:1431469715586416771>  on a high-low game!\nThe first card is " +
+          card1 +
+          "\nWill the next card be higher or lower?",
+        components: [row],
+      });
+
+      const filter = (i) => {
+        i.deferUpdate();
+        return i.user.id === interaction.user.id;
+      };
+
+      const collector = interaction.channel.createMessageComponentCollector({
+        filter,
+        time: 15000,
+        max: 1,
+      });
+
+      collector.on("collect", async (i) => {
+        console.log(`Collected ${i.customId}`);
+
+        let userChoice = i.customId; // "higher" or "lower"
+
+        let result;
+        if (card2 > card1) {
+          result = "higher";
+        } else if (card2 < card1) {
+          result = "lower";
+        } else {
+          result = "equal";
+        }
+
+        if (result === "equal") {
+          await interaction.editReply(
+            "The next card is " +
+              card2 +
+              "!\nIt's a tie! You get your bet back of " +
+              amount +
+              "<:leebux:1431469715586416771>!",
+          );
+        } else if (userChoice === result) {
+          await interaction.editReply(
+            "The next card is " +
+              card2 +
+              "!\nYou guessed correctly! You've won " +
+              amount * 2 +
+              "<:leebux:1431469715586416771>!",
+          );
+          userData.leebux = userData.leebux + amount * 2;
+          writeUserData(userData, interaction.user.id);
+        } else {
+          await interaction.editReply(
+            "The next card is " +
+              card2 +
+              "...\nUnlucky, you guessed wrong! You've lost " +
+              amount +
+              "<:leebux:1431469715586416771>!",
+          );
+          userData.leebux = userData.leebux - amount;
+          writeUserData(userData, interaction.user.id);
+        }
+      });
     }
   },
 };
