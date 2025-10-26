@@ -1,5 +1,5 @@
 const fsPromises = require("fs/promises");
-const fs = require("fs");
+const fss = require("fs");
 const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
