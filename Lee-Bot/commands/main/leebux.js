@@ -138,7 +138,7 @@ module.exports = {
         max: 1,
       });
 
-      collector.on("collect", async (i) => {
+      async function buyPlushie() {
         userData.leebux = userData.leebux - 1000;
         userData.inventory["lee_plush"] =
           (userData.inventory["lee_plush"] || 0) + 1;
@@ -151,13 +151,21 @@ module.exports = {
           });
           return;
         } else {
-          userData.inventory.push("lee_plush");
           writeUserData(userData, interaction.user.id);
           await interaction.editReply({
             content:
               "Thank you! (+1 <:lee_plush:1431871543914266725> added to inventory!)",
             components: [],
           });
+        }
+      }
+
+      collector.on("collect", async (i) => {
+        if (i.customId === "yes1") {
+          await buyPlushie();
+        }
+        if (i.customId === "yes2") {
+          await buyPlushie();
         }
       });
     }
