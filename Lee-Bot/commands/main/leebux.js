@@ -121,6 +121,12 @@ module.exports = {
         .setStyle(ButtonStyle.Primary);
       const row = new ActionRowBuilder().addComponents(yes1, yes2);
 
+      await interaction.reply({
+        content:
+          "Currently, the only item in the shop is a plushie. Of me!!! Would you like to buy one for 1000<:leebux:1431469715586416771>?",
+        components: [row],
+      });
+
       const filter = (i) => {
         i.deferUpdate();
         return i.user.id === interaction.user.id;
@@ -153,11 +159,6 @@ module.exports = {
             components: [],
           });
         }
-      });
-      await interaction.reply({
-        content:
-          "Currently, the only item in the shop is a plushie. Of me!!! Would you like to buy one for 1000<:leebux:1431469715586416771>?",
-        components: [row],
       });
     }
 
