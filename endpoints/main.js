@@ -75,4 +75,8 @@ module.exports = {
 
     res.send(data);
   },
+
+  "get/main/video-download": function (req, res) {
+    res.sendFile("./video.mp4");
+  },
 };
