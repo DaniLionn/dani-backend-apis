@@ -106,7 +106,7 @@ module.exports = {
       interaction.reply(
         interaction.user.username +
           "'s balance: " +
-          Math.floor(userData.leebux) +
+          Math.floor(userData.leebux).toLocaleString("en-US") +
           " <:leebux:1431469715586416771>",
       );
       return;
@@ -126,7 +126,7 @@ module.exports = {
 
       await interaction.reply({
         content:
-          "Currently, the only item in the shop is a plushie. Of me!!! Would you like to buy one for 1000<:leebux:1431469715586416771>?",
+          "Currently, the only item in the shop is a plushie. Of me!!! Would you like to buy one for 1,000<:leebux:1431469715586416771>?",
         components: [row],
       });
 
@@ -202,7 +202,9 @@ module.exports = {
         writeUserData(userData, interaction.user.id);
         await interaction.reply(
           "Daily " +
-            (300 + userData.inventory["lee_plush"] * 5) +
+            (300 + userData.inventory["lee_plush"] * 5).toLocaleString(
+              "en-US",
+            ) +
             " <:leebux:1431469715586416771> obtained!",
         );
       } else {
@@ -234,15 +236,15 @@ module.exports = {
       if (win === true) {
         await interaction.reply(
           "You bet " +
-            amount +
+            amount.toLocaleString("en-US") +
             "<:leebux:1431469715586416771>  and flip a coin...",
         );
         setTimeout(async () => {
           await interaction.editReply(
             "You bet " +
-              amount +
+              amount.toLocaleString("en-US") +
               "<:leebux:1431469715586416771> and flip a coin...\nAnd it lands on heads! You've won " +
-              amount * 2 +
+              (amount * 2).toLocaleString("en-US") +
               "<:leebux:1431469715586416771>!",
           );
           userData.leebux = userData.leebux + amount * 2;
@@ -257,9 +259,9 @@ module.exports = {
         setTimeout(async () => {
           await interaction.editReply(
             "You bet " +
-              amount +
+              amount.toLocaleString("en-US") +
               "<:leebux:1431469715586416771>  and flip a coin...\nAnd it lands on tails... You've lost " +
-              amount +
+              amount.toLocaleString("en-US") +
               "<:leebux:1431469715586416771>...",
           );
           userData.leebux = userData.leebux - amount;
@@ -285,15 +287,15 @@ module.exports = {
       if (win === true) {
         await interaction.reply(
           "You bet " +
-            amount +
+            amount.toLocaleString("en-US") +
             "<:leebux:1431469715586416771>  and flip a weirdly weighted coin...",
         );
         setTimeout(async () => {
           await interaction.editReply(
             "You bet " +
-              amount +
+              amount.toLocaleString("en-US") +
               "<:leebux:1431469715586416771> and flip a weirdly weighted coin...\nAnd it lands on heads! You've won " +
-              Math.floor(amount * 1.5) +
+              Math.floor(amount * 1.5).toLocaleString("en-US") +
               "<:leebux:1431469715586416771>!",
           );
           userData.leebux = userData.leebux + Math.floor(amount * 1.5);
@@ -302,15 +304,15 @@ module.exports = {
       } else {
         await interaction.reply(
           "You bet " +
-            amount +
+            amount.toLocaleString("en-US") +
             "<:leebux:1431469715586416771> and flip a flip a weirdly weighted coin...",
         );
         setTimeout(async () => {
           await interaction.editReply(
             "You bet " +
-              amount +
+              amount.toLocaleString("en-US") +
               "<:leebux:1431469715586416771>  and flip a flip a weirdly weighted coin...\nAnd it lands on tails... Unlucky! You've lost " +
-              amount +
+              amount.toLocaleString("en-US") +
               "<:leebux:1431469715586416771>...",
           );
           userData.leebux = userData.leebux - amount;
@@ -350,7 +352,7 @@ module.exports = {
       await interaction.reply({
         content:
           "You bet " +
-          amount +
+          amount.toLocaleString("en-US") +
           "<:leebux:1431469715586416771>  on a high-low card game!\nThe first card is\n# " +
           card1 +
           "\nWill the next card be higher or lower?\n-# By the way, the A card (Ace) is equal to 1.",
@@ -396,7 +398,7 @@ module.exports = {
               "The next card is... \n# " +
               card2 +
               "!\nYou guessed correctly! You've won " +
-              amount * 2 +
+              (amount * 2).toLocaleString("en-US") +
               "<:leebux:1431469715586416771>!",
             components: [],
           });
@@ -408,7 +410,7 @@ module.exports = {
               "The next card is... \n# " +
               card2 +
               "...\nUnlucky, you guessed wrong! You've lost " +
-              amount +
+              amount.toLocaleString("en-US") +
               "<:leebux:1431469715586416771>!",
             components: [],
           });
