@@ -79,6 +79,6 @@ module.exports = {
   },
 
   "get/main/video-download": function (req, res) {
-    res.sendFile(path.join(__dirname, "video.mp4"));
+    res.sendFile(path.join(__dirname, "../video.mp4"));
   },
 };
