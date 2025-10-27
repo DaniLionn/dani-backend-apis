@@ -18,7 +18,7 @@ module.exports = {
     var html = `<!DOCTYPE html><html><head><style>
   @font-face {
   font-family: Nunito;
-  src: url(https://danilionn.github.io/about-me-info-site/assets/fonts/Nunito-Regular.woff2);
+  src: url(https://danilionn.github.io/about/assets/fonts/Nunito-Regular.woff2);
 }
 
 div {
@@ -118,8 +118,8 @@ function redir(id) {
             html +
               `
             <h3>Total playtime for all ${gameCount - 1} games: ${(
-                totalTime / 60
-              ).toFixed(1)} hours.</h3>
+              totalTime / 60
+            ).toFixed(1)} hours.</h3>
           </div>
           </body>
           </html>`
