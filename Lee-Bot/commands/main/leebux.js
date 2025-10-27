@@ -184,7 +184,7 @@ module.exports = {
         inventoryString += "Your inventory is empty.";
       } else {
         for (const [item, quantity] of Object.entries(userData.inventory)) {
-          inventoryString += `- ${icons[item] || item}: ${quantity}\n`;
+          inventoryString += `- ${icons[item] || item}: ${quantity.toLocaleString("en-US")}\n`;
         }
       }
 
@@ -344,8 +344,13 @@ module.exports = {
       }
 
       const card1 = cards[Math.floor(Math.random() * cards.length)];
-      const card2 = cards[Math.floor(Math.random() * cards.length)];
+      var card2 = cards[Math.floor(Math.random() * cards.length)];
 
+      if (card1 === card2) {
+        while (card1 === card2) {
+          card2 = cards[Math.floor(Math.random() * cards.length)];
+        }
+      }
       const cardValue1 = cards.indexOf(card1) + 1;
       const cardValue2 = cards.indexOf(card2) + 1;
 
