@@ -12,5 +12,6 @@ module.exports = {
       "/var/data/lee-wars-leaderboard.json",
       JSON.stringify(read)
     );
+    res.send("ok");
   },
 };
