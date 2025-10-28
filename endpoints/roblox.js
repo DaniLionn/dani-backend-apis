@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 module.exports = {
-  "/roblox/leederboard/incrementScore": function (req, res) {
+  "get/roblox/leederboard/incrementScore": function (req, res) {
     const name = req.query.name;
     var read = JSON.parse(
       fs.readFileSync("/var/data/lee-wars-leaderboard.json", "utf8")
