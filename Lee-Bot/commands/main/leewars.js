@@ -28,10 +28,20 @@ module.exports = {
 
       let inventoryString = "Top Loo Kills:\n\n";
 
-      if (!leederboard || Object.keys(leederboard).length === 0) {
+      const entries =
+        leederboard && Object.keys(leederboard).length
+          ? Object.entries(leederboard)
+          : [];
+
+      if (entries.length === 0) {
         inventoryString += "No leederboards yet!";
       } else {
-        for (const [user, kills] of Object.entries(leederboard)) {
+        const top = entries
+          .map(([user, kills]) => [user, Number(kills) || 0])
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 10);
+
+        for (const [user, kills] of top) {
           inventoryString += `- ${user}: ${kills.toLocaleString("en-US")}\n`;
         }
       }
