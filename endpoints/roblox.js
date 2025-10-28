@@ -9,7 +9,7 @@ module.exports = {
     );
 
     read[`[${name}](https://www.roblox.com/users/${id}/profile)`] =
-      read[name] + 1 || 1;
+      read[`[${name}](https://www.roblox.com/users/${id}/profile)`] + 1 || 1;
     fs.writeFileSync(
       "/var/data/lee-wars-leaderboard.json",
       JSON.stringify(read)
