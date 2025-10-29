@@ -16,7 +16,7 @@ module.exports = {
     let subcommand = interaction.options.getSubcommand();
     if (subcommand === "play") {
       interaction.reply(
-        "Play Lee Wars 2007 on Roblox!\nhttps://www.roblox.com/games/112463461428800/Lee-Wars-2007",
+        "Play Lee Wars 2007 on Roblox!\nhttps://bit.ly/LeeWars2007",
       );
       return;
     }

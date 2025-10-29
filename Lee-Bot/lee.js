@@ -52,6 +52,7 @@ var randomStatuses = [
     "is it just me or is it hot in here? *fade to picture of carrot*",
   ],
   [ActivityType.Custom, "Lee ✌️😂"],
+  [ActivtyType.Custom, "Eating a. Joo loo"],
 ];
 
 const leedir = process.env.LEE_ROOT_DIR;
