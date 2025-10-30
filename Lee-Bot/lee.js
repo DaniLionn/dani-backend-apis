@@ -76,6 +76,7 @@ module.exports = {
             client.user.setAvatar(path.join(leedir, "assets/lee-new.png"));
           }
           if (randomStatus === randomStatuses[7]) {
+            console.log(path.join(leedir, "assets/lee-voices.png"));
             client.user.setAvatar(path.join(leedir, "assets/lee-voices.png"));
           } else {
             client.user.setAvatar(path.join(leedir, "assets/lee-new.png"));
