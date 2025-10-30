@@ -68,17 +68,10 @@ module.exports = {
 
           if (randomStatus === randomStatuses[6]) {
             const randomGuy = await randomUser(client);
-            console.log(randomGuy);
             randomStatus[1] = randomStatuses[6][1].replace(
               "PLACEHOLDER",
               randomGuy.displayName || randomGuy.username,
             );
-            client.user.setAvatar(path.join(leedir, "assets/lee-new.png"));
-          }
-          if (randomStatus === randomStatuses[7]) {
-            client.user.setAvatar(path.join(leedir, "assets/lee-voices.png"));
-          } else {
-            client.user.setAvatar(path.join(leedir, "assets/lee-new.png"));
           }
           client.user.setPresence({
             activities: [{ name: randomStatus[1], type: randomStatus[0] }],
