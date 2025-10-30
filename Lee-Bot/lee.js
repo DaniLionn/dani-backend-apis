@@ -64,7 +64,8 @@ module.exports = {
 
       client.once(Events.ClientReady, async (readyClient) => {
         async function setStatus() {
-          const randomStatus = randomSelect(randomStatuses);
+          const randomStatus = randomStatuses[7]; //randomSelect(randomStatuses);
+
           if (randomStatus === randomStatuses[6]) {
             const randomGuy = await randomUser(client);
             console.log(randomGuy);
@@ -72,6 +73,12 @@ module.exports = {
               "PLACEHOLDER",
               randomGuy.displayName || randomGuy.username,
             );
+            client.user.setAvatar(path.join(leedir, "assets/lee-new.png"));
+          }
+          if (randomStatus === randomStatuses[7]) {
+            client.user.setAvatar(path.join(leedir, "assets/lee-voices.png"));
+          } else {
+            client.user.setAvatar(path.join(leedir, "assets/lee-new.png"));
           }
           client.user.setPresence({
             activities: [{ name: randomStatus[1], type: randomStatus[0] }],
