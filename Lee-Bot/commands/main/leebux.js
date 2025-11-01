@@ -197,12 +197,12 @@ module.exports = {
       console.log(now, userData.daily_reset);
       if (now >= userData.daily_reset) {
         userData.daily_reset = now + 86400;
-        userData.leebux += 300 + userData.inventory["lee_plush"] * 5 || 0;
+        userData.leebux += 300 + userData.inventory["lee_plush"] || 0 * 5;
         console.log(userData);
         writeUserData(userData, interaction.user.id);
         await interaction.reply(
           "Daily " +
-            (300 + userData.inventory["lee_plush"] * 5 || 0).toLocaleString(
+            (300 + userData.inventory["lee_plush"] || 0 * 5).toLocaleString(
               "en-US",
             ) +
             " <:leebux:1431469715586416771> obtained!",
