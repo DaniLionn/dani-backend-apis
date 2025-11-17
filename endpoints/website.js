@@ -2,6 +2,7 @@ const axios = require("axios");
 const { Webhook } = require("discord-webhook-node");
 const websiteHook = new Webhook(process.env.WEBSITE_WEBHOOK_URL);
 const { getAverageColor } = require("fast-average-color-node");
+const ignoreIDs = [1725640, 743410, 1451940];
 
 module.exports = {
   "get/website/message": async function (req, res) {
@@ -52,7 +53,7 @@ function redir(id) {
 
         // Use Promise.all to wait for all game info to be fetched before responding
         const filteredGames = ownedGames["response"]["games"].filter(
-          (game) => game.appid !== 1725640
+          (game) => !ignoreIDs.find(game)
         );
 
         try {
