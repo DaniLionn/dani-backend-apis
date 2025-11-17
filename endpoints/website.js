@@ -38,7 +38,7 @@ function redir(id) {
     }
 </script>
 </head>
-<body style="background-color: #ffffff;">
+<body>
 <div class="steam games">`;
 
     axios
