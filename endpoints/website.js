@@ -53,7 +53,7 @@ function redir(id) {
 
         // Use Promise.all to wait for all game info to be fetched before responding
         const filteredGames = ownedGames["response"]["games"].filter(
-          (game) => !ignoreIDs.find(game)
+          (game) => !ignoreIDs.includes(game.appid)
         );
 
         try {
