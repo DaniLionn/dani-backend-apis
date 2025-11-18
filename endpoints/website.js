@@ -2,7 +2,17 @@ const axios = require("axios");
 const { Webhook } = require("discord-webhook-node");
 const websiteHook = new Webhook(process.env.WEBSITE_WEBHOOK_URL);
 const { getAverageColor } = require("fast-average-color-node");
-const ignoreIDs = [1725640, 743410, 1451940];
+const ignoreIDs = [1725640, 743410, 1451940]; //games to ignore and filter out of the list
+const includeIDs = [
+  {
+    appid: 1522950,
+    playtime_forever: "N/A",
+  },
+  {
+    appid: 1525320,
+    playtime_forever: "N/A",
+  },
+]; //games i own that for some reason don't show up normally
 
 module.exports = {
   "get/website/message": async function (req, res) {
@@ -56,6 +66,10 @@ function redir(id) {
           (game) => !ignoreIDs.includes(game.appid)
         );
 
+        for (let i = 0; i < includeIDs.length; i++) {
+          filteredGames.push(includeIDs[i]);
+        }
+
         try {
           const appinfo = await Promise.all(
             filteredGames.map(async (game) => {
@@ -63,7 +77,10 @@ function redir(id) {
                 `https://store.steampowered.com/api/appdetails?appids=${game.appid}`
               );
               const extraData = extraDataRequest.data[game.appid].data;
-              totalTime += game.playtime_forever;
+              totalTime +=
+                (typeof game.playtime_forever == "number" &&
+                  game.playtime_forever) ||
+                0;
               return [
                 game.appid,
                 game.playtime_forever,
@@ -102,9 +119,11 @@ function redir(id) {
                 appdata[3]
               }" alt="Game" title="${appdata[2]}\n\n${
                 appdata[4]
-              }\n\nMy Playtime: ${(appdata[1] / 60).toFixed(
-                1
-              )} Hours\n(Click to view on Steam!)" onclick="redir(${
+              }\n\nMy Playtime: ${
+                (typeof appdata[1] == "number" &&
+                  (appdata[1] / 60).toFixed(1)) ||
+                "Unavaliable"
+              } Hours\n(Click to view on Steam!)" onclick="redir(${
                 appdata[0]
               })"     onmouseover="brightenImage(this)" 
     onmouseout="resetImage(this)"/>`;
@@ -118,7 +137,7 @@ function redir(id) {
           res.send(
             html +
               `
-            <h3>Total playtime for all ${gameCount - 1} games: ${(
+            <h3>Total playtime for all ${gameCount + includeIDs.length - 1} games: ${(
               totalTime / 60
             ).toFixed(1)} hours.</h3>
           </div>
