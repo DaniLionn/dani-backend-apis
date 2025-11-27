@@ -22,7 +22,7 @@ module.exports = {
 
     await websiteHook.send(`${sender} says: "${message}"`);
 
-    res.redirect("https://danilionn.github.io/about-me-info-site/");
+    res.redirect("https://danilionn.github.io/about/");
   },
 
   "get/website/steamgames": async function (req, res) {
@@ -121,9 +121,9 @@ function redir(id) {
                 appdata[4]
               }\n\nMy Playtime: ${
                 (typeof appdata[1] == "number" &&
-                  (appdata[1] / 60).toFixed(1)) ||
+                  `${(appdata[1] / 60).toFixed(1)} Hours`) ||
                 "Unavaliable"
-              } Hours\n(Click to view on Steam!)" onclick="redir(${
+              } \n(Click to view on Steam!)" onclick="redir(${
                 appdata[0]
               })"     onmouseover="brightenImage(this)" 
     onmouseout="resetImage(this)"/>`;
