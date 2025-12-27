@@ -173,6 +173,11 @@ module.exports = {
         301,
         `roblox://experiences/start?placeId=10234861304&gameInstanceId=${jobId}`
       );
+    } else {
+            res.redirect(
+        301,
+        `roblox://experiences/start?placeId=10234861304`
+      );
     }
   },
 
