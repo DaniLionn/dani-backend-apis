@@ -93,6 +93,8 @@ module.exports = {
         await fs.unlink(
           path.join(workingDir, note.meta.current.filename + ".wav"),
         );
+
+        await fs.unlink(downloadedPPM);
         await fs.rmdir(workingDir);
       });
     });
