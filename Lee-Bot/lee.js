@@ -3,8 +3,8 @@ const path = require("node:path");
 const {
   Client,
   Collection,
-  Events,
   GatewayIntentBits,
+  Events,
   AttachmentBuilder,
   ActivityType,
 } = require("discord.js");
