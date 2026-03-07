@@ -17,6 +17,10 @@ const {
 } = require("./scripts/utils");
 
 const token = process.env.LEE_TOKEN;
+const { Octokit } = require("octokit");
+const octokit = new Octokit({
+  auth: process.env.GITHUB_ACCESS_TOKEN,
+});
 
 // Create a new client instance
 const client = new Client({
@@ -30,8 +34,11 @@ const client = new Client({
 const currentYear = new Date().getFullYear();
 
 var randomStatuses = [
-  [ActivityType.Playing, "Lee Wars 2007"],
-  [ActivityType.Competing, "hottest bot championships " + currentYear],
+  [ActivityType.Playing, "Playing Lee Wars 2007"],
+  [
+    ActivityType.Competing,
+    "Competing in hottest bot championships " + currentYear,
+  ],
   [ActivityType.Custom, "🪵"],
   [ActivityType.Custom, "i am lee bot"],
   [
@@ -40,19 +47,23 @@ var randomStatuses = [
   ],
   [
     ActivityType.Competing,
-    `the biggest fart competition ${currentYear} (and winning 😄)`,
+    `Competing in the biggest fart competition ${currentYear} (and winning 😄)`,
   ],
   [
     ActivityType.Competing,
-    `the biggest fart competition ${currentYear} (and losing to PLACEHOLDER)`,
+    `Competing in the biggest fart competition ${currentYear} (and losing to PLACEHOLDER)`,
   ],
-  [ActivityType.Listening, "the voices"],
+  [ActivityType.Custom, "the voices."],
   [
     ActivityType.Custom,
     "is it just me or is it hot in here? *fade to picture of carrot*",
   ],
   [ActivityType.Custom, "Lee ✌️😂"],
   [ActivityType.Custom, "Eating a. Joo loo"],
+  [
+    ActivityType.Custom,
+    "woah i thing i 'm adicted im adicted to lveo i'm otu of sync self inflicted but ut fits like a glove",
+  ],
 ];
 
 const leedir = process.env.LEE_ROOT_DIR;
@@ -78,9 +89,56 @@ module.exports = {
           });
         }
 
+        async function checkForGithubUpdates(o, r) {
+          const data = await octokit.request(
+            "GET /repos/{owner}/{repo}/releases",
+            {
+              owner: o,
+              repo: r,
+            },
+          );
+
+          const latest = data.data[0];
+          const tag = latest.tag_name;
+
+          if (
+            !fs.existsSync(path.join(process.env.LEE_DATA_DIR, `last${r}Ver`))
+          ) {
+            fs.writeFileSync(
+              path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
+              "v0",
+            );
+          }
+
+          if (
+            fs.readFileSync(
+              path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
+            ) != tag
+          ) {
+            fs.writeFileSync(
+              path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
+              tag,
+            );
+
+            client.channels.cache
+              .get("1479729565810163834")
+              .send(
+                `<@599641108116406300>\nNew ${r} update!\n${latest.name}\nhttps://github.com/${o}/${r}/releases/latest`,
+              );
+          }
+        }
+
+        async function updateCheck() {
+          await checkForGithubUpdates("DS-Homebrew", "TwilightMenu");
+          await checkForGithubUpdates("mq1", "TinyWiiBackupManager");
+        }
+
         console.log(`[lee.js:74] Ready! Logged in as ${readyClient.user.tag}`);
         require("./scripts/deploy-commands");
         await setStatus();
+        await updateCheck();
+
+        setInterval(updateCheck, 3_600_000);
         setInterval(setStatus, 5 * 60_000);
       });
 
@@ -182,6 +240,7 @@ module.exports = {
           return;
         }
 
+        //enforce the "no letter f" rule in the phighting channel in The Hakurei Family
         if (message.channel.id === "1417504755319701644") {
           //ignore links
           if (
