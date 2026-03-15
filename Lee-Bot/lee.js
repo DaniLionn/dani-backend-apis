@@ -131,6 +131,7 @@ module.exports = {
         async function updateCheck() {
           await checkForGithubUpdates("DS-Homebrew", "TwilightMenu");
           await checkForGithubUpdates("mq1", "TinyWiiBackupManager");
+          await checkForGithubUpdates("solosky", "pixl.js");
         }
 
         console.log(`[lee.js:74] Ready! Logged in as ${readyClient.user.tag}`);
