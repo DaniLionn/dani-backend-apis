@@ -71,7 +71,7 @@ const leedir = process.env.LEE_ROOT_DIR;
 module.exports = {
   startLee: function () {
     async function main() {
-      console.log("[lee.js:64] Starting lee bot!");
+      console.log("[lee.js:74] Starting lee bot!");
 
       client.once(Events.ClientReady, async (readyClient) => {
         async function setStatus() {
@@ -89,8 +89,10 @@ module.exports = {
           });
         }
 
-        async function checkForGithubUpdates(o, r) {
-          const data = await octokit.request(
+        async function checkForGithubUpdates(data) {
+
+          async function updateCheck(o,r) {
+                      const data = await octokit.request(
             "GET /repos/{owner}/{repo}/releases",
             {
               owner: o,
@@ -126,12 +128,22 @@ module.exports = {
                 `<@599641108116406300>\nNew ${r} update!\n${latest.name}\nhttps://github.com/${o}/${r}/releases/latest`,
               );
           }
+          }
+
+          data.forEach(async (repo)=> {
+
+            await updateCheck(repo.owner, repo.name)
+
+          })
+
         }
 
         async function updateCheck() {
-          await checkForGithubUpdates("DS-Homebrew", "TwilightMenu");
-          await checkForGithubUpdates("mq1", "TinyWiiBackupManager");
-          await checkForGithubUpdates("solosky", "pixl.js");
+          await checkForGithubUpdates([
+            {owner: "DS-Homebrew", name: "TwilightMenu"},
+            {owner: "mq1", name: "TinyWiiBackupManager"},
+            {owner: "solosky", name: "pixl.js"},
+          ]);
         }
 
         console.log(`[lee.js:74] Ready! Logged in as ${readyClient.user.tag}`);
