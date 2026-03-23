@@ -141,6 +141,7 @@ module.exports = {
         async function updateCheck() {
           await checkForGithubUpdates([
             {owner: "DS-Homebrew", name: "TwilightMenu"},
+            {owner: "DS-Homebrew", name: "GodMode9i"},
             {owner: "mq1", name: "TinyWiiBackupManager"},
             {owner: "solosky", name: "pixl.js"},
           ]);
