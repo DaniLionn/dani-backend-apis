@@ -153,15 +153,19 @@ module.exports = {
           amount = Math.floor(userData.leebux * 0.05);
           console.log(amount);
           userData.leebux += amount;
-          interaction.reply(crime.win.replace("%m", amount));
+          interaction.reply(
+            crime.win.replace("%m", amount.toLocaleString("en-US")),
+          );
         } else {
           amount = Math.floor(userData.leebux * 0.1);
           console.log(amount);
           userData.leebux -= amount;
-          interaction.reply(crime.lose.replace("%m", amount));
+          interaction.reply(
+            crime.lose.replace("%m", amount.toLocaleString("en-US")),
+          );
         }
       } else {
-        interaction.reply(crime.win);
+        interaction.reply(crime.win.toLocaleString("en-US"));
       }
 
       writeUserData(userData, interaction.user.id);
