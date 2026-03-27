@@ -156,7 +156,7 @@ module.exports = {
             crime.win.replace("%m", amount.toLocaleString("en-US")),
           );
         } else {
-          amount = Math.floor(250 + userData.leebux * 0.001);
+          amount = Math.floor(250 + userData.leebux * 0.005);
           console.log(amount);
           userData.leebux -= amount;
           interaction.reply(
