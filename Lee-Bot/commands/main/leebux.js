@@ -5,7 +5,7 @@ const {
   ButtonStyle,
   SlashCommandBuilder,
 } = require("discord.js");
-const cards = ["🂡", "🂢", "🂣", "🂤", "🂥", "🂦", "🂧", "🂨", "🂩"];
+const cards = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("leebux")
@@ -358,9 +358,9 @@ module.exports = {
         content:
           "You bet " +
           amount.toLocaleString("en-US") +
-          "<:leebux:1431469715586416771>  on a high-low card game!\nThe first card is\n" +
+          "<:leebux:1431469715586416771>  on a high-low card game!\nThe number on the first card is\n" +
           card1 +
-          "\nWill the next card be higher or lower?\n-# By the way, the A card (Ace) is equal to 1.",
+          "\nWill the next card be higher or lower?",
         components: [row],
       });
 
@@ -392,7 +392,7 @@ module.exports = {
         if (result === "equal") {
           await interaction.editReply({
             content:
-              "The next card is... \n# " +
+              "The number on the next card is... \n# " +
               card2 +
               "!\nIt's a tie! You neither win nor lose any leebux.",
             components: [],
@@ -400,7 +400,7 @@ module.exports = {
         } else if (userChoice === result) {
           await interaction.editReply({
             content:
-              "The next card is... \n# " +
+              "The number on the next card is... \n# " +
               card2 +
               "!\nYou guessed correctly! You've won " +
               (amount * 2).toLocaleString("en-US") +
@@ -412,7 +412,7 @@ module.exports = {
         } else {
           await interaction.editReply({
             content:
-              "The next card is... \n# " +
+              "The number on the next card is... \n# " +
               card2 +
               "...\nUnlucky, you guessed wrong! You've lost " +
               amount.toLocaleString("en-US") +
