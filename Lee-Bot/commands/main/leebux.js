@@ -146,14 +146,14 @@ module.exports = {
         const winner = Math.random() > 0.25;
         var amount;
         if (winner) {
-          amount = Math.floor(userData.leebux * 0.001);
+          amount = Math.floor(250 + userData.leebux * 0.001);
           console.log(amount);
           userData.leebux += amount;
           interaction.reply(
             crime.win.replace("%m", amount.toLocaleString("en-US")),
           );
         } else {
-          amount = Math.floor(userData.leebux * 0.01);
+          amount = Math.floor(250 + userData.leebux * 0.001);
           console.log(amount);
           userData.leebux -= amount;
           interaction.reply(
@@ -253,14 +253,14 @@ module.exports = {
       console.log(now, userData.daily_reset);
       if (now >= userData.daily_reset) {
         userData.daily_reset = now + 86400;
-        userData.leebux += 300 + userData.inventory["lee_plush"] || 0 * 5;
+        const baseValue = 300;
+        var value = baseValue + (userData.inventory["lee_plush"] || 0) * 5;
+        userData.leebux += value;
         console.log(userData);
         writeUserData(userData, interaction.user.id);
         await interaction.reply(
           "Daily " +
-            (300 + userData.inventory["lee_plush"] || 0 * 5).toLocaleString(
-              "en-US",
-            ) +
+            value.toLocaleString("en-US") +
             " <:leebux:1431469715586416771> obtained!",
         );
       } else {
