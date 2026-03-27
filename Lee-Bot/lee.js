@@ -67,7 +67,7 @@ var randomStatuses = [
 ];
 
 const leedir = process.env.LEE_ROOT_DIR;
-
+var turns = 0;
 module.exports = {
   startLee: function () {
     async function main() {
@@ -86,37 +86,37 @@ module.exports = {
           }
 
           function randomizeBanner() {
-
             const banners = [
-              './Lee-Bot/assets/banners/banner1.png',
-               './Lee-Bot/assets/banners/banner2.jpg',
-                './Lee-Bot/assets/banners/banner3.jpg',
-                 './Lee-Bot/assets/banners/banner4.jpg',
-                  './Lee-Bot/assets/banners/banner5.png',
-                   './Lee-Bot/assets/banners/banner6.png',
-                    './Lee-Bot/assets/banners/banner7.png',
-                     './Lee-Bot/assets/banners/banner8.png',
-                      './Lee-Bot/assets/banners/banner9.png',
-            ]
-            const random = banners[Math.floor(Math.random() * banners.length) ]
-            console.log(random)
-            client.user.setBanner(random)
-
-
+              "./Lee-Bot/assets/banners/banner1.png",
+              "./Lee-Bot/assets/banners/banner2.jpg",
+              "./Lee-Bot/assets/banners/banner3.jpg",
+              "./Lee-Bot/assets/banners/banner4.jpg",
+              "./Lee-Bot/assets/banners/banner5.png",
+              "./Lee-Bot/assets/banners/banner6.png",
+              "./Lee-Bot/assets/banners/banner7.png",
+              "./Lee-Bot/assets/banners/banner8.png",
+              "./Lee-Bot/assets/banners/banner9.png",
+            ];
+            const random = banners[Math.floor(Math.random() * banners.length)];
+            console.log(random);
+            client.user.setBanner(random);
           }
 
-          if (Math.random() <= .15) {
-            client.user.setAvatar("./Lee-Bot/assets/lee_rare.jpg")
-            randomizeBanner()
-          } else if (Math.random() <= .05) {
-            client.user.setAvatar("./Lee-Bot/assets/scag-takeover.gif")
-            client.user.setBanner('./Lee-Bot/assets/scag.png')
+          if (turns == 0) {
+            turns = Math.floor(Math.random() * 3) + 2;
+            if (Math.random() <= 0.15) {
+              client.user.setAvatar("./Lee-Bot/assets/lee_rare.jpg");
+              randomizeBanner();
+            } else if (Math.random() <= 0.05) {
+              client.user.setAvatar("./Lee-Bot/assets/scag-takeover.gif");
+              client.user.setBanner("./Lee-Bot/assets/scag.png");
+            } else {
+              client.user.setAvatar("./Lee-Bot/assets/lee_new.png");
+              randomizeBanner();
+            }
           } else {
-            client.user.setAvatar("./Lee-Bot/assets/lee_new.png")
-            randomizeBanner()
+            turns -= 1;
           }
-
-         
 
           client.user.setPresence({
             activities: [{ name: randomStatus[1], type: randomStatus[0] }],
@@ -124,60 +124,56 @@ module.exports = {
         }
 
         async function checkForGithubUpdates(data) {
-
-          async function updateCheck(o,r) {
-                      const data = await octokit.request(
-            "GET /repos/{owner}/{repo}/releases",
-            {
-              owner: o,
-              repo: r,
-            },
-          );
-
-          const latest = data.data[0];
-          const tag = latest.tag_name;
-
-          if (
-            !fs.existsSync(path.join(process.env.LEE_DATA_DIR, `last${r}Ver`))
-          ) {
-            fs.writeFileSync(
-              path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
-              "v0",
-            );
-          }
-
-          if (
-            fs.readFileSync(
-              path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
-            ) != tag
-          ) {
-            fs.writeFileSync(
-              path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
-              tag,
+          async function updateCheck(o, r) {
+            const data = await octokit.request(
+              "GET /repos/{owner}/{repo}/releases",
+              {
+                owner: o,
+                repo: r,
+              },
             );
 
-            client.channels.cache
-              .get("1479729565810163834")
-              .send(
-                `<@599641108116406300>\nNew ${r} update!\n${latest.name}\nhttps://github.com/${o}/${r}/releases/latest`,
+            const latest = data.data[0];
+            const tag = latest.tag_name;
+
+            if (
+              !fs.existsSync(path.join(process.env.LEE_DATA_DIR, `last${r}Ver`))
+            ) {
+              fs.writeFileSync(
+                path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
+                "v0",
               );
+            }
+
+            if (
+              fs.readFileSync(
+                path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
+              ) != tag
+            ) {
+              fs.writeFileSync(
+                path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
+                tag,
+              );
+
+              client.channels.cache
+                .get("1479729565810163834")
+                .send(
+                  `<@599641108116406300>\nNew ${r} update!\n${latest.name}\nhttps://github.com/${o}/${r}/releases/latest`,
+                );
+            }
           }
-          }
 
-          data.forEach(async (repo)=> {
-
-            await updateCheck(repo.owner, repo.name)
-
-          })
-
+          data.forEach(async (repo) => {
+            await updateCheck(repo.owner, repo.name);
+          });
         }
 
         async function updateCheck() {
           await checkForGithubUpdates([
-            {owner: "DS-Homebrew", name: "TwilightMenu"},
-            {owner: "DS-Homebrew", name: "GodMode9i"},
-            {owner: "mq1", name: "TinyWiiBackupManager"},
-            {owner: "solosky", name: "pixl.js"},
+            { owner: "DS-Homebrew", name: "TwilightMenu" },
+            { owner: "DS-Homebrew", name: "GodMode9i" },
+            { owner: "mq1", name: "TinyWiiBackupManager" },
+            { owner: "solosky", name: "pixl.js" },
           ]);
         }
 
