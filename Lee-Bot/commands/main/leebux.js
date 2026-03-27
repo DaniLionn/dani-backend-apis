@@ -358,7 +358,7 @@ module.exports = {
         content:
           "You bet " +
           amount.toLocaleString("en-US") +
-          "<:leebux:1431469715586416771>  on a high-low card game!\nThe first card is\n# " +
+          "<:leebux:1431469715586416771>  on a high-low card game!\nThe first card is\n" +
           card1 +
           "\nWill the next card be higher or lower?\n-# By the way, the A card (Ace) is equal to 1.",
         components: [row],
