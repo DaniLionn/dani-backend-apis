@@ -146,7 +146,7 @@ module.exports = {
       if (useRareCrime) {
         interaction.reply(rarecrime);
       } else {
-        const winner = Math.random() > 0.25;
+        const winner = Math.random() < 0.67; //this is NOT a 6 7 joke 😤
         var amount;
         if (winner) {
           amount = Math.floor(250 + userData.leebux * 0.001);
