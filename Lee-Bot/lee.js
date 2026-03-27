@@ -104,6 +104,7 @@ module.exports = {
 
           if (randomStatus == randomStatuses[7]) {
             client.user.setAvatar("./Lee-Bot/assets/lee_voices.png");
+            turns = 1;
           } else {
             if (turns == 0) {
               turns = Math.floor(Math.random() * 3) + 2;

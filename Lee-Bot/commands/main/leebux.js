@@ -5,6 +5,30 @@ const {
   ButtonStyle,
   SlashCommandBuilder,
 } = require("discord.js");
+
+const crimes = [
+  {
+    win: "You broke into a jewlery store and stole %m<:leebux:1431469715586416771>!",
+    lose: "You broke into a jewlery store but tripped the alarm and got arrested. You had to pay %m<:leebux:1431469715586416771> for bail.",
+  },
+  {
+    win: "You pretended to be Microsoft Support and scammed an old lady out of %m<:leebux:1431469715586416771>.",
+
+    lose: "You pretended to be Microsoft Support and tried to scam an old lady, but she turned out to be a scambaiter! You sent them your banking details without knowing and lost %m<:leebux:1431469715586416771> due to your account getting reported and closed.",
+  },
+  {
+    win: "You were hired to kill somebody for %m<:leebux:1431469715586416771> and sucessfully got the job done. Was that *really* worth it?",
+    lose: "You were hired to kill somebody, but got arrested for murder. You lost %m<:leebux:1431469715586416771>.",
+  },
+  {
+    win: "You carjacked somebody and sold their car for %m<:leebux:1431469715586416771>.",
+    lose: "You carjacked somebody but ended up crashing the car. You had to pay %m<:leebux:1431469715586416771> for your hospital bills.",
+  },
+  {
+    win: "You hacked into a wealthy Roblox player's account and stole 2,000,000<:robux:1487228952513613895>! You can't use that here, but at least you can buy a dominus!",
+  },
+];
+
 const cards = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 module.exports = {
   data: new SlashCommandBuilder()
@@ -18,6 +42,13 @@ module.exports = {
     )
     .addSubcommand((subcommand) =>
       subcommand.setName("daily").setDescription("daily leebux"),
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("crime")
+        .setDescription(
+          "commit a crime. has a 25% chance of resulting in you losing 10% of your money",
+        ),
     )
     .addSubcommand((subcommand) =>
       subcommand.setName("shop").setDescription("buy goods"),
@@ -109,6 +140,31 @@ module.exports = {
           Math.floor(userData.leebux).toLocaleString("en-US") +
           " <:leebux:1431469715586416771>",
       );
+      return;
+    }
+
+    if (subcommand == "crime") {
+      const crime = crimes[Math.floor(Math.random() * crimes.length)];
+
+      if (crime.lose != undefined) {
+        const winner = Math.random() > 0.25;
+        var amount;
+        if (winner) {
+          amount = Math.floor(userData.leebux * 0.05);
+          console.log(amount);
+          userData.leebux += amount;
+          interaction.reply(crime.win.replace("%m", amount));
+        } else {
+          amount = Math.floor(userData.leebux * 0.1);
+          console.log(amount);
+          userData.leebux -= amount;
+          interaction.reply(crime.lose.replace("%m", amount));
+        }
+      } else {
+        interaction.reply(crime.win);
+      }
+
+      writeUserData(userData, interaction.user.id);
       return;
     }
 
