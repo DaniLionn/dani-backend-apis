@@ -102,22 +102,25 @@ module.exports = {
             client.user.setBanner(random);
           }
 
-          if (turns == 0) {
-            turns = Math.floor(Math.random() * 3) + 2;
-            if (Math.random() <= 0.15) {
-              client.user.setAvatar("./Lee-Bot/assets/lee_rare.jpg");
-              randomizeBanner();
-            } else if (Math.random() <= 0.05) {
-              client.user.setAvatar("./Lee-Bot/assets/scag-takeover.gif");
-              client.user.setBanner("./Lee-Bot/assets/scag.png");
-            } else {
-              client.user.setAvatar("./Lee-Bot/assets/lee_new.png");
-              randomizeBanner();
-            }
+          if (randomStatus == randomStatuses[7]) {
+            client.user.setAvatar("./Lee-Bot/assets/lee_voices.png");
           } else {
-            turns -= 1;
+            if (turns == 0) {
+              turns = Math.floor(Math.random() * 3) + 2;
+              if (Math.random() <= 0.15) {
+                client.user.setAvatar("./Lee-Bot/assets/lee_rare.jpg");
+                randomizeBanner();
+              } else if (Math.random() <= 0.05) {
+                client.user.setAvatar("./Lee-Bot/assets/scag-takeover.gif");
+                client.user.setBanner("./Lee-Bot/assets/scag.png");
+              } else {
+                client.user.setAvatar("./Lee-Bot/assets/lee_new.png");
+                randomizeBanner();
+              }
+            } else {
+              turns -= 1;
+            }
           }
-
           client.user.setPresence({
             activities: [{ name: randomStatus[1], type: randomStatus[0] }],
           });
