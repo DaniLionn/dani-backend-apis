@@ -84,6 +84,40 @@ module.exports = {
               randomGuy.displayName || randomGuy.username,
             );
           }
+
+          function randomizeBanner() {
+
+            const banners = [
+              './Lee-Bot/assets/banners/banner1.png',
+               './Lee-Bot/assets/banners/banner2.jpg',
+                './Lee-Bot/assets/banners/banner3.jpg',
+                 './Lee-Bot/assets/banners/banner4.jpg',
+                  './Lee-Bot/assets/banners/banner5.png',
+                   './Lee-Bot/assets/banners/banner6.png',
+                    './Lee-Bot/assets/banners/banner7.png',
+                     './Lee-Bot/assets/banners/banner8.png',
+                      './Lee-Bot/assets/banners/banner9.png',
+            ]
+            const random = banners[Math.floor(Math.random() * banners.length) ]
+            console.log(random)
+            client.user.setBanner(random)
+
+
+          }
+
+          if (Math.random() <= .15) {
+            client.user.setAvatar("./Lee-Bot/assets/lee_rare.jpg")
+            randomizeBanner()
+          } else if (Math.random() <= .05) {
+            client.user.setAvatar("./Lee-Bot/assets/scag-takeover.gif")
+            client.user.setBanner('./Lee-Bot/assets/scag.png')
+          } else {
+            client.user.setAvatar("./Lee-Bot/assets/lee_new.png")
+            randomizeBanner()
+          }
+
+         
+
           client.user.setPresence({
             activities: [{ name: randomStatus[1], type: randomStatus[0] }],
           });
@@ -176,7 +210,7 @@ module.exports = {
             client.commands.set(command.data.name, command);
           } else {
             console.log(
-              `[lee.js:100] [WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`,
+              `[lee.js:179] [WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`,
             );
           }
         }
