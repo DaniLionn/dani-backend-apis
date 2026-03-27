@@ -44,11 +44,7 @@ module.exports = {
       subcommand.setName("daily").setDescription("daily leebux"),
     )
     .addSubcommand((subcommand) =>
-      subcommand
-        .setName("crime")
-        .setDescription(
-          "commit a crime. has a 25% chance of resulting in you losing 10% of your money",
-        ),
+      subcommand.setName("crime").setDescription("commit a crime"),
     )
     .addSubcommand((subcommand) =>
       subcommand.setName("shop").setDescription("buy goods"),
@@ -150,14 +146,14 @@ module.exports = {
         const winner = Math.random() > 0.25;
         var amount;
         if (winner) {
-          amount = Math.floor(userData.leebux * 0.05);
+          amount = Math.floor(userData.leebux * 0.001);
           console.log(amount);
           userData.leebux += amount;
           interaction.reply(
             crime.win.replace("%m", amount.toLocaleString("en-US")),
           );
         } else {
-          amount = Math.floor(userData.leebux * 0.1);
+          amount = Math.floor(userData.leebux * 0.01);
           console.log(amount);
           userData.leebux -= amount;
           interaction.reply(
