@@ -24,10 +24,9 @@ const crimes = [
     win: "You carjacked somebody and sold their car for %m<:leebux:1431469715586416771>.",
     lose: "You carjacked somebody but ended up crashing the car. You had to pay %m<:leebux:1431469715586416771> for your hospital bills.",
   },
-  {
-    win: "You hacked into a wealthy Roblox player's account and stole 2,000,000<:robux:1487228952513613895>! You can't use that here, but at least you can buy a dominus!",
-  },
 ];
+const rarecrime =
+  "You hacked into a wealthy Roblox player's account and stole 2,000,000<:robux:1487228952513613895>! You can't use that here, but at least you can buy a dominus!";
 
 const cards = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 module.exports = {
@@ -140,9 +139,13 @@ module.exports = {
     }
 
     if (subcommand == "crime") {
-      const crime = crimes[Math.floor(Math.random() * crimes.length)];
+      var crime = crimes[Math.floor(Math.random() * crimes.length)];
 
-      if (crime.lose != undefined) {
+      const useRareCrime = Math.random() <= 0.01;
+
+      if (useRareCrime) {
+        interaction.reply(rarecrime);
+      } else {
         const winner = Math.random() > 0.25;
         var amount;
         if (winner) {
@@ -160,8 +163,6 @@ module.exports = {
             crime.lose.replace("%m", amount.toLocaleString("en-US")),
           );
         }
-      } else {
-        interaction.reply(crime.win.toLocaleString("en-US"));
       }
 
       writeUserData(userData, interaction.user.id);
