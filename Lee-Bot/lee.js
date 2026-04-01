@@ -32,12 +32,11 @@ const client = new Client({
   ],
 });
 
-const date = new Date()
+const date = new Date();
 
 const currentYear = date.getFullYear();
 const Day = date.getDate();
 const Month = date.getMonth();
-
 
 var randomStatuses = [
   [ActivityType.Playing, "Playing Lee Wars 2007"],
@@ -81,25 +80,23 @@ module.exports = {
 
       client.once(Events.ClientReady, async (readyClient) => {
         async function setStatus() {
-
-            console.log(Day, Month)
+          console.log(Day, Month);
           if (Day == 1 && Month == 3) {
             if (client.user.username != "Neon Green") {
-              await client.user.setUsername("Neon Green")
-
+              await client.user.setUsername("Neon Green");
             }
 
-                                             await  client.user.setPresence({
-            activities: [{ name: "Green", type: ActivityType.Custom }],
-          })
-         await client.user.setBanner( "Lee-Bot/assets/neon green.png")
-        await  client.user.setAvatar( "Lee-Bot/assets/neon green.png")
+            await client.user.setPresence({
+              activities: [{ name: "Green", type: ActivityType.Custom }],
+            });
+            await client.user.setBanner("Lee-Bot/assets/neon green.png");
+            await client.user.setAvatar("Lee-Bot/assets/neon green.png");
 
-          return
+            return;
           }
 
           if (client.user.username == "Neon Green") {
-await client.user.setUsername("Lee Joe Smith")
+            await client.user.setUsername("Lee Joe Smith");
           }
 
           const randomStatus = randomSelect(randomStatuses);
@@ -136,13 +133,15 @@ await client.user.setUsername("Lee Joe Smith")
             if (turns == 0) {
               turns = Math.floor(Math.random() * 3) + 2;
               if (Math.random() <= 0.15) {
-              await  client.user.setAvatar("./Lee-Bot/assets/lee_rare.jpg");
+                await client.user.setAvatar("./Lee-Bot/assets/lee_rare.jpg");
                 randomizeBanner();
               } else if (Math.random() <= 0.05) {
-              await  client.user.setAvatar("./Lee-Bot/assets/scag-takeover.gif");
+                await client.user.setAvatar(
+                  "./Lee-Bot/assets/scag-takeover.gif",
+                );
                 client.user.setBanner("./Lee-Bot/assets/scag.png");
               } else {
-               await client.user.setAvatar("./Lee-Bot/assets/lee_new.png");
+                await client.user.setAvatar("./Lee-Bot/assets/lee_new.png");
                 randomizeBanner();
               }
             } else {
