@@ -20,7 +20,8 @@
     "flipnote.js": "^6.3.0",
     "node-html-parser": "^7.0.1",
     "nodejs-file-downloader": "^4.13.0",
-    "octokit": "^5.0.5"
+    "octokit": "^5.0.5",
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
     "discord-webhook-node": "^1.1.8",

@@ -31,7 +31,13 @@ const client = new Client({
     GatewayIntentBits.GuildMembers,
   ],
 });
-const currentYear = new Date().getFullYear();
+
+const date = new Date()
+
+const currentYear = date.getFullYear();
+const Day = date.getDate();
+const Month = date.getMonth();
+
 
 var randomStatuses = [
   [ActivityType.Playing, "Playing Lee Wars 2007"],
@@ -75,6 +81,22 @@ module.exports = {
 
       client.once(Events.ClientReady, async (readyClient) => {
         async function setStatus() {
+
+            console.log(Day, Month)
+          if (Day == 1 && Month == 4) {
+            client.user.setUsername("Neon Green")
+                     client.user.setPresence({
+            activities: [{ name: "Green", type: ActivityType.Custom }],
+          })
+          client.user.setBanner( "Lee-Bot/assets/neon green.png")
+          client.user.setAvatar( "Lee-Bot/assets/neon green.png")
+          return
+          }
+
+          if (client.user.username == "Neon Green") {
+client.user.setUsername("Lee Joe Smith")
+          }
+
           const randomStatus = randomSelect(randomStatuses);
 
           if (randomStatus === randomStatuses[6]) {
