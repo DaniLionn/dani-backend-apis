@@ -86,12 +86,14 @@ module.exports = {
           if (Day == 1 && Month == 3) {
             if (client.user.username != "Neon Green") {
               await client.user.setUsername("Neon Green")
-                                 await  client.user.setPresence({
+
+            }
+
+                                             await  client.user.setPresence({
             activities: [{ name: "Green", type: ActivityType.Custom }],
           })
          await client.user.setBanner( "Lee-Bot/assets/neon green.png")
         await  client.user.setAvatar( "Lee-Bot/assets/neon green.png")
-            }
 
           return
           }
