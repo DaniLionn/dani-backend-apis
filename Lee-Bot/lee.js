@@ -83,18 +83,18 @@ module.exports = {
         async function setStatus() {
 
             console.log(Day, Month)
-          if (Day == 1 && Month == 4) {
-            client.user.setUsername("Neon Green")
-                     client.user.setPresence({
+          if (Day == 1 && Month == 3) {
+            await client.user.setUsername("Neon Green")
+                   await  client.user.setPresence({
             activities: [{ name: "Green", type: ActivityType.Custom }],
           })
-          client.user.setBanner( "Lee-Bot/assets/neon green.png")
-          client.user.setAvatar( "Lee-Bot/assets/neon green.png")
+         await client.user.setBanner( "Lee-Bot/assets/neon green.png")
+        await  client.user.setAvatar( "Lee-Bot/assets/neon green.png")
           return
           }
 
           if (client.user.username == "Neon Green") {
-client.user.setUsername("Lee Joe Smith")
+await client.user.setUsername("Lee Joe Smith")
           }
 
           const randomStatus = randomSelect(randomStatuses);
@@ -125,26 +125,26 @@ client.user.setUsername("Lee Joe Smith")
           }
 
           if (randomStatus == randomStatuses[7]) {
-            client.user.setAvatar("./Lee-Bot/assets/lee_voices.png");
+            await client.user.setAvatar("./Lee-Bot/assets/lee_voices.png");
             turns = 1;
           } else {
             if (turns == 0) {
               turns = Math.floor(Math.random() * 3) + 2;
               if (Math.random() <= 0.15) {
-                client.user.setAvatar("./Lee-Bot/assets/lee_rare.jpg");
+              await  client.user.setAvatar("./Lee-Bot/assets/lee_rare.jpg");
                 randomizeBanner();
               } else if (Math.random() <= 0.05) {
-                client.user.setAvatar("./Lee-Bot/assets/scag-takeover.gif");
+              await  client.user.setAvatar("./Lee-Bot/assets/scag-takeover.gif");
                 client.user.setBanner("./Lee-Bot/assets/scag.png");
               } else {
-                client.user.setAvatar("./Lee-Bot/assets/lee_new.png");
+               await client.user.setAvatar("./Lee-Bot/assets/lee_new.png");
                 randomizeBanner();
               }
             } else {
               turns -= 1;
             }
           }
-          client.user.setPresence({
+          await client.user.setPresence({
             activities: [{ name: randomStatus[1], type: randomStatus[0] }],
           });
         }
