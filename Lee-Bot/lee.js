@@ -203,6 +203,8 @@ module.exports = {
             { owner: "DS-Homebrew", name: "GodMode9i" },
             { owner: "mq1", name: "TinyWiiBackupManager" },
             { owner: "solosky", name: "pixl.js" },
+            { owner: "LNH-team", name: "pico-loader" },
+            { owner: "LNH-team", name: "pico-launcher" },
           ]);
         }
 
