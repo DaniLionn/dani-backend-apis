@@ -91,66 +91,65 @@ module.exports = {
             });
             await client.user.setBanner("Lee-Bot/assets/neon green.png");
             await client.user.setAvatar("Lee-Bot/assets/neon green.png");
-
-            return;
-          }
-
-          if (client.user.username == "Neon Green") {
-            await client.user.setUsername("Lee Joe Smith");
-          }
-
-          const randomStatus = randomSelect(randomStatuses);
-
-          if (randomStatus === randomStatuses[6]) {
-            const randomGuy = await randomUser(client);
-            randomStatus[1] = randomStatuses[6][1].replace(
-              "PLACEHOLDER",
-              randomGuy.displayName || randomGuy.username,
-            );
-          }
-
-          function randomizeBanner() {
-            const banners = [
-              "./Lee-Bot/assets/banners/banner1.png",
-              "./Lee-Bot/assets/banners/banner2.jpg",
-              "./Lee-Bot/assets/banners/banner3.jpg",
-              "./Lee-Bot/assets/banners/banner4.jpg",
-              "./Lee-Bot/assets/banners/banner5.png",
-              "./Lee-Bot/assets/banners/banner6.png",
-              "./Lee-Bot/assets/banners/banner7.png",
-              "./Lee-Bot/assets/banners/banner8.png",
-              "./Lee-Bot/assets/banners/banner9.png",
-            ];
-            const random = banners[Math.floor(Math.random() * banners.length)];
-            console.log(random);
-            client.user.setBanner(random);
-          }
-
-          if (randomStatus == randomStatuses[7]) {
-            await client.user.setAvatar("./Lee-Bot/assets/lee_voices.png");
-            turns = 1;
           } else {
-            if (turns == 0) {
-              turns = Math.floor(Math.random() * 3) + 2;
-              if (Math.random() <= 0.15) {
-                await client.user.setAvatar("./Lee-Bot/assets/lee_rare.jpg");
-                randomizeBanner();
-              } else if (Math.random() <= 0.05) {
-                await client.user.setAvatar(
-                  "./Lee-Bot/assets/scag-takeover.gif",
-                );
-                client.user.setBanner("./Lee-Bot/assets/scag.png");
-              } else {
-                await client.user.setAvatar("./Lee-Bot/assets/lee_new.png");
-                randomizeBanner();
-              }
-            } else {
-              turns -= 1;
+            if (client.user.username != "Lee Joe Smith") {
+              await client.user.setUsername("Lee Joe Smith");
             }
+
+            const randomStatus = randomSelect(randomStatuses);
+
+            if (randomStatus === randomStatuses[6]) {
+              const randomGuy = await randomUser(client);
+              randomStatus[1] = randomStatuses[6][1].replace(
+                "PLACEHOLDER",
+                randomGuy.displayName || randomGuy.username,
+              );
+            }
+
+            function randomizeBanner() {
+              const banners = [
+                "./Lee-Bot/assets/banners/banner1.png",
+                "./Lee-Bot/assets/banners/banner2.jpg",
+                "./Lee-Bot/assets/banners/banner3.jpg",
+                "./Lee-Bot/assets/banners/banner4.jpg",
+                "./Lee-Bot/assets/banners/banner5.png",
+                "./Lee-Bot/assets/banners/banner6.png",
+                "./Lee-Bot/assets/banners/banner7.png",
+                "./Lee-Bot/assets/banners/banner8.png",
+                "./Lee-Bot/assets/banners/banner9.png",
+              ];
+              const random =
+                banners[Math.floor(Math.random() * banners.length)];
+              console.log(random);
+              client.user.setBanner(random);
+            }
+
+            if (randomStatus == randomStatuses[7]) {
+              await client.user.setAvatar("./Lee-Bot/assets/lee_voices.png");
+              turns = 1;
+            } else {
+              if (turns == 0) {
+                turns = Math.floor(Math.random() * 3) + 2;
+                if (Math.random() <= 0.15) {
+                  await client.user.setAvatar("./Lee-Bot/assets/lee_rare.jpg");
+                  randomizeBanner();
+                } else if (Math.random() <= 0.05) {
+                  await client.user.setAvatar(
+                    "./Lee-Bot/assets/scag-takeover.gif",
+                  );
+                  client.user.setBanner("./Lee-Bot/assets/scag.png");
+                } else {
+                  await client.user.setAvatar("./Lee-Bot/assets/lee_new.png");
+                  randomizeBanner();
+                }
+              } else {
+                turns -= 1;
+              }
+            }
+            client.user.setPresence({
+              activities: [{ name: randomStatus[1], type: randomStatus[0] }],
+            });
           }
-          await client.user.setPresence({
-            activities: [{ name: randomStatus[1], type: randomStatus[0] }],
-          });
         }
 
         async function checkForGithubUpdates(data) {
