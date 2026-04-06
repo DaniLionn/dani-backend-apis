@@ -77,7 +77,7 @@ module.exports = {
           embed.setFooter({ text: animalID });
           await interaction.editReply({ embeds: [embed], files: [filePath] });
 
-          await fs.promises.unlink(image);
+          await fs.promises.unlink(filePath);
         },
       );
     } else {
