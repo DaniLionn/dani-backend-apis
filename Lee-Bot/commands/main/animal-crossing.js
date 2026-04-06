@@ -29,7 +29,7 @@ const ids = [
   ["lon", 9], //lion
   ["mnk", 10], //monkey
   ["mus", 20], //mouse
-  ["ocp", 5], //kangaroo
+  ["ocp", 5], //octopus
   ["ost", 11], //ostrich
   ["pbr", 11], //eagle
   ["pgn", 15], //penguin
