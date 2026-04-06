@@ -37,10 +37,10 @@ module.exports = {
 
       const image = await download(animal.photoImage, process.env.LEE_DATA_DIR);
 
-      await interaction.reply({ embeds: [embed], files: [image] });
+      await interaction.editReply({ embeds: [embed], files: [image] });
       await fs.promises.unlink(image);
     } else {
-      await interaction.reply("No animal found!");
+      await interaction.editReply("No animal found!");
     }
   },
 };
