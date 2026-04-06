@@ -65,18 +65,21 @@ module.exports = {
     console.log(animal);
 
     if (animal) {
-      const image = await download(animal.photoImage, process.env.LEE_DATA_DIR);
+      await download(animal.photoImage, process.env.LEE_DATA_DIR).then(
+        async (filePath) => {
+          console.log(image);
+          const embed = new EmbedBuilder();
 
-      const embed = new EmbedBuilder();
+          embed.setTitle(animal.name);
+          embed.setDescription(`*"${animal.favoriteSaying}"*`);
+          embed.setColor(animal.nameColor);
+          embed.setImage(filePath);
+          embed.setFooter({ text: animalID });
+          await interaction.editReply({ embeds: [embed], files: [filePath] });
 
-      embed.setTitle(animal.name);
-      embed.setDescription(`*"${animal.favoriteSaying}"*`);
-      embed.setColor(animal.nameColor);
-      embed.setImage(image);
-      embed.setFooter({ text: animalID });
-      await interaction.editReply({ embeds: [embed], files: [image] });
-
-      await fs.promises.unlink(image);
+          await fs.promises.unlink(image);
+        },
+      );
     } else {
       await interaction.editReply("No animal found!");
     }
