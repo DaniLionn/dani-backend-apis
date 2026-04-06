@@ -80,7 +80,6 @@ module.exports = {
 
       client.once(Events.ClientReady, async (readyClient) => {
         async function setStatus() {
-          console.log(Day, Month);
           if (Day == 1 && Month == 3) {
             if (client.user.username != "Neon Green") {
               await client.user.setUsername("Neon Green");
@@ -124,28 +123,28 @@ module.exports = {
               client.user.setBanner(random);
             }
 
-            if (randomStatus == randomStatuses[7]) {
-              await client.user.setAvatar("./Lee-Bot/assets/lee_voices.png");
-              turns = 1;
-            } else {
-              if (turns == 0) {
-                turns = Math.floor(Math.random() * 3) + 2;
-                if (Math.random() <= 0.15) {
-                  await client.user.setAvatar("./Lee-Bot/assets/lee_rare.jpg");
-                  randomizeBanner();
-                } else if (Math.random() <= 0.05) {
-                  await client.user.setAvatar(
-                    "./Lee-Bot/assets/scag-takeover.gif",
-                  );
-                  client.user.setBanner("./Lee-Bot/assets/scag.png");
-                } else {
-                  await client.user.setAvatar("./Lee-Bot/assets/lee_new.png");
-                  randomizeBanner();
-                }
-              } else {
-                turns -= 1;
-              }
-            }
+            // if (randomStatus == randomStatuses[7]) {
+            //   await client.user.setAvatar("./Lee-Bot/assets/lee_voices.png");
+            //   turns = 1;
+            // } else {
+            //   if (turns == 0) {
+            //     turns = Math.floor(Math.random() * 3) + 2;
+            //     if (Math.random() <= 0.15) {
+            //       await client.user.setAvatar("./Lee-Bot/assets/lee_rare.jpg");
+            //       randomizeBanner();
+            //     } else if (Math.random() <= 0.05) {
+            //       await client.user.setAvatar(
+            //         "./Lee-Bot/assets/scag-takeover.gif",
+            //       );
+            //       client.user.setBanner("./Lee-Bot/assets/scag.png");
+            //     } else {
+            //       await client.user.setAvatar("./Lee-Bot/assets/lee_new.png");
+            //       randomizeBanner();
+            //     }
+            //   } else {
+            //     turns -= 1;
+            //   }
+            // }
             client.user.setPresence({
               activities: [{ name: randomStatus[1], type: randomStatus[0] }],
             });
