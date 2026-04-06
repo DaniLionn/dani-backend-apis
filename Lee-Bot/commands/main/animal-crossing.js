@@ -72,7 +72,7 @@ module.exports = {
 
           embed.setTitle(animal.name);
           embed.setDescription(`*"${animal.favoriteSaying}"*`);
-          embed.setColor(animal.nameColor);
+          embed.setColor(animal.bubbleColor);
           embed.setImage(`attachment://${path.basename(filePath)}`);
           embed.setFooter({ text: animalID });
           await interaction.editReply({ embeds: [embed], files: [filePath] });
