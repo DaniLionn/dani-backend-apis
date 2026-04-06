@@ -67,7 +67,7 @@ module.exports = {
     if (animal) {
       await download(animal.photoImage, process.env.LEE_DATA_DIR).then(
         async (filePath) => {
-          console.log(image);
+          console.log(filePath);
           const embed = new EmbedBuilder();
 
           embed.setTitle(animal.name);
