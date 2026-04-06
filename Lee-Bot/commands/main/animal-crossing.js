@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const animalCrossingData = require("animal-crossing");
 const { download } = require("../../scripts/utils");
 const fs = require("fs");
-
+const path = require("path");
 const ids = [
   //species id | # of animals
   ["ant", 10], //anteater
@@ -73,7 +73,7 @@ module.exports = {
           embed.setTitle(animal.name);
           embed.setDescription(`*"${animal.favoriteSaying}"*`);
           embed.setColor(animal.nameColor);
-          embed.setImage(filePath);
+          embed.setImage(`attachment://${path.basename(filePath)}`);
           embed.setFooter({ text: animalID });
           await interaction.editReply({ embeds: [embed], files: [filePath] });
 
