@@ -21,12 +21,20 @@ module.exports = {
     await interaction.deferReply();
     const entry = ids[Math.floor(Math.random() * ids.length)];
 
-    const animalID = entry[0] + Math.floor(Math.random() * entry[1]);
+    var number = Math.floor(Math.random() * entry[1]);
+
+    if (number < 10) {
+      number = "0" + number.toString();
+    }
+
+    const animalID = entry[0] + number;
     console.log(animalID);
 
     const animal = animalCrossingData.villagers.find(
       (villager) => villager.filename == animalID,
     );
+
+    console.log(animal);
 
     if (animal) {
       const embed = new EmbedBuilder();
