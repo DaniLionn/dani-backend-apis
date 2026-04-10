@@ -177,7 +177,7 @@ module.exports = {
 
       const yes2 = new ButtonBuilder()
         .setCustomId("yes2")
-        .setLabel("Yes")
+        .setLabel("NO!")
         .setStyle(ButtonStyle.Primary);
       const row = new ActionRowBuilder().addComponents(yes1, yes2);
 
@@ -225,7 +225,7 @@ module.exports = {
           await buyPlushie();
         }
         if (i.customId === "yes2") {
-          await buyPlushie();
+          await interaction.editReply("ok... :cry:")
         }
       });
     }
@@ -255,7 +255,7 @@ module.exports = {
       if (now >= userData.daily_reset) {
         userData.daily_reset = now + 86400;
         const baseValue = 300;
-        var value = baseValue + (userData.inventory["lee_plush"] || 0) * 5;
+        var value = baseValue + (userData.inventory["lee_plush"] || 0) * 50;
         userData.leebux += value;
         console.log(userData);
         writeUserData(userData, interaction.user.id);
