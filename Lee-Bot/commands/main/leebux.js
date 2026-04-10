@@ -225,7 +225,11 @@ module.exports = {
           await buyPlushie();
         }
         if (i.customId === "yes2") {
-          await interaction.editReply("ok... :cry:")
+                   await interaction.editReply({
+            content:
+              "ok... :cry:",
+            components: [],
+          });
         }
       });
     }
