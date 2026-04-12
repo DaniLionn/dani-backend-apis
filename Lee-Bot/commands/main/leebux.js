@@ -29,6 +29,28 @@ const rarecrime =
   "You hacked into a wealthy Roblox player's account and stole 2,000,000<:robux:1487228952513613895>\nYou can't use that here, but at least you can buy a dominus!";
 
 const cards = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+function addLeebux(userID, userData,amount, type) {
+
+
+  var leeplushies = (userData.inventory["lee_plush"] || 0)
+
+
+  if (type == "daily" || type == "crime") {
+    amount = amount + leeplushies * 50
+  }
+
+  
+
+  if (userID == "1405003996237795449" && type == "gamble") {
+
+    amount = Math.floor(amount * 0.25)
+
+  }
+
+  userData.leebux = amount
+}
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("leebux")
@@ -151,10 +173,9 @@ module.exports = {
         if (winner) {
           amount = Math.floor(250 + userData.leebux * 0.001);
           console.log(amount);
-          userData.leebux += amount;
-          interaction.reply(
-            crime.win.replace("%m", amount.toLocaleString("en-US")),
-          );
+
+          addLeebux(interaction.user.id, userData, amount, "crime")
+          
         } else {
           amount = Math.floor(250 + userData.leebux * 0.002);
           console.log(amount);
@@ -259,9 +280,7 @@ module.exports = {
       if (now >= userData.daily_reset) {
         userData.daily_reset = now + 86400;
         const baseValue = 300;
-        var value = baseValue + (userData.inventory["lee_plush"] || 0) * 50;
-        userData.leebux += value;
-        console.log(userData);
+addLeebux(interaction.user.id, userData, amount, "daily")
         writeUserData(userData, interaction.user.id);
         await interaction.reply(
           "Daily " +
@@ -308,7 +327,7 @@ module.exports = {
               (amount * 2).toLocaleString("en-US") +
               "<:leebux:1431469715586416771>!",
           );
-          userData.leebux = userData.leebux + amount * 2;
+          addLeebux(interaction.user.id, userData, amount * 2, "gamble")
           writeUserData(userData, interaction.user.id);
         }, 1500);
       } else {
@@ -359,7 +378,7 @@ module.exports = {
               Math.floor(amount * 1.5).toLocaleString("en-US") +
               "<:leebux:1431469715586416771>!",
           );
-          userData.leebux = userData.leebux + Math.floor(amount * 1.5);
+          addLeebux(interaction.user.id, userData, amount * 1.5, "gamble")
           writeUserData(userData, interaction.user.id);
         }, 1500);
       } else {
@@ -468,7 +487,7 @@ module.exports = {
               "<:leebux:1431469715586416771>!",
             components: [],
           });
-          userData.leebux = userData.leebux + amount * 2;
+         addLeebux(interaction.user.id, userData, amount * 2, "gamble")
           writeUserData(userData, interaction.user.id);
         } else {
           await interaction.editReply({
