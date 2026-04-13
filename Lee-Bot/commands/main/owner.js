@@ -7,10 +7,10 @@ module.exports = {
     .setDescription("commands that only lee's creator can use")
     .addSubcommand((subcommand) =>
       subcommand.setName("storage").setDescription("disk usage of /var/data"),
-    )    .addSubcommand((subcommand) =>
-      subcommand.setName("userdata-dump").setDescription("sends userdata"),
-    ).addSubcommand((subcommand) =>
-      subcommand.setName("userdata-upload").setDescription("sends userdata").addAttachmentOption("userdata"),
+    // )    .addSubcommand((subcommand) =>
+    //   subcommand.setName("userdata-dump").setDescription("sends userdata"),
+    // ).addSubcommand((subcommand) =>
+    //   subcommand.setName("userdata-upload").setDescription("sends userdata").addAttachmentOption("userdata"),
     ),
   async execute(interaction) {
     if (interaction.user.id !== process.env.OWNER_ID) {
