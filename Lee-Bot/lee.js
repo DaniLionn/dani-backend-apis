@@ -116,6 +116,7 @@ module.exports = {
                 "./Lee-Bot/assets/banners/banner7.png",
                 "./Lee-Bot/assets/banners/banner8.png",
                 "./Lee-Bot/assets/banners/banner9.png",
+                "./Lee-Bot/assets/banners/lee dance.gif",
               ];
               const random =
                 banners[Math.floor(Math.random() * banners.length)];
