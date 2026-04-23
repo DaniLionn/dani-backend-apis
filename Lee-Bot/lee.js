@@ -71,8 +71,8 @@ var randomStatuses = [
   ],
 ];
 
-const leedir = process.env.LEE_ROOT_DIR;
-var turns = 0;
+const leeDir = process.env.LEE_ROOT_DIR;
+let turns = 0;
 module.exports = {
   startLee: function () {
     async function main() {
@@ -80,8 +80,8 @@ module.exports = {
 
       client.once(Events.ClientReady, async (readyClient) => {
         async function setStatus() {
-          if (Day == 1 && Month == 3) {
-            if (client.user.username != "Neon Green") {
+          if (Day === 1 && Month === 3) {
+            if (client.user.username !== "Neon Green") {
               await client.user.setUsername("Neon Green");
             }
 
@@ -90,8 +90,25 @@ module.exports = {
             });
             await client.user.setBanner("Lee-Bot/assets/neon green.png");
             await client.user.setAvatar("Lee-Bot/assets/neon green.png");
-          } else {
-            if (client.user.username != "Lee Joe Smith") {
+          }
+
+          else if (Day === 23 && Month === 3) {
+            if (client.user.username !== "Birthday Girl Lee") {
+              await client.user.setUsername("Birthday Girl Lee");
+
+              await client.user.setBanner("./Lee-Bot/assets/banners/birthdday_banner.jpg");
+              await client.user.setAvatar("Lee-Bot/assets/lee_birthday.png");
+              await client.user.setPresence({
+                activities: [{ name: "Having a robot birthday bash with Loo and the gang" , type: ActivityType.Custom }],
+              });
+
+            }
+
+
+          }
+
+          else {
+            if (client.user.username !== "Lee Joe Smith") {
               await client.user.setUsername("Lee Joe Smith");
             }
 
@@ -124,7 +141,7 @@ module.exports = {
               client.user.setBanner(random);
             }
 
-            if (randomStatus == randomStatuses[7]) {
+            if (randomStatus === randomStatuses[7]) {
               await client.user.setAvatar("./Lee-Bot/assets/lee_voices.png");
               turns = 1;
             } else {
@@ -267,7 +284,7 @@ module.exports = {
 
           try {
             await fs.promises.writeFile(
-              path.join(leedir, "temp/errorDetails.txt"),
+              path.join(leeDir, "temp/errorDetails.txt"),
               "Error Details:\n" +
                 (error?.stack || error?.message || String(error)),
             );
@@ -279,7 +296,7 @@ module.exports = {
             const response = {
               content:
                 "There was an error while executing this command!\n(Don't worry if you don't understand this, this is just here for debugging purposes.)",
-              files: [path.join(leedir, "temp/errorDetails.txt")],
+              files: [path.join(leeDir, "temp/errorDetails.txt")],
             };
 
             if (interaction.replied || interaction.deferred) {
@@ -293,7 +310,7 @@ module.exports = {
 
           try {
             await fs.promises.unlink(
-              path.join(leedir, "temp/errorDetails.txt"),
+              path.join(leeDir, "temp/errorDetails.txt"),
             );
           } catch (fsDeleteError) {
             console.error(
@@ -351,7 +368,7 @@ module.exports = {
 
           await message.channel.sendTyping();
           const attachmentsGrab = message.attachments;
-          var attachmentsSend = [];
+          let attachmentsSend = [];
 
           attachmentsGrab.forEach(async (attachment) => {
             console.log(attachment);
@@ -361,7 +378,7 @@ module.exports = {
               await fs.promises.unlink(path);
             });
           });
-          if (message.reference != undefined) {
+          if (message.reference !== undefined) {
             const messageContent = message.content.replace("lee:", "");
 
             const originalMessage = message.channel.messages.cache.get(
@@ -403,7 +420,7 @@ module.exports = {
         writeUserData(userData, message.member.user.id);
       });
 
-      const tempDirPath = path.join(leedir, "temp");
+      const tempDirPath = path.join(leeDir, "temp");
       try {
         if (!fs.existsSync(tempDirPath)) {
           fs.mkdirSync(tempDirPath, { recursive: true });
@@ -416,7 +433,7 @@ module.exports = {
       process.on("unhandledRejection", async (error) => {
         await lastChannel.send({
           content: "An error occured!",
-          files: [path.join(leedir, "temp/errorDetails.txt")],
+          files: [path.join(leeDir, "temp/errorDetails.txt")],
         });
       });
 
@@ -429,14 +446,14 @@ module.exports = {
       console.error("[lee.js:258]", err);
       fs.promises
         .writeFile(
-          path.join(leedir, "temp/errorDetails.txt"),
+          path.join(leeDir, "temp/errorDetails.txt"),
           err?.stack || err?.message || String(err),
           "utf-8",
         )
         .then(async () => {
           await lastChannel.send({
             content: "An error occured!",
-            files: [path.join(leedir, "temp/errorDetails.txt")],
+            files: [path.join(leeDir, "temp/errorDetails.txt")],
           });
         });
     }
