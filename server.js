@@ -1,4 +1,4 @@
-//render adds a port variable to the enviroment and also loads .env files automatically
+//render adds a port variable to the environment and also loads .env files automatically
 //so this just checks for that to tell if it needs to load the .env or not
 if (!process.env.PORT) {
   require("dotenv").config();

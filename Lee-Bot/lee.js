@@ -365,21 +365,28 @@ module.exports = {
         ) {
 
 
+
           await message.channel.sendTyping();
           const attachmentsGrab = message.attachments;
-          let attachmentsSend = [];
 
+          let attachmentsSend = []
           for (const attachment of attachmentsGrab) {
             console.log(attachment);
-          attachmentsSend.push({attachment: attachment.url, name: attachment.name});
+            await download(attachment[1].url, process.env.LEE_DATA_DIR, attachment[1].name).then(async (path) => {
+              const a =  new AttachmentBuilder(path);
+              attachmentsSend.push({attachment: a.attachment, name: attachment[1].name})
+
+
+            });
           }
 
+          console.log(attachmentsSend);
 
-          if (message.reference !== undefined) {
+          if (message.reference !== null) {
             const messageContent = message.content.replace("lee:", "");
 
             const originalMessage = message.channel.messages.cache.get(
-              message.reference.messageId,
+                message.reference.messageId,
             );
 
             await originalMessage.reply({

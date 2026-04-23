@@ -4,6 +4,9 @@ const { Collection } = require("discord.js");
 const { Downloader } = require("nodejs-file-downloader");
 
 exports.download = async function (url, dir, name) {
+
+  console.log(url)
+
   if (!dir) {
     dir = path.join(process.env.LEE_ROOT_DIR, "temp");
   }
