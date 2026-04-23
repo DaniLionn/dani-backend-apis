@@ -38,7 +38,7 @@ const currentYear = date.getFullYear();
 const Day = date.getDate();
 const Month = date.getMonth();
 
-var randomStatuses = [
+let randomStatuses = [
   [ActivityType.Playing, "Playing Lee Wars 2007"],
   [
     ActivityType.Competing,
@@ -74,7 +74,7 @@ var randomStatuses = [
 const leeDir = process.env.LEE_ROOT_DIR;
 let turns = 0;
 module.exports = {
-  startLee: function () {
+  startLee: async function() {
     async function main() {
       console.log("[lee.js:74] Starting lee bot!");
 
@@ -83,26 +83,27 @@ module.exports = {
           if (Day === 1 && Month === 3) {
             if (client.user.username !== "Neon Green") {
               await client.user.setUsername("Neon Green");
+              await client.user.setPresence({
+                activities: [{ name: "Green", type: ActivityType.Custom }],
+              });
+              await client.user.setBanner("Lee-Bot/assets/neon green.png");
+              await client.user.setAvatar("Lee-Bot/assets/neon green.png");
             }
 
-            await client.user.setPresence({
-              activities: [{ name: "Green", type: ActivityType.Custom }],
-            });
-            await client.user.setBanner("Lee-Bot/assets/neon green.png");
-            await client.user.setAvatar("Lee-Bot/assets/neon green.png");
+
           }
 
           else if (Day === 23 && Month === 3) {
             if (client.user.username !== "Birthday Girl Lee") {
               await client.user.setUsername("Birthday Girl Lee")
-
+              await client.user.setBanner("./Lee-Bot/assets/banners/birthday_banner.jpg");
+              await client.user.setAvatar("Lee-Bot/assets/lee_bday.png");
+              await client.user.setPresence({
+                activities: [{ name: "Having a robot birthday bash with Loo and the gang" , type: ActivityType.Custom }],
+              });
             }
 
-            await client.user.setBanner("./Lee-Bot/assets/banners/birthday_banner.jpg");
-            await client.user.setAvatar("Lee-Bot/assets/lee_bday.png");
-            await client.user.setPresence({
-              activities: [{ name: "Having a robot birthday bash with Loo and the gang" , type: ActivityType.Custom }],
-            });
+
           }
 
           else {
@@ -143,7 +144,7 @@ module.exports = {
               await client.user.setAvatar("./Lee-Bot/assets/lee_voices.png");
               turns = 1;
             } else {
-              if (turns == 0) {
+              if (turns === 0) {
                 turns = Math.floor(Math.random() * 3) + 2;
                 if (Math.random() <= 0.15) {
                   await client.user.setAvatar("./Lee-Bot/assets/lee_rare.jpg");
@@ -152,7 +153,7 @@ module.exports = {
                   await client.user.setAvatar(
                     "./Lee-Bot/assets/scag-takeover.gif",
                   );
-                  client.user.setBanner("./Lee-Bot/assets/scag.png");
+                 await client.user.setBanner("./Lee-Bot/assets/scag.png");
                 } else {
                   await client.user.setAvatar("./Lee-Bot/assets/lee_new.png");
                   randomizeBanner();
@@ -192,14 +193,14 @@ module.exports = {
             if (
               fs.readFileSync(
                 path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
-              ) != tag
+              ) !== tag
             ) {
               fs.writeFileSync(
                 path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
                 tag,
               );
 
-              client.channels.cache
+              await client.channels.cache
                 .get("1479729565810163834")
                 .send(
                   `<@599641108116406300>\nNew ${r} update!\n${latest.name}\nhttps://github.com/${o}/${r}/releases/latest`,
@@ -207,9 +208,9 @@ module.exports = {
             }
           }
 
-          data.forEach(async (repo) => {
+          for (const repo of data) {
             await updateCheck(repo.owner, repo.name);
-          });
+          }
         }
 
         async function updateCheck() {
@@ -237,7 +238,7 @@ module.exports = {
       const foldersPath = path.join(__dirname, "commands");
       const commandFolders = fs.readdirSync(foldersPath);
 
-      var lastChannel;
+      let lastChannel;
 
       for (const folder of commandFolders) {
         const commandsPath = path.join(foldersPath, folder);
@@ -368,14 +369,17 @@ module.exports = {
           const attachmentsGrab = message.attachments;
           let attachmentsSend = [];
 
-          attachmentsGrab.forEach(async (attachment) => {
+          for (const attachment of attachmentsGrab) {
             console.log(attachment);
             await download(attachment.url).then(async (path) => {
+
               attachmentsSend[attachmentsSend.length + 1] =
-                new AttachmentBuilder(await fs.promises.readFile(path));
-              await fs.promises.unlink(path);
+                  new AttachmentBuilder(path);
+
             });
-          });
+          }
+
+
           if (message.reference !== undefined) {
             const messageContent = message.content.replace("lee:", "");
 
@@ -387,6 +391,10 @@ module.exports = {
               content: messageContent,
               files: attachmentsSend,
             });
+
+            for (const attachment of attachmentsSend) {
+              await fs.promises.unlink(attachment)
+            }
           } else {
             const messageContent = message.content.replace("lee:", "");
 
@@ -398,7 +406,7 @@ module.exports = {
           return;
         }
 
-        var data = readUserData();
+        let data = readUserData();
 
         function registerUser(id, username) {
           data[id] = {
@@ -410,7 +418,7 @@ module.exports = {
           return data[id];
         }
 
-        var userData =
+        let userData =
           data[message.member.user.id] ||
           registerUser(message.member.user.id, message.member.user.username);
 
@@ -428,18 +436,18 @@ module.exports = {
         console.error("Failed to create temp directory:", err);
       }
 
-      process.on("unhandledRejection", async (error) => {
+      process.on("unhandledRejection", async () => {
         await lastChannel.send({
-          content: "An error occured!",
+          content: "An error occurred!",
           files: [path.join(leeDir, "temp/errorDetails.txt")],
         });
       });
 
-      client.login(token);
+     await client.login(token);
     }
 
-    try {
-      main();
+     try {
+      await main();
     } catch (err) {
       console.error("[lee.js:258]", err);
       fs.promises
