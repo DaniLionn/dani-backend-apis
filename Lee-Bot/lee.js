@@ -363,7 +363,7 @@ module.exports = {
           /*message.member.roles.cache.has(process.env.modID) &&*/
           message.content.startsWith("lee:")
         ) {
-          await message.delete();
+
 
           await message.channel.sendTyping();
           const attachmentsGrab = message.attachments;
@@ -371,12 +371,7 @@ module.exports = {
 
           for (const attachment of attachmentsGrab) {
             console.log(attachment);
-            await download(attachment.url).then(async (path) => {
-
-              attachmentsSend[attachmentsSend.length + 1] =
-                  new AttachmentBuilder(path);
-
-            });
+          attachmentsSend.push({attachment: attachment.url, name: attachment.name});
           }
 
 
@@ -403,6 +398,8 @@ module.exports = {
               files: attachmentsSend,
             });
           }
+
+          await message.delete();
           return;
         }
 
