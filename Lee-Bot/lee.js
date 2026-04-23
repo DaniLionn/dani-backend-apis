@@ -94,17 +94,15 @@ module.exports = {
 
           else if (Day === 23 && Month === 3) {
             if (client.user.username !== "Birthday Girl Lee") {
-              await client.user.setUsername("Birthday Girl Lee");
-
-              await client.user.setBanner("./Lee-Bot/assets/banners/birthdday_banner.jpg");
-              await client.user.setAvatar("Lee-Bot/assets/lee_birthday.png");
-              await client.user.setPresence({
-                activities: [{ name: "Having a robot birthday bash with Loo and the gang" , type: ActivityType.Custom }],
-              });
+              await client.user.setUsername("Birthday Girl Lee")
 
             }
 
-
+            await client.user.setBanner("./Lee-Bot/assets/banners/birthday_banner.jpg");
+            await client.user.setAvatar("Lee-Bot/assets/lee_bday.png");
+            await client.user.setPresence({
+              activities: [{ name: "Having a robot birthday bash with Loo and the gang" , type: ActivityType.Custom }],
+            });
           }
 
           else {
