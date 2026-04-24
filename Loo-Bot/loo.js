@@ -70,7 +70,7 @@ module.exports = {
               await fs.promises.unlink(attachment)
             }
           } else {
-            const messageContent = message.content.replace("lee:", "");
+            const messageContent = message.content.replace("loo:", "");
 
             await message.channel.send({
               content: messageContent,
