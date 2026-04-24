@@ -203,12 +203,9 @@ module.exports = {
 
             if (
               fs.readFileSync(
-                path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
+                path.join(process.env.LEE_DATA_DIR, `last${r}Ver`), "utf-8"
               ) !== tag
             ) {
-              console.log("new version", tag,               fs.readFileSync(
-                  path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
-              ))
               fs.writeFileSync(
                 path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
                 tag,
