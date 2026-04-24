@@ -43,11 +43,11 @@ let options = {
     },
     formatter = new Intl.DateTimeFormat([], options);
 
-const date = new Date(formatter.format(new Date()))
+let date = new Date(formatter.format(new Date()))
 
-const currentYear = date.getFullYear();
-const Day = date.getDate();
-const Month = date.getMonth();
+let currentYear = date.getFullYear();
+let Day = date.getDate();
+let Month = date.getMonth();
 
 let randomStatuses = [
   [ActivityType.Playing, "Playing Lee Wars 2007"],
@@ -179,6 +179,13 @@ module.exports = {
           }
         }
 
+        function updateDate() {
+           date = new Date(formatter.format(new Date()))
+           currentYear = date.getFullYear();
+           Day = date.getDate();
+           Month = date.getMonth();
+        }
+
         async function checkForGithubUpdates(data) {
           async function updateCheck(o, r) {
             const data = await octokit.request(
@@ -247,7 +254,7 @@ module.exports = {
           setInterval(updateCheck, 3_600_000);
         }
 
-
+        setInterval(updateDate, 3_600_000);
         setInterval(setStatus, 5 * 60_000);
       });
 
