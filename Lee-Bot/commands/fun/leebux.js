@@ -172,13 +172,13 @@ module.exports = {
         var amount;
         if (winner) {
           amount = Math.floor(250 + userData.leebux * 0.001);
-          console.log(amount);
+          //console.log(amount);
 
           addLeebux(interaction.user.id, userData, amount, "crime")
           
         } else {
           amount = Math.floor(250 + userData.leebux * 0.002);
-          console.log(amount);
+          //console.log(amount);
           userData.leebux -= amount;
           interaction.reply(
             crime.lose.replace("%m", amount.toLocaleString("en-US")),
@@ -276,7 +276,7 @@ module.exports = {
 
     if (subcommand === "daily") {
       const now = Math.floor(new Date().getTime() / 1000);
-      console.log(now, userData.daily_reset);
+      //console.log(now, userData.daily_reset);
       if (now >= userData.daily_reset) {
         userData.daily_reset = now + 86400;
         const baseValue = 300;
@@ -289,7 +289,7 @@ addLeebux(interaction.user.id, userData, amount, "daily")
         );
       } else {
         const diff = userData.daily_reset - now;
-        console.log(diff);
+        //console.log(diff);
         await interaction.reply(
           "You've already redeemed your daily LeeBux! You have " +
             convertSeconds(diff) +
@@ -456,7 +456,7 @@ addLeebux(interaction.user.id, userData, amount, "daily")
       });
 
       collector.on("collect", async (i) => {
-        console.log(`Collected ${i.customId}`);
+        //console.log(`Collected ${i.customId}`);
 
         let userChoice = i.customId; // "higher" or "lower"
 

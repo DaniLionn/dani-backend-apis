@@ -87,7 +87,7 @@ let turns = 0;
 module.exports = {
   startLee: async function() {
     async function main() {
-      console.log("[lee.js:74] Starting lee bot!");
+      console.log("[lee.js] Starting lee bot!");
 
       client.once(Events.ClientReady, async (readyClient) => {
         async function setStatus() {
@@ -147,7 +147,6 @@ module.exports = {
               ];
               const random =
                 banners[Math.floor(Math.random() * banners.length)];
-              console.log(random);
               client.user.setBanner(random);
             }
 
@@ -242,7 +241,7 @@ module.exports = {
           ]);
         }
 
-        console.log(`[lee.js:74] Ready! Logged in as ${readyClient.user.tag}`);
+        console.log(`[lee.js] Ready! Logged in as ${readyClient.user.tag}`);
         require("./scripts/deploy-commands");
         await setStatus();
 
@@ -278,7 +277,7 @@ module.exports = {
             client.commands.set(command.data.name, command);
           } else {
             console.log(
-              `[lee.js:179] [WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`,
+              `[lee.js] [WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`,
             );
           }
         }
@@ -396,7 +395,6 @@ module.exports = {
 
           let attachmentsSend = []
           for (const attachment of attachmentsGrab) {
-            console.log(attachment);
             await download(attachment[1].url, process.env.LEE_DATA_DIR, attachment[1].name).then(async (path) => {
               const a =  new AttachmentBuilder(path);
               attachmentsSend.push({attachment: a.attachment, name: attachment[1].name})
@@ -404,8 +402,6 @@ module.exports = {
 
             });
           }
-
-          console.log(attachmentsSend);
 
           if (message.reference !== null) {
             const messageContent = message.content.replace("lee:", "");
@@ -459,7 +455,7 @@ module.exports = {
       try {
         if (!fs.existsSync(tempDirPath)) {
           fs.mkdirSync(tempDirPath, { recursive: true });
-          console.log("[lee.js:238]created temp directory!");
+          console.log("[lee.js] Created temp directory!");
         }
       } catch (err) {
         console.error("Failed to create temp directory:", err);

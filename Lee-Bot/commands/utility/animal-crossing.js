@@ -56,18 +56,14 @@ module.exports = {
     }
 
     const animalID = entry[0] + number;
-    console.log(animalID);
 
     const animal = animalCrossingData.villagers.find(
       (villager) => villager.filename == animalID,
     );
 
-    console.log(animal);
-
     if (animal) {
       await download(animal.photoImage, process.env.LEE_DATA_DIR).then(
         async (filePath) => {
-          console.log(filePath);
           const embed = new EmbedBuilder();
 
           embed.setTitle(animal.name);
