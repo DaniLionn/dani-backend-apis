@@ -1,4 +1,5 @@
 const { spawn } = require("child_process");
+const {once} = require("node:events");
 const { SlashCommandBuilder } = require("discord.js");
 const { download } = require("../../scripts/utils");
 module.exports = {
@@ -6,7 +7,12 @@ module.exports = {
     .setName("owner")
     .setDescription("commands that only lee's creator can use")
     .addSubcommand((subcommand) =>
-      subcommand.setName("storage").setDescription("disk usage of /var/data"),
+      subcommand.setName("run-command").setDescription("Run a command through leebot")    .addStringOption((option) =>
+          option
+              .setName("command")
+              .setDescription("The command to run")
+              .setRequired(true),
+      ),
     // )    .addSubcommand((subcommand) =>
     //   subcommand.setName("userdata-dump").setDescription("sends userdata"),
     // ).addSubcommand((subcommand) =>
@@ -22,49 +28,44 @@ module.exports = {
     }
 
     let subcommand = interaction.options.getSubcommand();
-    if (subcommand === "storage") {
-      await interaction.deferReply();
-      const diskUsage = spawn("sh", [
-        "-c",
-        "df --output=pcent /var/data | tail -n 1 | tr -d ' %'",
-      ]);
 
-      // ensure stdout emits strings (so the existing stdout 'data' handler will get a string)
-      diskUsage.stdout.setEncoding("utf8");
+    if (subcommand === "run-command") {
+     await interaction.deferReply()
 
-      diskUsage.on("error", async (err) => {
-        await interaction.editReply(`Failed to run disk check: ${err.message}`);
-      });
+      try {
 
-      // diskUsage.on("close", (code) => {
-      //   if (code !== 0) {
-      //     interaction.editReply(`df exited with code ${code}`);
-      //   }
-      // });
+        const run = spawn(interaction.options.getString("command"))
 
-      diskUsage.stdout.on("data", async (data) => {
-        await interaction.editReply(
-          "Data partition is " + data.trim() + "% full",
-        );
-      });
+        run.on("error", function (error) {
+          run.emit("exit", 1);
+          interaction.editReply(error.message)
+        })
 
-      return;
-    }
+        let output = ""
 
-    if (subcommand === "userdata-dump") {
-      interaction.reply({files: ["/var/data/userdata.json"]})
-    }
+        run.stdout.on("data", (stdout) => {
+          output += stdout;
+        })
 
-    if (subcommand === "userdata-upload") {
+        run.stderr.on("data", (stderr) => {
+          output += stderr;
+        })
 
-      const data = interaction.options.get("userdata")
+        await run.once("exit", async (code) => {
+          if (code !== 0) {return}
 
-      
+          await interaction.editReply(output);
+        })
 
-      await download(data.url, "/var/data", "userdata.json")
 
-      interaction.reply("userdata replaced!")
+
+      } catch (err) {await interaction.editReply(err)}
+
+
+
+
 
     }
+
   },
 };

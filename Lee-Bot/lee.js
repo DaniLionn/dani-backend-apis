@@ -206,6 +206,9 @@ module.exports = {
                 path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
               ) !== tag
             ) {
+              console.log("new version", tag,               fs.readFileSync(
+                  path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
+              ))
               fs.writeFileSync(
                 path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
                 tag,
@@ -479,7 +482,7 @@ module.exports = {
           "utf-8",
         )
         .then(async () => {
-          await lastChannel.send({
+          await client.channels.cache.get("946797124824203307").send({
             content: "An error occured!",
             files: [path.join(leeDir, "temp/errorDetails.txt")],
           });
