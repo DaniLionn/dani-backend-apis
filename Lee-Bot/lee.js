@@ -86,8 +86,8 @@ module.exports = {
               await client.user.setPresence({
                 activities: [{ name: "Green", type: ActivityType.Custom }],
               });
-              await client.user.setBanner("Lee-Bot/assets/neon green.png");
-              await client.user.setAvatar("Lee-Bot/assets/neon green.png");
+              await client.user.setBanner("Lee-Bot/assets/banners/neon green.png");
+              await client.user.setAvatar("Lee-Bot/assets/banners/neon green.png");
             }
 
 
@@ -97,7 +97,7 @@ module.exports = {
             if (client.user.username !== "Birthday Girl Lee") {
               await client.user.setUsername("Birthday Girl Lee")
               await client.user.setBanner("./Lee-Bot/assets/banners/birthday_banner.jpg");
-              await client.user.setAvatar("Lee-Bot/assets/lee_bday.png");
+              await client.user.setAvatar("Lee-Bot/assets/pfps/lee_bday.png");
 
             }
             await client.user.setPresence({
@@ -141,21 +141,21 @@ module.exports = {
             }
 
             if (randomStatus === randomStatuses[7]) {
-              await client.user.setAvatar("./Lee-Bot/assets/lee_voices.png");
-              turns = 1;
+              await client.user.setAvatar("./Lee-Bot/assets/pfps/lee_voices.png");
+              turns = 0;
             } else {
               if (turns === 0) {
                 turns = Math.floor(Math.random() * 3) + 2;
                 if (Math.random() <= 0.15) {
-                  await client.user.setAvatar("./Lee-Bot/assets/lee_rare.jpg");
+                  await client.user.setAvatar("./Lee-Bot/assets/pfps/lee_rare.jpg");
                   randomizeBanner();
                 } else if (Math.random() <= 0.05) {
                   await client.user.setAvatar(
-                    "./Lee-Bot/assets/scag-takeover.gif",
+                    "./Lee-Bot/assets/pfps/scag-takeover.gif",
                   );
-                 await client.user.setBanner("./Lee-Bot/assets/scag.png");
+                 await client.user.setBanner("./Lee-Bot/assets/banners/scag.png");
                 } else {
-                  await client.user.setAvatar("./Lee-Bot/assets/lee_new.png");
+                  await client.user.setAvatar("./Lee-Bot/assets/pfps/lee_new.png");
                   randomizeBanner();
                 }
               } else {
@@ -227,9 +227,16 @@ module.exports = {
         console.log(`[lee.js:74] Ready! Logged in as ${readyClient.user.tag}`);
         require("./scripts/deploy-commands");
         await setStatus();
-        await updateCheck();
 
-        setInterval(updateCheck, 3_600_000);
+
+        //only update check if on render
+        if (process.env.PORT) {
+          await updateCheck();
+
+          setInterval(updateCheck, 3_600_000);
+        }
+
+
         setInterval(setStatus, 5 * 60_000);
       });
 
