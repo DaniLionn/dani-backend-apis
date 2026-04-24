@@ -90,12 +90,12 @@ exports.deployCommands = function () {
 };
 
 exports.readUserData = function () {
-  const data = fs.readFileSync("/var/data/userdata.json", "utf8");
+  const data = fs.readFileSync(process.env.LEE_DATA_DIR + "/userdata.json", "utf8");
   return JSON.parse(data);
 };
 exports.writeUserData = function (data, id) {
-  var read = JSON.parse(fs.readFileSync("/var/data/userdata.json", "utf8"));
+  var read = JSON.parse(fs.readFileSync(process.env.LEE_DATA_DIR + "/ar/data/userdata.json", "utf8"));
 
   read[id] = data;
-  fs.writeFileSync("/var/data/userdata.json", JSON.stringify(read));
+  fs.writeFileSync(process.env.LEE_DATA_DIR + "/var/data/userdata.json", JSON.stringify(read));
 };

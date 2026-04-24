@@ -87,7 +87,7 @@ let turns = 0;
 module.exports = {
   startLee: async function() {
     async function main() {
-      console.log("[lee.js] Starting lee bot!");
+      console.log("[loo.js] Starting lee bot!");
 
       client.once(Events.ClientReady, async (readyClient) => {
         async function setStatus() {
@@ -243,7 +243,10 @@ module.exports = {
 
         console.log(`[lee.js] Ready! Logged in as ${readyClient.user.tag}`);
         require("./scripts/deploy-commands");
-        await setStatus();
+
+        try {
+          await setStatus();
+        } catch(err) {console.log(err)}
 
 
         //only update check if on render
@@ -254,7 +257,11 @@ module.exports = {
         }
 
         setInterval(updateDate, 3_600_000);
-        setInterval(setStatus, 5 * 60_000);
+        setInterval(async function () {
+          try {
+            await setStatus();
+          } catch(err) {console.log(err)}
+        }, 5 * 60_000);
       });
 
       client.commands = new Collection();
@@ -431,31 +438,34 @@ module.exports = {
           return;
         }
 
-        let data = readUserData();
+        if (process.env.PORT) {
 
-        function registerUser(id, username) {
-          data[id] = {
-            username: username,
-            leebux: 0,
-            daily_reset: 0,
-          };
-          writeUserData(data[id], id);
-          return data[id];
+          let data = readUserData();
+
+          function registerUser(id, username) {
+            data[id] = {
+              username: username,
+              leebux: 0,
+              daily_reset: 0,
+            };
+            writeUserData(data[id], id);
+            return data[id];
+          }
+
+          let userData =
+              data[message.member.user.id] ||
+              registerUser(message.member.user.id, message.member.user.username);
+
+          userData.leebux += 0.25;
+          writeUserData(userData, message.member.user.id);
         }
-
-        let userData =
-          data[message.member.user.id] ||
-          registerUser(message.member.user.id, message.member.user.username);
-
-        userData.leebux += 0.25;
-        writeUserData(userData, message.member.user.id);
       });
 
       const tempDirPath = path.join(leeDir, "temp");
       try {
         if (!fs.existsSync(tempDirPath)) {
           fs.mkdirSync(tempDirPath, { recursive: true });
-          console.log("[lee.js] Created temp directory!");
+          console.log("[loo.js] Created temp directory!");
         }
       } catch (err) {
         console.error("Failed to create temp directory:", err);
@@ -474,7 +484,7 @@ module.exports = {
      try {
       await main();
     } catch (err) {
-      console.error("[lee.js:258]", err);
+      console.error("[loo.js:258]", err);
       fs.promises
         .writeFile(
           path.join(leeDir, "temp/errorDetails.txt"),
