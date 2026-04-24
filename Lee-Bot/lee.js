@@ -32,7 +32,18 @@ const client = new Client({
   ],
 });
 
-const date = new Date();
+let options = {
+      timeZone: 'America/Edmonton',
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+    },
+    formatter = new Intl.DateTimeFormat([], options);
+
+const date = formatter.format(new Date();)
 
 const currentYear = date.getFullYear();
 const Day = date.getDate();
