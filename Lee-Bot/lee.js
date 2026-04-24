@@ -43,7 +43,7 @@ let options = {
     },
     formatter = new Intl.DateTimeFormat([], options);
 
-const date = formatter.format(new Date())
+const date = new Date(formatter.format(new Date()))
 
 const currentYear = date.getFullYear();
 const Day = date.getDate();
