@@ -269,8 +269,6 @@ module.exports = {
       const foldersPath = path.join(__dirname, "commands");
       const commandFolders = fs.readdirSync(foldersPath);
 
-      let lastChannel;
-
       for (const folder of commandFolders) {
         const commandsPath = path.join(foldersPath, folder);
         const commandFiles = fs
@@ -366,7 +364,6 @@ module.exports = {
         if (message.channel.id === "1417504755319701644") {
           //ignore links
           if (
-            message.content.startsWith("http://") ||
             message.content.startsWith("https://")
           ) {
             return;
@@ -394,9 +391,6 @@ module.exports = {
           /*message.member.roles.cache.has(process.env.modID) &&*/
           message.content.startsWith("lee:")
         ) {
-
-
-
           await message.channel.sendTyping();
           const attachmentsGrab = message.attachments;
 
@@ -435,6 +429,10 @@ module.exports = {
           }
 
           await message.delete();
+          for (const attachment of attachmentsSend) {
+            await fs.promises.unlink(attachment);
+          }
+
           return;
         }
 
