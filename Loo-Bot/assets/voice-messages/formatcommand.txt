@@ -1,1 +1,1 @@
-ffmpeg -y -i [INPUT] -c:a libopus -b:a 64k -a:r 48000 [OUTPUT]
+ffmpeg -y -vn -i [INPUT] -c:a libopus -b:a 64k -ar 48000 [OUTPUT]

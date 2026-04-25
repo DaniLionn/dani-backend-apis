@@ -116,8 +116,6 @@ module.exports = {
       });
 
       client.on(Events.MessageCreate, async (message) => {
-        console.log("message created!", message.content);
-
         if (message.author.bot) {
           return;
         }

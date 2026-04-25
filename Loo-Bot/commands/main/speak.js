@@ -6,7 +6,12 @@ const voiceFiles = [
     path:
       process.env.ROOT_DIR +
       "/Loo-Bot/assets/voice-messages/loo_peepeepoopoo.ogg",
-    duration: 1.5,
+    duration: 1.45,
+  },
+  {
+    path:
+      process.env.ROOT_DIR + "/Loo-Bot/assets/voice-messages/loo_diaper.ogg",
+    duration: 3.03,
   },
 ];
 const wave =
@@ -19,7 +24,7 @@ module.exports = {
     .setDescription("loo will say something"),
   async execute(interaction) {
     await interaction.reply({
-      content: "Choosing a voice message.",
+      content: "Random voice message will be uploaded shortly.",
       ephemeral: true,
     });
     const randomFile =
