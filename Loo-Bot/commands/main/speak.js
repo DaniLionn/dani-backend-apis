@@ -9,8 +9,7 @@ const voiceFiles = [
     duration: 1.45,
   },
   {
-    path:
-      process.env.ROOT_DIR + "/Loo-Bot/assets/voice-messages/loo_diaper.ogg",
+    path: process.env.ROOT_DIR + "/Loo-Bot/assets/voice-messages/loo_diper.ogg",
     duration: 3.03,
   },
 ];
