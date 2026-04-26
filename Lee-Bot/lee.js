@@ -33,17 +33,17 @@ const client = new Client({
 });
 
 let options = {
-      timeZone: 'America/Edmonton',
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-    },
-    formatter = new Intl.DateTimeFormat([], options);
+    timeZone: "America/Edmonton",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  },
+  formatter = new Intl.DateTimeFormat([], options);
 
-let date = new Date(formatter.format(new Date()))
+let date = new Date(formatter.format(new Date()));
 
 let currentYear = date.getFullYear();
 let Day = date.getDate();
@@ -85,7 +85,7 @@ let randomStatuses = [
 const leeDir = process.env.LEE_ROOT_DIR;
 let turns = 0;
 module.exports = {
-  startLee: async function() {
+  startLee: async function () {
     async function main() {
       console.log("[loo.js] Starting lee bot!");
 
@@ -97,27 +97,30 @@ module.exports = {
               await client.user.setPresence({
                 activities: [{ name: "Green", type: ActivityType.Custom }],
               });
-              await client.user.setBanner("Lee-Bot/assets/banners/neon green.png");
-              await client.user.setAvatar("Lee-Bot/assets/banners/neon green.png");
+              await client.user.setBanner(
+                "Lee-Bot/assets/banners/neon green.png",
+              );
+              await client.user.setAvatar(
+                "Lee-Bot/assets/banners/neon green.png",
+              );
             }
-
-
-          }
-
-          else if (Day === 23 && Month === 3) {
+          } else if (Day === 23 && Month === 3) {
             if (client.user.username !== "Birthday Girl Lee") {
-              await client.user.setUsername("Birthday Girl Lee")
-              await client.user.setBanner("./Lee-Bot/assets/banners/birthday_banner.jpg");
+              await client.user.setUsername("Birthday Girl Lee");
+              await client.user.setBanner(
+                "./Lee-Bot/assets/banners/birthday_banner.jpg",
+              );
               await client.user.setAvatar("Lee-Bot/assets/pfps/lee_bday.png");
-
             }
             await client.user.setPresence({
-              activities: [{ name: "Having a robot birthday bash with Loo and the gang" , type: ActivityType.Custom }],
+              activities: [
+                {
+                  name: "Having a robot birthday bash with Loo and the gang",
+                  type: ActivityType.Custom,
+                },
+              ],
             });
-
-          }
-
-          else {
+          } else {
             if (client.user.username !== "Lee Joe Smith") {
               await client.user.setUsername("Lee Joe Smith");
             }
@@ -151,21 +154,29 @@ module.exports = {
             }
 
             if (randomStatus === randomStatuses[7]) {
-              await client.user.setAvatar("./Lee-Bot/assets/pfps/lee_voices.png");
+              await client.user.setAvatar(
+                "./Lee-Bot/assets/pfps/lee_voices.png",
+              );
               turns = 0;
             } else {
               if (turns === 0) {
                 turns = Math.floor(Math.random() * 3) + 2;
                 if (Math.random() <= 0.15) {
-                  await client.user.setAvatar("./Lee-Bot/assets/pfps/lee_rare.jpg");
+                  await client.user.setAvatar(
+                    "./Lee-Bot/assets/pfps/lee_rare.jpg",
+                  );
                   randomizeBanner();
                 } else if (Math.random() <= 0.05) {
                   await client.user.setAvatar(
                     "./Lee-Bot/assets/pfps/scag-takeover.gif",
                   );
-                 await client.user.setBanner("./Lee-Bot/assets/banners/scag.png");
+                  await client.user.setBanner(
+                    "./Lee-Bot/assets/banners/scag.png",
+                  );
                 } else {
-                  await client.user.setAvatar("./Lee-Bot/assets/pfps/lee_new.png");
+                  await client.user.setAvatar(
+                    "./Lee-Bot/assets/pfps/lee_new.png",
+                  );
                   randomizeBanner();
                 }
               } else {
@@ -179,10 +190,10 @@ module.exports = {
         }
 
         function updateDate() {
-           date = new Date(formatter.format(new Date()))
-           currentYear = date.getFullYear();
-           Day = date.getDate();
-           Month = date.getMonth();
+          date = new Date(formatter.format(new Date()));
+          currentYear = date.getFullYear();
+          Day = date.getDate();
+          Month = date.getMonth();
         }
 
         async function checkForGithubUpdates(data) {
@@ -199,21 +210,36 @@ module.exports = {
             const tag = latest.tag_name;
 
             if (
-              !fs.existsSync(path.join(process.env.LEE_DATA_DIR, `last${r}Ver`))
+              !fs.existsSync(
+                path.join(
+                  process.env.LEE_DATA_DIR + "/github-update-checker/",
+                  `last${r}Ver`,
+                ),
+              )
             ) {
               fs.writeFileSync(
-                path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
+                path.join(
+                  process.env.LEE_DATA_DIR + "/github-update-checker/",
+                  `last${r}Ver`,
+                ),
                 "v0",
               );
             }
 
             if (
               fs.readFileSync(
-                path.join(process.env.LEE_DATA_DIR, `last${r}Ver`), "utf-8"
+                path.join(
+                  process.env.LEE_DATA_DIR + "/github-update-checker/",
+                  `last${r}Ver`,
+                ),
+                "utf-8",
               ) !== tag
             ) {
               fs.writeFileSync(
-                path.join(process.env.LEE_DATA_DIR, `last${r}Ver`),
+                path.join(
+                  process.env.LEE_DATA_DIR + "/github-update-checker/",
+                  `last${r}Ver`,
+                ),
                 tag,
               );
 
@@ -246,8 +272,9 @@ module.exports = {
 
         try {
           await setStatus();
-        } catch(err) {console.log(err)}
-
+        } catch (err) {
+          console.log(err);
+        }
 
         //only update check if on render
         if (process.env.PORT) {
@@ -260,7 +287,9 @@ module.exports = {
         setInterval(async function () {
           try {
             await setStatus();
-          } catch(err) {console.log(err)}
+          } catch (err) {
+            console.log(err);
+          }
         }, 5 * 60_000);
       });
 
@@ -363,9 +392,7 @@ module.exports = {
         //enforce the "no letter f" rule in the phighting channel in The Hakurei Family
         if (message.channel.id === "1417504755319701644") {
           //ignore links
-          if (
-            message.content.startsWith("https://")
-          ) {
+          if (message.content.startsWith("https://")) {
             return;
           }
 
@@ -394,13 +421,18 @@ module.exports = {
           await message.channel.sendTyping();
           const attachmentsGrab = message.attachments;
 
-          let attachmentsSend = []
+          let attachmentsSend = [];
           for (const attachment of attachmentsGrab) {
-            await download(attachment[1].url, process.env.LEE_DATA_DIR, attachment[1].name).then(async (path) => {
-              const a =  new AttachmentBuilder(path);
-              attachmentsSend.push({attachment: a.attachment, name: attachment[1].name})
-
-
+            await download(
+              attachment[1].url,
+              process.env.LEE_DATA_DIR,
+              attachment[1].name,
+            ).then(async (path) => {
+              const a = new AttachmentBuilder(path);
+              attachmentsSend.push({
+                attachment: a.attachment,
+                name: attachment[1].name,
+              });
             });
           }
 
@@ -408,7 +440,7 @@ module.exports = {
             const messageContent = message.content.replace("lee:", "");
 
             const originalMessage = message.channel.messages.cache.get(
-                message.reference.messageId,
+              message.reference.messageId,
             );
 
             await originalMessage.reply({
@@ -417,7 +449,7 @@ module.exports = {
             });
 
             for (const attachment of attachmentsSend) {
-              await fs.promises.unlink(attachment)
+              await fs.promises.unlink(attachment);
             }
           } else {
             const messageContent = message.content.replace("lee:", "");
@@ -437,7 +469,6 @@ module.exports = {
         }
 
         if (process.env.PORT) {
-
           let data = readUserData();
 
           function registerUser(id, username) {
@@ -451,8 +482,8 @@ module.exports = {
           }
 
           let userData =
-              data[message.member.user.id] ||
-              registerUser(message.member.user.id, message.member.user.username);
+            data[message.member.user.id] ||
+            registerUser(message.member.user.id, message.member.user.username);
 
           userData.leebux += 0.25;
           writeUserData(userData, message.member.user.id);
@@ -476,10 +507,10 @@ module.exports = {
         });
       });
 
-     await client.login(token);
+      await client.login(token);
     }
 
-     try {
+    try {
       await main();
     } catch (err) {
       console.error("[loo.js:258]", err);

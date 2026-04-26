@@ -84,5 +84,7 @@ module.exports = {
         },
       },
     );
+
+    await fs.promises.unlink(newPath);
   },
 };
