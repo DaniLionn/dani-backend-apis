@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@jimp/plugin-crop": "^1.6.1",
     "@ljharb/tsconfig": "^0.3.2",
     "animal-crossing": "^8.2.0",
     "axios": "1.15.0",
@@ -19,8 +20,11 @@
     "express": "^5.1.0",
     "fast-average-color-node": "^3.1.0",
     "flipnote.js": "^6.3.0",
+    "i": "^0.3.7",
+    "jimp": "^1.6.1",
     "node-html-parser": "^7.0.1",
     "nodejs-file-downloader": "^4.13.0",
+    "npm": "^11.13.0",
     "octokit": "^5.0.5",
     "sharp": "^0.34.5"
   },

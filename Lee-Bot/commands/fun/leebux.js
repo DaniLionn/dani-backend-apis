@@ -30,25 +30,18 @@ const rarecrime =
 
 const cards = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
-function addLeebux(userID, userData,amount, type) {
+function addLeebux(userID, userData, amount, type) {
+  var leeplushies = userData.inventory["lee_plush"] || 0;
 
-
-  var leeplushies = (userData.inventory["lee_plush"] || 0)
-
-
-  if (type == "daily" || type == "crime") {
-    amount = amount + leeplushies * 50
+  if (type === "daily" || type === "crime") {
+    amount = amount + leeplushies * 50;
   }
 
-  
-
-  if (userID == "1405003996237795449" && type == "gamble") {
-
-    amount = Math.floor(amount * 0.25)
-
+  if (userID === "1405003996237795449" && type === "gamble") {
+    amount = Math.floor(amount * 0.25);
   }
 
-  userData.leebux = amount
+  userData.leebux = amount;
 }
 
 module.exports = {
@@ -160,7 +153,7 @@ module.exports = {
       return;
     }
 
-    if (subcommand == "crime") {
+    if (subcommand === "crime") {
       var crime = crimes[Math.floor(Math.random() * crimes.length)];
 
       const useRareCrime = Math.random() <= 0.01;
@@ -174,8 +167,7 @@ module.exports = {
           amount = Math.floor(250 + userData.leebux * 0.001);
           //console.log(amount);
 
-          addLeebux(interaction.user.id, userData, amount, "crime")
-          
+          addLeebux(interaction.user.id, userData, amount, "crime");
         } else {
           amount = Math.floor(250 + userData.leebux * 0.002);
           //console.log(amount);
@@ -193,18 +185,28 @@ module.exports = {
     if (subcommand === "shop") {
       const yes1 = new ButtonBuilder()
         .setCustomId("yes1")
-        .setLabel("Yes")
+        .setLabel("Buy 1")
         .setStyle(ButtonStyle.Primary);
 
       const yes2 = new ButtonBuilder()
         .setCustomId("yes2")
-        .setLabel("NO!")
+        .setLabel("Buy 5")
         .setStyle(ButtonStyle.Primary);
-      const row = new ActionRowBuilder().addComponents(yes1, yes2);
+
+      const yes3 = new ButtonBuilder()
+        .setCustomId("yes3")
+        .setLabel("Buy 10")
+        .setStyle(ButtonStyle.Primary);
+
+      const yes4 = new ButtonBuilder()
+        .setCustomId("yes4")
+        .setLabel("NO!!!")
+        .setStyle(ButtonStyle.Primary);
+      const row = new ActionRowBuilder().addComponents(yes1, yes2, yes3, yes4);
 
       await interaction.reply({
         content:
-          "Currently, the only item in the shop is a plushie. Of me!!! Would you like to buy one for 1,000<:leebux:1431469715586416771>?",
+          "Currently, the only item in the shop is a plushie. Of me!!! These plushies give you more daily money and more money from the gambling commands. Would you like to buy? They're 1,000<:leebux:1431469715586416771> each.",
         components: [row],
       });
 
@@ -219,23 +221,24 @@ module.exports = {
         max: 1,
       });
 
-      async function buyPlushie() {
-        userData.leebux = userData.leebux - 1000;
-        userData.inventory["lee_plush"] =
-          (userData.inventory["lee_plush"] || 0) + 1;
+      async function buyPlushie(price, amount) {
 
-        if (userData.leebux < 1000) {
+
+        if (userData.leebux < price) {
           await interaction.editReply({
             content:
-              "Thank you! You are now in debt. (+1 <:lee_plush:1431871543914266725> added to inventory!)",
+              "You don't have enough!",
             components: [],
           });
-          return;
+
         } else {
+          userData.leebux = userData.leebux - price;
+          userData.inventory["lee_plush"] =
+            (userData.inventory["lee_plush"] || 0) + amount;
           writeUserData(userData, interaction.user.id);
           await interaction.editReply({
             content:
-              "Thank you! (+1 <:lee_plush:1431871543914266725> added to inventory!)",
+              "Thank you! (+" + amount + " <:lee_plush:1431871543914266725> added to inventory!)",
             components: [],
           });
         }
@@ -243,12 +246,20 @@ module.exports = {
 
       collector.on("collect", async (i) => {
         if (i.customId === "yes1") {
-          await buyPlushie();
+          await buyPlushie(1000, 1);
         }
+
         if (i.customId === "yes2") {
-                   await interaction.editReply({
-            content:
-              "ok... :cry:",
+          await buyPlushie(5000, 5);
+        }
+
+        if (i.customId === "yes3") {
+          await buyPlushie(10000, 10);
+        }
+
+        if (i.customId === "yes4") {
+          await interaction.editReply({
+            content: "ok... :cry:",
             components: [],
           });
         }
@@ -280,7 +291,7 @@ module.exports = {
       if (now >= userData.daily_reset) {
         userData.daily_reset = now + 86400;
         const baseValue = 300;
-addLeebux(interaction.user.id, userData, amount, "daily")
+        addLeebux(interaction.user.id, userData, amount, "daily");
         writeUserData(userData, interaction.user.id);
         await interaction.reply(
           "Daily " +
@@ -327,7 +338,7 @@ addLeebux(interaction.user.id, userData, amount, "daily")
               (amount * 2).toLocaleString("en-US") +
               "<:leebux:1431469715586416771>!",
           );
-          addLeebux(interaction.user.id, userData, amount * 2, "gamble")
+          addLeebux(interaction.user.id, userData, amount * 2, "gamble");
           writeUserData(userData, interaction.user.id);
         }, 1500);
       } else {
@@ -378,7 +389,7 @@ addLeebux(interaction.user.id, userData, amount, "daily")
               Math.floor(amount * 1.5).toLocaleString("en-US") +
               "<:leebux:1431469715586416771>!",
           );
-          addLeebux(interaction.user.id, userData, amount * 1.5, "gamble")
+          addLeebux(interaction.user.id, userData, amount * 1.5, "gamble");
           writeUserData(userData, interaction.user.id);
         }, 1500);
       } else {
@@ -487,7 +498,7 @@ addLeebux(interaction.user.id, userData, amount, "daily")
               "<:leebux:1431469715586416771>!",
             components: [],
           });
-         addLeebux(interaction.user.id, userData, amount * 2, "gamble")
+          addLeebux(interaction.user.id, userData, amount * 2, "gamble");
           writeUserData(userData, interaction.user.id);
         } else {
           await interaction.editReply({

@@ -47,7 +47,6 @@ module.exports = {
       }
 
       await interaction.reply(inventoryString);
-      return;
     }
   },
 };
