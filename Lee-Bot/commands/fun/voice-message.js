@@ -16,7 +16,7 @@ module.exports = {
     ),
   async execute(interaction) {
     await interaction.deferReply();
-   const filePath = await download(interaction.options.get("audio-file"));
+   const filePath = await download(interaction.options.get("audio-file").url);
 
     let newPath = process.env.LEE_DATA_DIR + "/voice-message.ogg";
 
