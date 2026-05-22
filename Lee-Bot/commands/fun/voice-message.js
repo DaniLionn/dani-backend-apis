@@ -30,9 +30,11 @@ module.exports = {
             code +
             ")",
         );
+        await fs.promises.unlink(filePath);
         return
       }
 
+      await fs.promises.unlink(filePath);
       const ffprobe = spawn("ffprobe -v quiet -output_format json -show_format "+newPath);
 
       let data = ""
@@ -53,6 +55,7 @@ module.exports = {
               code +
               ")",
           );
+          await fs.promises.unlink(newPath);
           return;
         }
 
@@ -109,6 +112,8 @@ module.exports = {
             },
           },
         );
+
+        await fs.promises.unlink(newPath);
       });
 
       })
@@ -116,6 +121,6 @@ module.exports = {
 
 
 
-    await fs.promises.unlink(newPath);
+
   },
 };
