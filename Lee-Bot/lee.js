@@ -481,12 +481,19 @@ module.exports = {
             return data[id];
           }
 
-          let userData =
-            data[message.member.user.id] ||
-            registerUser(message.member.user.id, message.member.user.username);
+          if (message.member && message.member.user) {
+            let userData =
+              data[message.member.user.id] ||
+              registerUser(
+                message.member.user.id,
+                message.member.user.username,
+              );
 
-          userData.leebux += 0.25;
-          writeUserData(userData, message.member.user.id);
+            userData.leebux += 0.25;
+            writeUserData(userData, message.member.user.id);
+          }
+
+
         }
       });
 
