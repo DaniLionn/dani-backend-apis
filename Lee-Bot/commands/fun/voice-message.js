@@ -44,11 +44,12 @@ module.exports = {
 
       })
 
-      console.log(data)
+
 
 
 
       ffprobe.on("close", async (code) => {
+
         if (code > 0) {
           interaction.editReply(
             "There was an error while running this command (Conversion process exited with code " +
@@ -58,6 +59,8 @@ module.exports = {
           await fs.promises.unlink(newPath);
           return;
         }
+
+        console.log(data);
 
         const attachmentResponse = await axios.post(
           `https://discord.com/api/v10/channels/${interaction.channel.id}/attachments`,
@@ -85,7 +88,7 @@ module.exports = {
         await axios.put(upload_url, await fs.promises.readFile(newPath), {
           headers: {
             "Content-Type": "application/ogg",
-            Authorization: "Bot " + process.env.LOO_TOKEN,
+            Authorization: "Bot " + process.env.LEE_TOKEN,
           },
         });
 
