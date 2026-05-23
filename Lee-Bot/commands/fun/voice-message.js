@@ -41,7 +41,7 @@ module.exports = {
 
       await fs.promises.unlink(filePath);
       const ffprobe = spawn("ffprobe", [
-        '-v', 'quiet', '-output_format', 'json', '-show_format', newPath
+        '-v', 'quiet', '-of', 'json', '-show_format', newPath
       ]);
 
       let output = "";
