@@ -37,10 +37,10 @@ module.exports = {
       await fs.promises.unlink(filePath);
       const ffprobe = spawn("ffprobe -v quiet -output_format json -show_format "+newPath);
 
-      let data = ""
+      let dataa = ""
 
       ffprobe.stdout.on("data", (data) => {
-        data+= data
+        dataa+= data
 
       })
 
@@ -60,7 +60,7 @@ module.exports = {
           return;
         }
 
-        console.log(data);
+        console.log(dataa);
 
         const attachmentResponse = await axios.post(
           `https://discord.com/api/v10/channels/${interaction.channel.id}/attachments`,
