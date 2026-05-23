@@ -50,6 +50,10 @@ module.exports = {
         console.log(`stdout: ${data}`);
       });
 
+      ffprobe.stderr.on("data", (data) => {
+        console.log(`stderr: ${data}`);
+      });
+
 
 
 
