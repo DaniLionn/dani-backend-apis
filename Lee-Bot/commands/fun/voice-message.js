@@ -37,6 +37,8 @@ module.exports = {
         return
       }
 
+      console.log(newPath)
+
       await fs.promises.unlink(filePath);
       const ffprobe = spawn("ffprobe", [
         '-v', 'quiet', '-output_format', 'json', '-show_format', newPath
@@ -56,7 +58,7 @@ module.exports = {
         console.log("ffprobe exited with code " + code);
         if (code > 0) {
           interaction.editReply(
-            "There was an error while running this command (Conversion process exited with code " +
+            "There was an error while running this command (ffprobe process exited with code " +
               code +
               ")",
           );
