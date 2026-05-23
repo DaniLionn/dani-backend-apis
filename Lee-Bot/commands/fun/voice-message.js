@@ -24,12 +24,15 @@ module.exports = {
     const ffmpeg = spawn("ffmpeg", ["-i", filePath, newPath]);
 
     ffmpeg.on("close", async (code) => {
+      console.log("ffmpeg exited with code " + code);
+
       if (code > 0) {
         interaction.editReply(
           "There was an error while running this command (Conversion process exited with code " +
             code +
             ")",
         );
+
         await fs.promises.unlink(filePath);
         return
       }
@@ -50,7 +53,7 @@ module.exports = {
 
 
       ffprobe.on("close", async (code) => {
-
+        console.log("ffprobe exited with code " + code);
         if (code > 0) {
           interaction.editReply(
             "There was an error while running this command (Conversion process exited with code " +
