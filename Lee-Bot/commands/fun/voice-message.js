@@ -66,7 +66,7 @@ module.exports = {
               code +
               ")",
           );
-          await fs.promises.unlink(newPath);
+          //await fs.promises.unlink(newPath);
           return;
         }
 
