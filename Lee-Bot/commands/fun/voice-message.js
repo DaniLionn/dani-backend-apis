@@ -35,15 +35,15 @@ module.exports = {
       }
 
       await fs.promises.unlink(filePath);
-      const ffprobe = spawn("ffprobe -v quiet -output_format json -show_format "+newPath);
+      const ffprobe = spawn("ffprobe", [
+        '-v', 'quiet', '-output_format', 'json', '-show_format', newPath
+      ]);
 
-      let dataa = ""
-
-      ffprobe.on("message", (data) => {
-        console.log(data)
-        dataa+= data
-
-      })
+      let output = "";
+      ffprobe.stdout.on("data", (data) => {
+        output += data.toString();
+        console.log(`stdout: ${data}`);
+      });
 
 
 
@@ -61,7 +61,7 @@ module.exports = {
           return;
         }
 
-        console.log(dataa);
+        console.log(output);
 
         const attachmentResponse = await axios.post(
           `https://discord.com/api/v10/channels/${interaction.channel.id}/attachments`,
