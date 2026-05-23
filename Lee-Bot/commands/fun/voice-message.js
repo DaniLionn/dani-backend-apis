@@ -106,7 +106,7 @@ module.exports = {
                 filename: "voice-message.ogg",
                 uploaded_filename: upload_filename,
                 duration_secs: Math.floor(
-                  Number(JSON.parse(data).format.duration),
+                  Number(JSON.parse(output).format.duration),
                 ),
                 waveform: wave,
               },
