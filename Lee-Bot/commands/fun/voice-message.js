@@ -39,7 +39,8 @@ module.exports = {
 
       let dataa = ""
 
-      ffprobe.stdout.on("data", (data) => {
+      ffprobe.on("message", (data) => {
+        console.log(data)
         dataa+= data
 
       })
