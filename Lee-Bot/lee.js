@@ -120,7 +120,7 @@ module.exports = {
                 },
               ],
             });
-          } else if (Month === 4) {
+          } else if (Month === 5) {
             let randomStatus = randomSelect(randomStatuses);
 
             if (randomStatus === randomStatuses[6]) {
@@ -132,7 +132,7 @@ module.exports = {
             }
 
                 await client.user.setAvatar("Lee-Bot/assets/pfps/lee_pride.png");
-              if (Math.random <= 0.9) {
+              if (Math.random <= 0.15) {
                 randomStatus =   [ActivityType.Custom, 'It is that time of year the humans call "Pride Month". I support the gays.',]
               }
 
@@ -154,6 +154,7 @@ module.exports = {
               client.user.setBanner(random);
             }
 
+            randomizeBanner()
 
             client.user.setPresence({
               activities: [{ name: randomStatus[1], type: randomStatus[0] }],
