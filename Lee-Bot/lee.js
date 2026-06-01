@@ -120,7 +120,7 @@ module.exports = {
                 },
               ],
             });
-          } else if (Month === 5) {
+          } else if (Month === 4) {
             let randomStatus = randomSelect(randomStatuses);
 
             if (randomStatus === randomStatuses[6]) {
@@ -131,12 +131,10 @@ module.exports = {
               );
             }
 
-            if (Month === 4 ) {
-              await client.user.setAvatar("Lee-Bot/assets/pfps/lee_pride.png");
-              if (Math.random <= 0.15) {
+                await client.user.setAvatar("Lee-Bot/assets/pfps/lee_pride.png");
+              if (Math.random <= 0.9) {
                 randomStatus =   [ActivityType.Custom, 'It is that time of year the humans call "Pride Month". I support the gays.',]
               }
-            }
 
             function randomizeBanner() {
               const banners = [
