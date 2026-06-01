@@ -120,12 +120,53 @@ module.exports = {
                 },
               ],
             });
-          } else {
+          } else if (Month === 5) {
+            let randomStatus = randomSelect(randomStatuses);
+
+            if (randomStatus === randomStatuses[6]) {
+              const randomGuy = await randomUser(client);
+              randomStatus[1] = randomStatuses[6][1].replace(
+                "PLACEHOLDER",
+                randomGuy.displayName || randomGuy.username,
+              );
+            }
+
+            if (Month === 4 ) {
+              await client.user.setAvatar("Lee-Bot/assets/pfps/lee_pride.png");
+              if (Math.random <= 0.15) {
+                randomStatus =   [ActivityType.Custom, 'It is that time of year the humans call "Pride Month". I support the gays.',]
+              }
+            }
+
+            function randomizeBanner() {
+              const banners = [
+                "./Lee-Bot/assets/banners/banner1.png",
+                "./Lee-Bot/assets/banners/banner2.jpg",
+                "./Lee-Bot/assets/banners/banner3.jpg",
+                "./Lee-Bot/assets/banners/banner4.jpg",
+                "./Lee-Bot/assets/banners/banner5.png",
+                "./Lee-Bot/assets/banners/banner6.png",
+                "./Lee-Bot/assets/banners/banner7.png",
+                "./Lee-Bot/assets/banners/banner8.png",
+                "./Lee-Bot/assets/banners/banner9.png",
+                "./Lee-Bot/assets/banners/lee dance.gif",
+              ];
+              const random =
+                banners[Math.floor(Math.random() * banners.length)];
+              client.user.setBanner(random);
+            }
+
+
+            client.user.setPresence({
+              activities: [{ name: randomStatus[1], type: randomStatus[0] }],
+            });
+          }
+           else {
             if (client.user.username !== "Lee Joe Smith") {
               await client.user.setUsername("Lee Joe Smith");
             }
 
-            const randomStatus = randomSelect(randomStatuses);
+            let randomStatus = randomSelect(randomStatuses);
 
             if (randomStatus === randomStatuses[6]) {
               const randomGuy = await randomUser(client);
