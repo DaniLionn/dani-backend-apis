@@ -121,6 +121,10 @@ module.exports = {
               ],
             });
           } else if (Month === 5) {
+
+            if (client.user.username !== "Lee Joe Smith 🏳️‍🌈") {
+                await client.user.setUsername("Lee Joe Smith 🏳️‍🌈");
+            }
             let randomStatus = randomSelect(randomStatuses);
 
             if (randomStatus === randomStatuses[6]) {
