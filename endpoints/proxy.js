@@ -19,11 +19,11 @@ module.exports = {
 
     var URL = Request.body.url;
     var postData = Request.body.data;
-    console.log(URL, postData);
+    //console.log(URL, postData);
     var json;
     if (isValidJSON(URL)) {
       json = JSON.parse(URL);
-      console.log(json);
+      //console.log(json);
     } else {
       json = {
         url: URL,
@@ -33,11 +33,11 @@ module.exports = {
     axios
       .post(json.url, json.data)
       .then((result) => {
-        console.log(result.data);
+        //console.log(result.data);
         Res.send(result.data);
       })
       .catch((err) => {
-        console.log(err.message);
+        //console.log(err.message);
         Res.send(err.message);
       });
   },
@@ -51,11 +51,11 @@ module.exports = {
 
     var URL = Request.body.url;
     var postData = Request.body.data;
-    console.log(URL, postData);
+    //console.log(URL, postData);
     var json;
     if (isValidJSON(URL)) {
       json = JSON.parse(URL);
-      console.log(json);
+      //console.log(json);
     } else {
       json = {
         url: URL,
@@ -73,11 +73,11 @@ module.exports = {
         },
       })
       .then((result) => {
-        console.log(result.data);
+        //console.log(result.data);
         Res.send(result.data);
       })
       .catch((err) => {
-        console.log(err.message);
+        //console.log(err.message);
         Res.send(err.message);
       });
   },
@@ -90,11 +90,11 @@ module.exports = {
     }
 
     var URL = Request.body.url;
-    console.log(URL);
+    //console.log(URL);
     var json;
     if (isValidJSON(URL)) {
       json = JSON.parse(URL);
-      console.log(json);
+      //console.log(json);
     } else {
       json = {
         url: URL,
@@ -104,11 +104,11 @@ module.exports = {
     axios
       .get(json.url)
       .then((result) => {
-        console.log(result.data);
+        //console.log(result.data);
         Res.send(result.data);
       })
       .catch((err) => {
-        console.log(err.message);
+        //console.log(err.message);
         Res.send(err.message);
       });
   },
@@ -121,11 +121,11 @@ module.exports = {
     }
 
     var URL = Request.body.url;
-    console.log(URL);
+    //console.log(URL);
     var json;
     if (isValidJSON(URL)) {
       json = JSON.parse(URL);
-      console.log(json);
+      //console.log(json);
     } else {
       json = {
         url: URL,
@@ -144,7 +144,7 @@ module.exports = {
         Res.send(result.data);
       })
       .catch((err) => {
-        console.log(err.message);
+        //console.log(err.message);
         Res.send(err.message);
       });
   },

@@ -22,7 +22,7 @@ module.exports = {
 
     await websiteHook.send(`${sender} says: "${message}"`);
 
-    res.redirect("https://danilionn.github.io/about/");
+    res.redirect("https://danilionn.github.io/daniellas-site/");
   },
 
   "get/website/steamgames": async function (req, res) {
