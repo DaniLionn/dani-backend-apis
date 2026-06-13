@@ -19,7 +19,7 @@ module.exports = {
 
     var URL = Request.body.url;
     var postData = Request.body.data;
-    //console.log(URL, postData);
+    console.log("Got!", URL, postData);
     var json;
     if (isValidJSON(URL)) {
       json = JSON.parse(URL);
@@ -42,45 +42,45 @@ module.exports = {
       });
   },
 
-  "post/proxy/tokenpost": function (Request, Res) {
-    if (!Request.body.url) {
-      Res.send("No url provided");
+  // "post/proxy/tokenpost": function (Request, Res) {
+  //   if (!Request.body.url) {
+  //     Res.send("No url provided");
 
-      return;
-    }
+  //     return;
+  //   }
 
-    var URL = Request.body.url;
-    var postData = Request.body.data;
-    //console.log(URL, postData);
-    var json;
-    if (isValidJSON(URL)) {
-      json = JSON.parse(URL);
-      //console.log(json);
-    } else {
-      json = {
-        url: URL,
-      };
-    }
+  //   var URL = Request.body.url;
+  //   var postData = Request.body.data;
+  //   //console.log(URL, postData);
+  //   var json;
+  //   if (isValidJSON(URL)) {
+  //     json = JSON.parse(URL);
+  //     //console.log(json);
+  //   } else {
+  //     json = {
+  //       url: URL,
+  //     };
+  //   }
 
-    let tok = process.env.ROBLOSECURITY;
+  //   let tok = process.env.ROBLOSECURITY;
 
-    let data = json.data;
+  //   let data = json.data;
 
-    axios
-      .post(json.url, data, {
-        headers: {
-          Cookie: `.ROBLOSECURITY=${tok}`,
-        },
-      })
-      .then((result) => {
-        //console.log(result.data);
-        Res.send(result.data);
-      })
-      .catch((err) => {
-        //console.log(err.message);
-        Res.send(err.message);
-      });
-  },
+  //   axios
+  //     .post(json.url, data, {
+  //       headers: {
+  //         Cookie: `.ROBLOSECURITY=${tok}`,
+  //       },
+  //     })
+  //     .then((result) => {
+  //       //console.log(result.data);
+  //       Res.send(result.data);
+  //     })
+  //     .catch((err) => {
+  //       //console.log(err.message);
+  //       Res.send(err.message);
+  //     });
+  // },
 
   "post/proxy/get": function (Request, Res) {
     if (!Request.body.url) {
@@ -90,7 +90,7 @@ module.exports = {
     }
 
     var URL = Request.body.url;
-    //console.log(URL);
+    console.log("Got!", URL);
     var json;
     if (isValidJSON(URL)) {
       json = JSON.parse(URL);
@@ -113,39 +113,39 @@ module.exports = {
       });
   },
 
-  "post/proxy/tokenget": function (Request, Res) {
-    if (!Request.body.url) {
-      Res.send("No url provided");
+  // "post/proxy/tokenget": function (Request, Res) {
+  //   if (!Request.body.url) {
+  //     Res.send("No url provided");
 
-      return;
-    }
+  //     return;
+  //   }
 
-    var URL = Request.body.url;
-    //console.log(URL);
-    var json;
-    if (isValidJSON(URL)) {
-      json = JSON.parse(URL);
-      //console.log(json);
-    } else {
-      json = {
-        url: URL,
-      };
-    }
+  //   var URL = Request.body.url;
+  //   //console.log(URL);
+  //   var json;
+  //   if (isValidJSON(URL)) {
+  //     json = JSON.parse(URL);
+  //     //console.log(json);
+  //   } else {
+  //     json = {
+  //       url: URL,
+  //     };
+  //   }
 
-    let tok = process.env.ROBLOSECURITY;
+  //   let tok = process.env.ROBLOSECURITY;
 
-    axios
-      .get(json.url, {
-        headers: {
-          Cookie: `.ROBLOSECURITY=${tok}`,
-        },
-      })
-      .then((result) => {
-        Res.send(result.data);
-      })
-      .catch((err) => {
-        //console.log(err.message);
-        Res.send(err.message);
-      });
-  },
+  //   axios
+  //     .get(json.url, {
+  //       headers: {
+  //         Cookie: `.ROBLOSECURITY=${tok}`,
+  //       },
+  //     })
+  //     .then((result) => {
+  //       Res.send(result.data);
+  //     })
+  //     .catch((err) => {
+  //       //console.log(err.message);
+  //       Res.send(err.message);
+  //     });
+  // },
 };
