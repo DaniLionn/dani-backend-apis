@@ -44,7 +44,7 @@ module.exports = {
         path.basename(imgpath) + ".jpg",
         image.attachment.contentType,
       );*/
-      if (!image.attachment.contentType === "image/jpeg") {
+      if (path.extname(imgpath) !== ".jpg") {
         const ffmpeg = spawn("ffmpeg", [
           "-i",
           imgpath,

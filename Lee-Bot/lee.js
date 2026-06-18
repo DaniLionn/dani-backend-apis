@@ -367,7 +367,6 @@ module.exports = {
           interaction.commandName,
         );
 
-        lastChannel = interaction.channel;
 
         if (!command) {
           console.error(
@@ -551,11 +550,22 @@ module.exports = {
         console.error("Failed to create temp directory:", err);
       }
 
-      process.on("unhandledRejection", async () => {
-        await lastChannel.send({
-          content: "An error occurred!",
-          files: [path.join(leeDir, "temp/errorDetails.txt")],
-        });
+      process.on("unhandledRejection", async (err) => {
+
+        fs.promises
+          .writeFile(
+            path.join(leeDir, "temp/errorDetails.txt"),
+            err?.stack || err?.message || String(err),
+            "utf-8",
+          )
+          .then(async () => {
+            await client.channels.cache.get("1517013559366914199").send({
+              content: "An error occurred!",
+              files: [path.join(leeDir, "temp/errorDetails.txt")],
+            });
+          });
+
+
       });
 
       await client.login(token);
@@ -564,7 +574,7 @@ module.exports = {
     try {
       await main();
     } catch (err) {
-      console.error("[loo.js:258]", err);
+      console.error("[lee.js:258]", err);
       fs.promises
         .writeFile(
           path.join(leeDir, "temp/errorDetails.txt"),
@@ -572,8 +582,8 @@ module.exports = {
           "utf-8",
         )
         .then(async () => {
-          await client.channels.cache.get("946797124824203307").send({
-            content: "An error occured!",
+          await client.channels.cache.get("1517013559366914199").send({
+            content: "An error occurred!",
             files: [path.join(leeDir, "temp/errorDetails.txt")],
           });
         });
