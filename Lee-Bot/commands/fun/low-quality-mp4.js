@@ -45,8 +45,6 @@ module.exports = {
       "8000",
       "-vr",
       "8000",
-      "-vc",
-      "1",
       "-ac",
       "1",
       outputPath,
