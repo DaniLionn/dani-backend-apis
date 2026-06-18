@@ -3,6 +3,8 @@ const { download } = require("../../scripts/utils");
 const { spawn } = require("child_process");
 const path = require("path");
 const fs = require("node:fs").promises;
+
+const customEmojis = require(`../../scripts/lee-emojis`);
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("jpeg-compression")
@@ -11,6 +13,9 @@ module.exports = {
       option.setName("jpg").setDescription("la crunch").setRequired(true),
     ),
   async execute(interaction) {
+
+
+
     async function convert(jpegpath) {
       //console.log(jpegpath);
       const crunchification = spawn(
@@ -36,7 +41,7 @@ module.exports = {
     }
 
     const image = interaction.options.get("jpg");
-    await interaction.deferReply();
+    await interaction.reply(`${customEmojis.loading} Converting... `);
     await download(image.attachment.url, "./temp").then((imgpath) => {
       /*console.log(
         "image:",

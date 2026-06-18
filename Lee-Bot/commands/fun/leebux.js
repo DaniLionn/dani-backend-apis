@@ -1,43 +1,45 @@
-const { readUserData, writeUserData } = require("../../scripts/utils");
+const { readUserData, writeUserData } = require(`../../scripts/utils`);
 const {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
   SlashCommandBuilder,
-} = require("discord.js");
+} = require(`discord.js`);
+
+const customEmojis = require(`../../scripts/lee-emojis`);
 
 const crimes = [
   {
-    win: "You broke into a jewlery store and stole %m<:leebux:1431469715586416771>",
-    lose: "You broke into a jewlery store but tripped the alarm and got arrested. You had to pay %m<:leebux:1431469715586416771> for bail.",
+    win: `You broke into a jewelry store and stole %m${customEmojis.leebux}`,
+    lose: `You broke into a jewelry store but tripped the alarm and got arrested. You had to pay %m${customEmojis.leebux} for bail.`,
   },
   {
-    win: "You pretended to be Microsoft Support and scammed an old lady out of %m<:leebux:1431469715586416771>",
+    win: `You pretended to be Microsoft Support and scammed an old lady out of %m${customEmojis.leebux}`,
 
-    lose: "You pretended to be Microsoft Support and tried to scam an old lady, but she turned out to be a scambaiter! You lost %m<:leebux:1431469715586416771>",
+    lose: `You pretended to be Microsoft Support and tried to scam an old lady, but she turned out to be a scambaiter! You lost %m${customEmojis.leebux}`,
   },
   {
-    win: "You were hired to kill somebody for %m<:leebux:1431469715586416771> and sucessfully got the job done. Was that *really* worth it?",
-    lose: "You were hired to kill somebody, but got arrested for murder. You lost %m<:leebux:1431469715586416771>",
+    win: `You were hired to kill somebody for %m${customEmojis.leebux} and successfully got the job done. Was that *really* worth it?`,
+    lose: `You were hired to kill somebody, but got arrested for murder. You lost %m${customEmojis.leebux}`,
   },
   {
-    win: "You carjacked somebody and sold their car for %m<:leebux:1431469715586416771>",
-    lose: "You carjacked somebody but ended up crashing the car. You had to pay %m<:leebux:1431469715586416771> for your hospital bills",
+    win: `You carjacked somebody and sold their car for %m${customEmojis.leebux}`,
+    lose: `You carjacked somebody but ended up crashing the car. You had to pay %m${customEmojis.leebux} for your hospital bills`,
   },
 ];
 const rarecrime =
-  "You hacked into a wealthy Roblox player's account and stole 2,000,000<:robux:1487228952513613895>\nYou can't use that here, but at least you can buy a dominus!";
+  `You hacked into a wealthy Roblox player's account and stole 2,000,000${customEmojis.robux}\nYou can't use that here, but at least you can buy a dominus!`;
 
-const cards = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const cards = [`1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`];
 
 function addLeebux(userID, userData, amount, type) {
-  var leeplushies = userData.inventory["lee_plush"] || 0;
+  var leeplushies = userData.inventory[`lee_plush`] || 0;
 
-  if (type === "daily" || type === "crime") {
+  if (type === `daily` || type === `crime`) {
     amount = amount + leeplushies * 50;
   }
 
-  if (userID === "1405003996237795449" && type === "gamble") {
+  if (userID === `1405003996237795449` && type === `gamble`) {
     amount = Math.floor(amount * 0.25);
   }
 
@@ -46,53 +48,53 @@ function addLeebux(userID, userData, amount, type) {
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("leebux")
-    .setDescription("commands relating to lee's currency, leebux")
+    .setName(`leebux`)
+    .setDescription(`commands relating to lee's currency, leebux`)
     .addSubcommand((subcommand) =>
-      subcommand.setName("balance").setDescription("leebux balance"),
+      subcommand.setName(`balance`).setDescription(`leebux balance`),
     )
     .addSubcommand((subcommand) =>
-      subcommand.setName("inventory").setDescription("leebux inventory"),
+      subcommand.setName(`inventory`).setDescription(`leebux inventory`),
     )
     .addSubcommand((subcommand) =>
-      subcommand.setName("daily").setDescription("daily leebux"),
+      subcommand.setName(`daily`).setDescription(`daily leebux`),
     )
     .addSubcommand((subcommand) =>
-      subcommand.setName("crime").setDescription("commit a crime"),
+      subcommand.setName(`crime`).setDescription(`commit a crime`),
     )
     .addSubcommand((subcommand) =>
-      subcommand.setName("shop").setDescription("buy goods"),
+      subcommand.setName(`shop`).setDescription(`buy goods`),
     )
     .addSubcommand((subcommand) =>
       subcommand
-        .setName("cf")
-        .setDescription("coin flip")
+        .setName(`cf`)
+        .setDescription(`coin flip`)
         .addNumberOption((option) =>
           option
-            .setName("amount")
-            .setDescription("how much you want to bet")
+            .setName(`amount`)
+            .setDescription(`how much you want to bet`)
             .setRequired(true),
         ),
     )
     .addSubcommand((subcommand) =>
       subcommand
-        .setName("weird-coin-flip")
-        .setDescription("coin flip but weird")
+        .setName(`weird-coin-flip`)
+        .setDescription(`coin flip but weird`)
         .addNumberOption((option) =>
           option
-            .setName("amount")
-            .setDescription("how much you want to bet")
+            .setName(`amount`)
+            .setDescription(`how much you want to bet`)
             .setRequired(true),
         ),
     )
     .addSubcommand((subcommand) =>
       subcommand
-        .setName("high-low")
-        .setDescription("high low game")
+        .setName(`high-low`)
+        .setDescription(`high low game`)
         .addNumberOption((option) =>
           option
-            .setName("amount")
-            .setDescription("how much you want to bet")
+            .setName(`amount`)
+            .setDescription(`how much you want to bet`)
             .setRequired(true),
         ),
     ),
@@ -117,16 +119,16 @@ module.exports = {
         (seconds % 1 > 0 && Math.floor(seconds % 60)) || seconds % 60;
 
       const hourString =
-        hours > 0 ? `${hours} hour${hours > 1 ? "s" : ""}` : "";
+        hours > 0 ? `${hours} hour${hours > 1 ? `s` : ``}` : ``;
       const minuteString =
-        minutes > 0 ? `${minutes} minute${minutes > 1 ? "s" : ""}` : "";
+        minutes > 0 ? `${minutes} minute${minutes > 1 ? `s` : ``}` : ``;
       const secondString =
         remainingSeconds > 0
-          ? `${remainingSeconds} second${remainingSeconds > 1 ? "s" : ""}`
-          : "";
+          ? `${remainingSeconds} second${remainingSeconds > 1 ? `s` : ``}`
+          : ``;
 
       if (hours > 0) {
-        return `${hourString} : ${minuteString || "0 "} ${secondString && ` : ${secondString}`}`;
+        return `${hourString} : ${minuteString || `0 `} ${secondString && ` : ${secondString}`}`;
       } else if (!hours && minutes > 0) {
         return `${minuteString} ${secondString && ` : ${secondString}`}`;
       }
@@ -143,17 +145,17 @@ module.exports = {
     }
 
     let subcommand = interaction.options.getSubcommand();
-    if (subcommand === "balance") {
+    if (subcommand === `balance`) {
       interaction.reply(
         interaction.user.username +
-          "'s balance: " +
-          Math.floor(userData.leebux).toLocaleString("en-US") +
-          " <:leebux:1431469715586416771>",
+          `'s balance: ` +
+          Math.floor(userData.leebux).toLocaleString(`en-US`) +
+          ` ${customEmojis.leebux}`,
       );
       return;
     }
 
-    if (subcommand === "crime") {
+    if (subcommand === `crime`) {
       var crime = crimes[Math.floor(Math.random() * crimes.length)];
 
       const useRareCrime = Math.random() <= 0.01;
@@ -167,13 +169,13 @@ module.exports = {
           amount = Math.floor(250 + userData.leebux * 0.001);
           //console.log(amount);
 
-          addLeebux(interaction.user.id, userData, amount, "crime");
+          addLeebux(interaction.user.id, userData, amount, `crime`);
         } else {
           amount = Math.floor(250 + userData.leebux * 0.002);
           //console.log(amount);
           userData.leebux -= amount;
           interaction.reply(
-            crime.lose.replace("%m", amount.toLocaleString("en-US")),
+            crime.lose.replace(`%m`, amount.toLocaleString(`en-US`)),
           );
         }
       }
@@ -182,31 +184,31 @@ module.exports = {
       return;
     }
 
-    if (subcommand === "shop") {
+    if (subcommand === `shop`) {
       const yes1 = new ButtonBuilder()
-        .setCustomId("yes1")
-        .setLabel("Buy 1")
+        .setCustomId(`yes1`)
+        .setLabel(`Buy 1`)
         .setStyle(ButtonStyle.Primary);
 
       const yes2 = new ButtonBuilder()
-        .setCustomId("yes2")
-        .setLabel("Buy 5")
+        .setCustomId(`yes2`)
+        .setLabel(`Buy 5`)
         .setStyle(ButtonStyle.Primary);
 
       const yes3 = new ButtonBuilder()
-        .setCustomId("yes3")
-        .setLabel("Buy 10")
+        .setCustomId(`yes3`)
+        .setLabel(`Buy 10`)
         .setStyle(ButtonStyle.Primary);
 
       const yes4 = new ButtonBuilder()
-        .setCustomId("yes4")
-        .setLabel("NO!!!")
+        .setCustomId(`yes4`)
+        .setLabel(`NO!!!`)
         .setStyle(ButtonStyle.Primary);
       const row = new ActionRowBuilder().addComponents(yes1, yes2, yes3, yes4);
 
       await interaction.reply({
         content:
-          "Currently, the only item in the shop is a plushie. Of me!!! These plushies give you more daily money and more money from the gambling commands. Would you like to buy? They're 1,000<:leebux:1431469715586416771> each.",
+          `Currently, the only item in the shop is a plushie. Of me!!! These plushies give you more daily money and more money from the gambling commands. Would you like to buy? They're 1,000${customEmojis.leebux} each.`,
         components: [row],
       });
 
@@ -227,57 +229,57 @@ module.exports = {
         if (userData.leebux < price) {
           await interaction.editReply({
             content:
-              "You don't have enough!",
+              `You don't have enough!`,
             components: [],
           });
 
         } else {
           userData.leebux = userData.leebux - price;
-          userData.inventory["lee_plush"] =
-            (userData.inventory["lee_plush"] || 0) + amount;
+          userData.inventory[`lee_plush`] =
+            (userData.inventory[`lee_plush`] || 0) + amount;
           writeUserData(userData, interaction.user.id);
           await interaction.editReply({
             content:
-              "Thank you! (+" + amount + " <:lee_plush:1431871543914266725> added to inventory!)",
+              `Thank you! (+` + amount + ` ${customEmojis.lee_plush} added to inventory!)`,
             components: [],
           });
         }
       }
 
-      collector.on("collect", async (i) => {
-        if (i.customId === "yes1") {
+      collector.on(`collect`, async (i) => {
+        if (i.customId === `yes1`) {
           await buyPlushie(1000, 1);
         }
 
-        if (i.customId === "yes2") {
+        if (i.customId === `yes2`) {
           await buyPlushie(5000, 5);
         }
 
-        if (i.customId === "yes3") {
+        if (i.customId === `yes3`) {
           await buyPlushie(10000, 10);
         }
 
-        if (i.customId === "yes4") {
+        if (i.customId === `yes4`) {
           await interaction.editReply({
-            content: "ok... :cry:",
+            content: `ok... :cry:`,
             components: [],
           });
         }
       });
     }
 
-    if (subcommand === "inventory") {
+    if (subcommand === `inventory`) {
       const icons = {
-        lee_plush: "<:lee_plush:1431871543914266725>",
+        lee_plush: `${customEmojis.lee_plush}`,
       };
 
-      let inventoryString = "Your Inventory:\n";
+      let inventoryString = `Your Inventory:\n`;
 
       if (!userData.inventory || Object.keys(userData.inventory).length === 0) {
-        inventoryString += "Your inventory is empty.";
+        inventoryString += `Your inventory is empty.`;
       } else {
         for (const [item, quantity] of Object.entries(userData.inventory)) {
-          inventoryString += `- ${icons[item] || item}: ${quantity.toLocaleString("en-US")}\n`;
+          inventoryString += `- ${icons[item] || item}: ${quantity.toLocaleString(`en-US`)}\n`;
         }
       }
 
@@ -285,37 +287,37 @@ module.exports = {
       return;
     }
 
-    if (subcommand === "daily") {
+    if (subcommand === `daily`) {
       const now = Math.floor(new Date().getTime() / 1000);
       //console.log(now, userData.daily_reset);
       if (now >= userData.daily_reset) {
         userData.daily_reset = now + 86400;
         const baseValue = 300;
-        addLeebux(interaction.user.id, userData, amount, "daily");
+        addLeebux(interaction.user.id, userData, amount, `daily`);
         writeUserData(userData, interaction.user.id);
         await interaction.reply(
-          "Daily " +
-            value.toLocaleString("en-US") +
-            " <:leebux:1431469715586416771> obtained!",
+          `Daily ` +
+            value.toLocaleString(`en-US`) +
+            ` ${customEmojis.leebux} obtained!`,
         );
       } else {
         const diff = userData.daily_reset - now;
         //console.log(diff);
         await interaction.reply(
-          "You've already redeemed your daily LeeBux! You have " +
+          `You've already redeemed your daily LeeBux! You have ` +
             convertSeconds(diff) +
-            " remaining until you can redeem again.",
+            ` remaining until you can redeem again.`,
         );
       }
       return;
     }
 
-    if (subcommand === "cf") {
-      const amount = interaction.options.getNumber("amount");
+    if (subcommand === `cf`) {
+      const amount = interaction.options.getNumber(`amount`);
 
       if (userData.leebux < amount) {
         await interaction.reply(
-          "you don't have enough leebux<:leebux:1431469715586416771>  :rofl:",
+          `you don't have enough leebux${customEmojis.leebux}  :rofl:`,
         );
         return;
       }
@@ -326,34 +328,34 @@ module.exports = {
 
       if (win === true) {
         await interaction.reply(
-          "You bet " +
-            amount.toLocaleString("en-US") +
-            "<:leebux:1431469715586416771>  and flip a coin...",
+          `You bet ` +
+            amount.toLocaleString(`en-US`) +
+            `${customEmojis.leebux}  and flip a coin...`,
         );
         setTimeout(async () => {
           await interaction.editReply(
-            "You bet " +
-              amount.toLocaleString("en-US") +
-              "<:leebux:1431469715586416771> and flip a coin...\nAnd it lands on heads! You've won " +
-              (amount * 2).toLocaleString("en-US") +
-              "<:leebux:1431469715586416771>!",
+            `You bet ` +
+              amount.toLocaleString(`en-US`) +
+              `${customEmojis.leebux} and flip a coin...\nAnd it lands on heads! You've won ` +
+              (amount * 2).toLocaleString(`en-US`) +
+              `${customEmojis.leebux}!`,
           );
-          addLeebux(interaction.user.id, userData, amount * 2, "gamble");
+          addLeebux(interaction.user.id, userData, amount * 2, `gamble`);
           writeUserData(userData, interaction.user.id);
         }, 1500);
       } else {
         await interaction.reply(
-          "You bet " +
+          `You bet ` +
             amount +
-            "<:leebux:1431469715586416771> and flip a coin...",
+            `${customEmojis.leebux} and flip a coin...`,
         );
         setTimeout(async () => {
           await interaction.editReply(
-            "You bet " +
-              amount.toLocaleString("en-US") +
-              "<:leebux:1431469715586416771>  and flip a coin...\nAnd it lands on tails... You've lost " +
-              amount.toLocaleString("en-US") +
-              "<:leebux:1431469715586416771>...",
+            `You bet ` +
+              amount.toLocaleString(`en-US`) +
+              `${customEmojis.leebux}  and flip a coin...\nAnd it lands on tails... You've lost ` +
+              amount.toLocaleString(`en-US`) +
+              `${customEmojis.leebux}...`,
           );
           userData.leebux = userData.leebux - amount;
           writeUserData(userData, interaction.user.id);
@@ -361,12 +363,12 @@ module.exports = {
       }
     }
 
-    if (subcommand === "weird-coin-flip") {
-      const amount = interaction.options.getNumber("amount");
+    if (subcommand === `weird-coin-flip`) {
+      const amount = interaction.options.getNumber(`amount`);
 
       if (userData.leebux < amount) {
         await interaction.reply(
-          "you don't have enough leebux<:leebux:1431469715586416771> :rofl:",
+          `you don't have enough leebux${customEmojis.leebux} :rofl:`,
         );
         return;
       }
@@ -377,34 +379,34 @@ module.exports = {
 
       if (win === true) {
         await interaction.reply(
-          "You bet " +
-            amount.toLocaleString("en-US") +
-            "<:leebux:1431469715586416771>  and flip a weirdly weighted coin...",
+          `You bet ` +
+            amount.toLocaleString(`en-US`) +
+            `${customEmojis.leebux}  and flip a weirdly weighted coin...`,
         );
         setTimeout(async () => {
           await interaction.editReply(
-            "You bet " +
-              amount.toLocaleString("en-US") +
-              "<:leebux:1431469715586416771> and flip a weirdly weighted coin...\nAnd it lands on heads! You've won " +
-              Math.floor(amount * 1.5).toLocaleString("en-US") +
-              "<:leebux:1431469715586416771>!",
+            `You bet ` +
+              amount.toLocaleString(`en-US`) +
+              `${customEmojis.leebux} and flip a weirdly weighted coin...\nAnd it lands on heads! You've won ` +
+              Math.floor(amount * 1.5).toLocaleString(`en-US`) +
+              `${customEmojis.leebux}!`,
           );
-          addLeebux(interaction.user.id, userData, amount * 1.5, "gamble");
+          addLeebux(interaction.user.id, userData, amount * 1.5, `gamble`);
           writeUserData(userData, interaction.user.id);
         }, 1500);
       } else {
         await interaction.reply(
-          "You bet " +
-            amount.toLocaleString("en-US") +
-            "<:leebux:1431469715586416771> and flip a flip a weirdly weighted coin...",
+          `You bet ` +
+            amount.toLocaleString(`en-US`) +
+            `${customEmojis.leebux} and flip a flip a weirdly weighted coin...`,
         );
         setTimeout(async () => {
           await interaction.editReply(
-            "You bet " +
-              amount.toLocaleString("en-US") +
-              "<:leebux:1431469715586416771>  and flip a flip a weirdly weighted coin...\nAnd it lands on tails... Unlucky! You've lost " +
-              amount.toLocaleString("en-US") +
-              "<:leebux:1431469715586416771>...",
+            `You bet ` +
+              amount.toLocaleString(`en-US`) +
+              `${customEmojis.leebux}  and flip a flip a weirdly weighted coin...\nAnd it lands on tails... Unlucky! You've lost ` +
+              amount.toLocaleString(`en-US`) +
+              `${customEmojis.leebux}...`,
           );
           userData.leebux = userData.leebux - amount;
           writeUserData(userData, interaction.user.id);
@@ -412,24 +414,24 @@ module.exports = {
       }
     }
 
-    if (subcommand === "high-low") {
-      const amount = interaction.options.getNumber("amount");
+    if (subcommand === `high-low`) {
+      const amount = interaction.options.getNumber(`amount`);
 
       const higher = new ButtonBuilder()
-        .setCustomId("higher")
-        .setLabel("Higher")
+        .setCustomId(`higher`)
+        .setLabel(`Higher`)
         .setStyle(ButtonStyle.Primary);
 
       const lower = new ButtonBuilder()
-        .setCustomId("lower")
-        .setLabel("Lower")
+        .setCustomId(`lower`)
+        .setLabel(`Lower`)
         .setStyle(ButtonStyle.Primary);
 
       const row = new ActionRowBuilder().addComponents(lower, higher);
 
       if (userData.leebux < amount) {
         await interaction.reply(
-          "you don't have enough leebux<:leebux:1431469715586416771> :rofl:",
+          `you don't have enough leebux${customEmojis.leebux} :rofl:`,
         );
         return;
       }
@@ -447,11 +449,11 @@ module.exports = {
 
       await interaction.reply({
         content:
-          "You bet " +
-          amount.toLocaleString("en-US") +
-          "<:leebux:1431469715586416771>  on a high-low card game!\nThe number on the first card is\n# " +
+          `You bet ` +
+          amount.toLocaleString(`en-US`) +
+          `${customEmojis.leebux}  on a high-low card game!\nThe number on the first card is\n# ` +
           card1 +
-          "\nWill the next card be higher or lower?",
+          `\nWill the next card be higher or lower?`,
         components: [row],
       });
 
@@ -466,48 +468,48 @@ module.exports = {
         max: 1,
       });
 
-      collector.on("collect", async (i) => {
+      collector.on(`collect`, async (i) => {
         //console.log(`Collected ${i.customId}`);
 
-        let userChoice = i.customId; // "higher" or "lower"
+        let userChoice = i.customId; // `higher` or `lower`
 
         let result;
         if (cardValue2 > cardValue1) {
-          result = "higher";
+          result = `higher`;
         } else if (cardValue2 < cardValue1) {
-          result = "lower";
+          result = `lower`;
         } else {
-          result = "equal";
+          result = `equal`;
         }
 
-        if (result === "equal") {
+        if (result === `equal`) {
           await interaction.editReply({
             content:
-              "The number on the next card is... \n# " +
+              `The number on the next card is... \n# ` +
               card2 +
-              "!\nIt's a tie! You neither win nor lose any leebux.",
+              `!\nIt's a tie! You neither win nor lose any leebux.`,
             components: [],
           });
         } else if (userChoice === result) {
           await interaction.editReply({
             content:
-              "The number on the next card is... \n# " +
+              `The number on the next card is... \n# ` +
               card2 +
-              "!\nYou guessed correctly! You've won " +
-              (amount * 2).toLocaleString("en-US") +
-              "<:leebux:1431469715586416771>!",
+              `!\nYou guessed correctly! You've won ` +
+              (amount * 2).toLocaleString(`en-US`) +
+              `${customEmojis.leebux}!`,
             components: [],
           });
-          addLeebux(interaction.user.id, userData, amount * 2, "gamble");
+          addLeebux(interaction.user.id, userData, amount * 2, `gamble`);
           writeUserData(userData, interaction.user.id);
         } else {
           await interaction.editReply({
             content:
-              "The number on the next card is... \n# " +
+              `The number on the next card is... \n# ` +
               card2 +
-              "...\nUnlucky, you guessed wrong! You've lost " +
-              amount.toLocaleString("en-US") +
-              "<:leebux:1431469715586416771>!",
+              `...\nUnlucky, you guessed wrong! You've lost ` +
+              amount.toLocaleString(`en-US`) +
+              `${customEmojis.leebux}!`,
             components: [],
           });
           userData.leebux = userData.leebux - amount;

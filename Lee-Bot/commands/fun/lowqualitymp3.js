@@ -3,7 +3,7 @@ const { download } = require("../../scripts/utils");
 const { spawn } = require("child_process");
 const path = require("path");
 const fs = require("fs").promises;
-
+const customEmojis = require(`../../scripts/lee-emojis`);
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("low-quality-mp3")
@@ -22,7 +22,7 @@ module.exports = {
         ),
     ),
   async execute(interaction) {
-    await interaction.deferReply();
+    await interaction.reply(`${customEmojis.loading} Converting... `);
 
     const mp3Attachment = interaction.options.getAttachment("mp3");
     const showExtraInfo = interaction.options.getBoolean("extra-info");
