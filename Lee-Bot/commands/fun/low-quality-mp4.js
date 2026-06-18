@@ -38,7 +38,7 @@ module.exports = {
       downloadedMP3,
       "-y",
       "-b:a",
-      "4k",
+      "8k",
       "-b:v",
       "48k",
       "-ar",
