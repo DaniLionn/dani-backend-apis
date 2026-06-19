@@ -61,7 +61,15 @@ module.exports = {
 
     console.log(percent)
 
-    await interaction.reply("Compatibility of " + user1.username +" and "+user2.username+":\n"+progressBar(percent,100,15));
+    await interaction.reply(
+      "Compatibility of " +
+        user1.username +
+        " and " +
+        user2.username +
+        ":\n" +
+        progressBar(percent, 100, 15) +
+        "⠀",
+    );
 
   },
 };
