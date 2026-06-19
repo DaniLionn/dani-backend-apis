@@ -21,16 +21,17 @@ module.exports = {
     function calculateCompatibility(u1,u2) {
       let id1, id2;
 
-      if (u1 >= u2) {
-        id1 = u1;
-        id2 = u2;
-      } else {
+      if (u1 <= u2) {
         id1 = u2;
         id2 = u1;
+      } else {
+        id1 = u1;
+        id2 = u2;
       }
 
       return Math.floor(
-        (id1 / 1000000000000000 / (id2 / 1000000000000000)) * 100,
+        (Number(id1) / 1000000000000000 / (Number(id2) / 1000000000000000)) *
+          100,
       );
     }
 
