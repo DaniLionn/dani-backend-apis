@@ -22,9 +22,11 @@ module.exports = {
       let id1, id2;
 
       if (u1 <= u2) {
+        console.log(u1, u2, "Id 1 is smaller than id 2")
         id1 = u2;
         id2 = u1;
       } else {
+        console.log(u1, u2, "Id 1 is not smaller than id 2");
         id1 = u1;
         id2 = u2;
       }
