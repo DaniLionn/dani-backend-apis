@@ -39,6 +39,8 @@ module.exports = {
 
     const percent = calculateCompatibility(user1.id, user2.id)
 
+    console.log(percent)
+
     await interaction.reply("Compatibility of " + user1.username +" and "+user2.username+":\n"+progressBar(percent,100,15));
 
   },
