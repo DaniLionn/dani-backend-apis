@@ -23,18 +23,35 @@ module.exports = {
 
       if (u1 <= u2) {
         console.log(u1, u2, "Id 1 is smaller than id 2")
-        id1 = u2;
-        id2 = u1;
-      } else {
-        console.log(u1, u2, "Id 1 is not smaller than id 2");
         id1 = u1;
         id2 = u2;
+      } else {
+        console.log(u1, u2, "Id 1 is not smaller than id 2");
+        id1 = u2;
+        id2 = u1;
       }
 
-      return Math.floor(
+      let p = Math.floor(
         (Number(id1) / 1000000000000000 / (Number(id2) / 1000000000000000)) *
           100,
       );
+      if (p > 100) {
+        if (u1 <= u2) {
+          id1 = u2;
+          id2 = u1;
+        } else {
+
+          id1 = u1;
+          id2 = u2;
+        }
+
+        p = Math.floor(
+          (Number(id1) / 1000000000000000 / (Number(id2) / 1000000000000000)) *
+            100,
+        );
+      }
+
+      return p
     }
 
     const user1 = interaction.options.getUser("user1");
