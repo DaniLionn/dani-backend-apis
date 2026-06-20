@@ -1,4 +1,4 @@
-const { readUserData, writeUserData } = require(`../../scripts/utils`);
+const { readUserData, writeUserData } = require(`../../utils/scripts/utils`);
 const {
   ActionRowBuilder,
   ButtonBuilder,
@@ -6,7 +6,7 @@ const {
   SlashCommandBuilder,
 } = require(`discord.js`);
 
-const customEmojis = require(`../../scripts/lee-emojis`);
+const customEmojis = require(`../../utils/references/lee-emojis`);
 
 const crimes = [
   {
@@ -293,6 +293,7 @@ module.exports = {
       if (now >= userData.daily_reset) {
         userData.daily_reset = now + 86400;
         const baseValue = 300;
+        let amount = baseValue + (userData.inventory[`lee_plush`] || 0) * 50;
         addLeebux(interaction.user.id, userData, amount, `daily`);
         writeUserData(userData, interaction.user.id);
         await interaction.reply(
