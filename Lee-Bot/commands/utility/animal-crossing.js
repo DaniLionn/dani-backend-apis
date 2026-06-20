@@ -1,8 +1,8 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const animalCrossingData = require("animal-crossing");
 const { download } = require("../../utils/scripts/utils");
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 const ids = [
   //species id | # of animals
   ["ant", 10], //anteater
@@ -44,7 +44,7 @@ const ids = [
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("animal-crossing-random-villager")
-    .setDescription("gives a random animal crossing villager"),
+    .setDescription("gives a random animal crossing villager. database used for this is outdated and doesn't have 2.0 or 3.0 villagers"),
   async execute(interaction) {
     await interaction.deferReply();
     const entry = ids[Math.floor(Math.random() * ids.length)];
@@ -58,7 +58,7 @@ module.exports = {
     const animalID = entry[0] + number;
 
     const animal = animalCrossingData.villagers.find(
-      (villager) => villager.filename == animalID,
+      (villager) => villager.filename === animalID,
     );
 
     if (animal) {

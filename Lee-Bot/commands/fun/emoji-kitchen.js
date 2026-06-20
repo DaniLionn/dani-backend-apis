@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { download } = require("../../utils/scripts/utils");
-const fs = require("fs");
+const fs = require("node:fs");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("emoji-kitchen")

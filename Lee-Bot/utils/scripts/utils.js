@@ -53,12 +53,12 @@ exports.random = function (min, max) {
 
 exports.randomUser = async function (client, serverId) {
   const server =
-    (serverId != undefined && client.guilds.cache.get(serverId)) ||
+    (serverId !== undefined && client.guilds.cache.get(serverId)) ||
     client.guilds.cache.random();
   const members = await server.members.fetch();
   const member = members.random();
-  const user = member.user;
-  return user;
+
+  return member.user;
 };
 exports.loadCommands = async function (client) {
   client.commands = new Collection();

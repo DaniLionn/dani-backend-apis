@@ -4,7 +4,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const axios = require("axios");
 const sharp = require("sharp");
 const { download } = require("../../utils/scripts/utils");
-const fs = require("fs");
+const fs = require("node:fs");
 const fun_facts = [
   "Fun fact: I originally stayed up until 2 AM when programming the first version of this command.",
   "Fun fact: This command uses the https://pokeapi.co/ API to source all the pokedex data.",
@@ -62,6 +62,9 @@ module.exports = {
         .setDescription("Grabs the Pokédex entry for a random Pokémon"),
     ),
   async execute(interaction) {
+    let game;
+    let pokemon;
+
     async function errorHandling(statusCode) {
       switch (statusCode) {
         case 404:
@@ -90,7 +93,7 @@ module.exports = {
     }
 
     async function resizeImage(url, nat_dex_number) {
-      var filepath = await download(url, "./temp/");
+      let filepath = await download(url, "./temp/");
 
       let proc = sharp(filepath).resize(200, 200);
 
@@ -107,10 +110,8 @@ module.exports = {
 
     let subcommand = interaction.options.getSubcommand();
 
-    var pokemon;
-    var game;
 
-    if (subcommand == "random") {
+    if (subcommand === "random") {
       pokemon = Math.floor(Math.random() * 1025) + 1;
     } else {
       pokemon = interaction.options.getString("pokemon").toLocaleLowerCase();
@@ -120,16 +121,11 @@ module.exports = {
         .replace(/[^a-zA-Z\s]/g, "")
         .replace(" ", "-");
     }
-    if (game == "fire-red") {
+    if (game === "fire-red") {
       game = "firered";
-    } else if (game == "leaf-green") {
+    } else if (game === "leaf-green") {
       game = "leafgreen";
     }
-
-    // //api for whatever reason doens't give info about oricorio unless you request via national dex number
-    // if (pokemon === "oricorio") {
-    //   pokemon = "741";
-    // }
 
     try {
       var pokemon_species_data = await axios.get(
@@ -171,14 +167,14 @@ module.exports = {
     const types = {
       first_type: pokemon_data.types[0].type.name,
       second_type:
-        (pokemon_data.types[1] != undefined &&
+        (pokemon_data.types[1] !== undefined &&
           pokemon_data.types[1].type.name) ||
         "",
     };
 
     const nat_dex_number = pokemon_data.id;
 
-    if (subcommand == "random") {
+    if (subcommand === "random") {
       var english = pokemon_species_data.flavor_text_entries.filter(
         (item) => item.language.name === "en",
       );
@@ -225,7 +221,7 @@ module.exports = {
         `# No. ${nat_dex_number}: ${name}\n## ${category}\n### ${pokedex_entry}\n# ${
           type_emojis[types.first_type]
         }${
-          (types.second_type != "" && ` / ${type_emojis[types.second_type]}`) ||
+          (types.second_type !== "" && ` / ${type_emojis[types.second_type]}`) ||
           ""
         }\n### Debuted in ${debut_generation}`,
       )

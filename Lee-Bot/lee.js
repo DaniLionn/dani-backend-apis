@@ -81,7 +81,22 @@ let randomStatuses = [
     "woah i thing i 'm adicted im adicted to lveo i'm otu of sync self inflicted but ut fits like a glove",
   ],
 ];
-
+function randomizeBanner() {
+  const banners = [
+    "./Lee-Bot/assets/banners/banner1.png",
+    "./Lee-Bot/assets/banners/banner2.jpg",
+    "./Lee-Bot/assets/banners/banner3.jpg",
+    "./Lee-Bot/assets/banners/banner4.jpg",
+    "./Lee-Bot/assets/banners/banner5.png",
+    "./Lee-Bot/assets/banners/banner6.png",
+    "./Lee-Bot/assets/banners/banner7.png",
+    "./Lee-Bot/assets/banners/banner8.png",
+    "./Lee-Bot/assets/banners/banner9.png",
+    "./Lee-Bot/assets/banners/lee dance.gif",
+  ];
+  const random = banners[Math.floor(Math.random() * banners.length)];
+  client.user.setBanner(random);
+}
 const leeDir = process.env.LEE_ROOT_DIR;
 let turns = 0;
 module.exports = {
@@ -140,24 +155,6 @@ module.exports = {
                 randomStatus =   [ActivityType.Custom, 'It is that time of year the humans call "Pride Month". I support the gays.',]
               }
 
-            function randomizeBanner() {
-              const banners = [
-                "./Lee-Bot/assets/banners/banner1.png",
-                "./Lee-Bot/assets/banners/banner2.jpg",
-                "./Lee-Bot/assets/banners/banner3.jpg",
-                "./Lee-Bot/assets/banners/banner4.jpg",
-                "./Lee-Bot/assets/banners/banner5.png",
-                "./Lee-Bot/assets/banners/banner6.png",
-                "./Lee-Bot/assets/banners/banner7.png",
-                "./Lee-Bot/assets/banners/banner8.png",
-                "./Lee-Bot/assets/banners/banner9.png",
-                "./Lee-Bot/assets/banners/lee dance.gif",
-              ];
-              const random =
-                banners[Math.floor(Math.random() * banners.length)];
-              client.user.setBanner(random);
-            }
-
             randomizeBanner()
 
             client.user.setPresence({
@@ -179,23 +176,7 @@ module.exports = {
               );
             }
 
-            function randomizeBanner() {
-              const banners = [
-                "./Lee-Bot/assets/banners/banner1.png",
-                "./Lee-Bot/assets/banners/banner2.jpg",
-                "./Lee-Bot/assets/banners/banner3.jpg",
-                "./Lee-Bot/assets/banners/banner4.jpg",
-                "./Lee-Bot/assets/banners/banner5.png",
-                "./Lee-Bot/assets/banners/banner6.png",
-                "./Lee-Bot/assets/banners/banner7.png",
-                "./Lee-Bot/assets/banners/banner8.png",
-                "./Lee-Bot/assets/banners/banner9.png",
-                "./Lee-Bot/assets/banners/lee dance.gif",
-              ];
-              const random =
-                banners[Math.floor(Math.random() * banners.length)];
-              client.user.setBanner(random);
-            }
+
 
             if (randomStatus === randomStatuses[7]) {
               await client.user.setAvatar(

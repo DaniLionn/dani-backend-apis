@@ -2,8 +2,8 @@ const { SlashCommandBuilder } = require("discord.js");
 const flipnote = require("flipnote.js");
 const { download } = require("../../utils/scripts/utils.js");
 const fs = require("fs/promises");
-const path = require("path");
-const { spawn } = require("child_process");
+const path = require("node:path");
+const { spawn } = require("node:child_process");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -32,7 +32,7 @@ module.exports = {
     const ppm = interaction.options.getAttachment("file");
 
     await download(ppm.url, workingDir).then(async (downloadedPPM) => {
-      if (path.extname(downloadedPPM) != ".ppm") {
+      if (path.extname(downloadedPPM) !== ".ppm") {
         await fs.unlink(downloadedPPM);
         await fs.rmdir(workingDir);
         await interaction.editReply(
@@ -74,7 +74,7 @@ module.exports = {
 
       ffmpeg.on("close", async (code) => {
         console.log(`ffmpeg process exited with code ${code}`);
-        if (code == 0) {
+        if (code === 0) {
           await interaction.editReply({
             files: [path.join(workingDir, note.meta.current.filename + ".mp4")],
           });
