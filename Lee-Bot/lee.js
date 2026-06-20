@@ -83,16 +83,16 @@ let randomStatuses = [
 ];
 function randomizeBanner() {
   const banners = [
-    "./Lee-Bot/assets/banners/banner1.png",
-    "./Lee-Bot/assets/banners/banner2.jpg",
-    "./Lee-Bot/assets/banners/banner3.jpg",
-    "./Lee-Bot/assets/banners/banner4.jpg",
-    "./Lee-Bot/assets/banners/banner5.png",
-    "./Lee-Bot/assets/banners/banner6.png",
-    "./Lee-Bot/assets/banners/banner7.png",
-    "./Lee-Bot/assets/banners/banner8.png",
-    "./Lee-Bot/assets/banners/banner9.png",
-    "./Lee-Bot/assets/banners/lee dance.gif",
+    "./assets/banners/banner1.png",
+    "./assets/banners/banner2.jpg",
+    "./assets/banners/banner3.jpg",
+    "./assets/banners/banner4.jpg",
+    "./assets/banners/banner5.png",
+    "./assets/banners/banner6.png",
+    "./assets/banners/banner7.png",
+    "./assets/banners/banner8.png",
+    "./assets/banners/banner9.png",
+    "./assets/banners/lee dance.gif",
   ];
   const random = banners[Math.floor(Math.random() * banners.length)];
   client.user.setBanner(random);
@@ -102,7 +102,7 @@ let turns = 0;
 module.exports = {
   startLee: async function () {
     async function main() {
-      console.log("[loo.js] Starting lee bot!");
+      console.log("[lee.js] Starting lee bot!");
 
       client.once(Events.ClientReady, async (readyClient) => {
         async function setStatus() {
@@ -113,19 +113,19 @@ module.exports = {
                 activities: [{ name: "Green", type: ActivityType.Custom }],
               });
               await client.user.setBanner(
-                "Lee-Bot/assets/banners/neon green.png",
+                "assets/banners/neon green.png",
               );
               await client.user.setAvatar(
-                "Lee-Bot/assets/banners/neon green.png",
+                "assets/banners/neon green.png",
               );
             }
           } else if (Day === 23 && Month === 3) {
             if (client.user.username !== "Birthday Girl Lee") {
               await client.user.setUsername("Birthday Girl Lee");
               await client.user.setBanner(
-                "./Lee-Bot/assets/banners/birthday_banner.jpg",
+                "./assets/banners/birthday_banner.jpg",
               );
-              await client.user.setAvatar("Lee-Bot/assets/pfps/lee_bday.png");
+              await client.user.setAvatar("assets/pfps/lee_bday.png");
             }
             await client.user.setPresence({
               activities: [
@@ -150,7 +150,7 @@ module.exports = {
               );
             }
 
-                await client.user.setAvatar("Lee-Bot/assets/pfps/lee_pride.png");
+                await client.user.setAvatar("assets/pfps/lee_pride.png");
               if (Math.random <= 0.15) {
                 randomStatus =   [ActivityType.Custom, 'It is that time of year the humans call "Pride Month". I support the gays.',]
               }
@@ -180,7 +180,7 @@ module.exports = {
 
             if (randomStatus === randomStatuses[7]) {
               await client.user.setAvatar(
-                "./Lee-Bot/assets/pfps/lee_voices.png",
+                "./assets/pfps/lee_voices.png",
               );
               turns = 0;
             } else {
@@ -188,19 +188,19 @@ module.exports = {
                 turns = Math.floor(Math.random() * 3) + 2;
                 if (Math.random() <= 0.15) {
                   await client.user.setAvatar(
-                    "./Lee-Bot/assets/pfps/lee_rare.jpg",
+                    "./assets/pfps/lee_rare.jpg",
                   );
                   randomizeBanner();
                 } else if (Math.random() <= 0.05) {
                   await client.user.setAvatar(
-                    "./Lee-Bot/assets/pfps/scag-takeover.gif",
+                    "./assets/pfps/scag-takeover.gif",
                   );
                   await client.user.setBanner(
-                    "./Lee-Bot/assets/banners/scag.png",
+                    "./assets/banners/scag.png",
                   );
                 } else {
                   await client.user.setAvatar(
-                    "./Lee-Bot/assets/pfps/lee_new.png",
+                    "./assets/pfps/lee_new.png",
                   );
                   randomizeBanner();
                 }
