@@ -6,6 +6,7 @@ if (!process.env.PORT) {
 const express = require("express");
 const fs = require("node:fs");
 const app = express();
+const path = require("node:path");
 const { startLee } = require("./Lee-Bot/lee.js");
 app.use(express.json({ limit: "128kb" }));
 
@@ -55,7 +56,7 @@ fs.readdir("./endpoints", (err, files) => {
 });
 
 app.get("/", async function (_, res) {
-  res.sendFile("./index.htm");
+  res.sendFile(path.join(__dirname, "./index.htm"));
 });
 
 app.listen(process.env.PORT || 3000);
