@@ -55,7 +55,7 @@ fs.readdir("./endpoints", (err, files) => {
 });
 
 app.get("/", async function (_, res) {
-  res.sendFile("index.htm");
+  res.sendFile("./index.htm");
 });
 
 app.listen(process.env.PORT || 3000);
