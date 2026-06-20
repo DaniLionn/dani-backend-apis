@@ -14,7 +14,7 @@ const {
   randomUser,
   readUserData,
   writeUserData,
-} = require("./scripts/utils");
+} = require("./utils/scripts/utils");
 
 const token = process.env.LEE_TOKEN;
 const { Octokit } = require("octokit");
@@ -312,7 +312,7 @@ module.exports = {
         }
 
         console.log(`[lee.js] Ready! Logged in as ${readyClient.user.tag}`);
-        require("./scripts/deploy-commands");
+        require("./utils/scripts/deploy-commands");
 
         try {
           await setStatus();

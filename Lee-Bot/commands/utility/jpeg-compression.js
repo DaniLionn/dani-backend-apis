@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const { download } = require("../../scripts/utils");
+const { download } = require("../../utils/scripts/utils");
 const { spawn } = require("child_process");
 const path = require("path");
 const fs = require("node:fs").promises;

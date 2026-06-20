@@ -1,2 +1,0 @@
-ffprobe -v error  -show_entries format=duration -of json [FILE]
-

@@ -5,18 +5,18 @@ if (!process.env.PORT) {
 }
 const started = new Date().getTime();
 const express = require("express");
-const fs = require("fs");
+const fs = require("node:fs");
 const app = express();
-
+const { startLee } = require("./Lee-Bot/lee.js");
 app.use(express.json({ limit: "128kb" }));
 
 function deployEndpoints(endpoint) {
   const split = endpoint[0].split("/");
   const method = split[0];
-  var endpointUrl = "";
+  let endpointUrl = "";
 
   split.forEach((part) => {
-    if (part != method) {
+    if (part !== method) {
       endpointUrl += "/" + part;
     }
   });
@@ -44,8 +44,8 @@ fs.readdir("./endpoints", (err, files) => {
 
   files.forEach((file) => {
     console.log("Loading " + file + "...");
-    var endpointData = require("./endpoints/" + file);
-    if (JSON.stringify(endpointData) != {}) {
+    let endpointData = require("./endpoints/" + file);
+    if (JSON.stringify(endpointData) !== {}) {
       Object.entries(endpointData).forEach((endpoint) => {
         deployEndpoints(endpoint);
       });
@@ -56,40 +56,15 @@ fs.readdir("./endpoints", (err, files) => {
 });
 
 app.get("/", async function (_, res) {
-  const timePassed = new Date().getTime() - started;
-
-  res.send(
-    `<!DOCTYPE html>
-<html>
-  <head>
-    <style>
-      h1 {text-align: center;}
-      p {text-align: center;}
-      img {text-align: center;}
-      .center {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 10%;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Dani's API Server</h1>
-    <img src="https://danilionn.github.io/dani-cdn/assets/general/images/fish.gif" alt="funny fish gif" class="center">
-    <p>APIs for my various projects</p>
-    <p>Uptime (as of page load): ${new Date(timePassed)
-      .toISOString()
-      .slice(11, 19)}</p>
-  </body>
-</html>`
-  );
+  res.sendFile("index.htm");
 });
 
 app.listen(process.env.PORT || 3000);
+startLee().then(function () {
 
-const { startLee } = require("./Lee-Bot/lee.js");
-const { startLoo } = require("./Loo-Bot/loo.js");
-setImmediate(startLoo);
-startLee();
+  console.log("Lee process exited!")
+
+})
+
+
 

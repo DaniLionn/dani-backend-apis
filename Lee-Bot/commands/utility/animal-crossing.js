@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const animalCrossingData = require("animal-crossing");
-const { download } = require("../../scripts/utils");
+const { download } = require("../../utils/scripts/utils");
 const fs = require("fs");
 const path = require("path");
 const ids = [
