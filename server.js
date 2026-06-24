@@ -8,6 +8,7 @@ const fs = require("node:fs");
 const app = express();
 const path = require("node:path");
 const { startLee } = require("./Lee-Bot/lee.js");
+const { startLoo } = require("./LooLee-Bot/loo.js");
 app.use(express.json({ limit: "128kb" }));
 
 function deployEndpoints(endpoint) {
@@ -60,6 +61,12 @@ app.get("/", async function (_, res) {
 });
 
 app.listen(process.env.PORT || 3000);
+setImmediate(
+  startLoo().then(function () {
+
+  console.log("loo process exited!")
+
+}))
 startLee().then(function () {
 
   console.log("Lee process exited!")
