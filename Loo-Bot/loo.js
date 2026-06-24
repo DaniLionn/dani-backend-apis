@@ -7,7 +7,7 @@ const {
   Collection,
 } = require("discord.js");
 
-const { download } = require("../../Lee-Bot/utils/scripts/utils");
+const { download } = require("./scripts/utils.js");
 const path = require("node:path");
 
 const token = process.env.LOO_TOKEN;
