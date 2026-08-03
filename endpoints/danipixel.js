@@ -40,8 +40,9 @@ module.exports = {
     };
 
 const date = new Date();
-    const time = date.toLocaleTimeString("en-US", options);
+    const timestring = date.toLocaleTimeString("en-US", options);
 
+    const time = timestring.split(" ")[1]
     res.send(time)
 
 
