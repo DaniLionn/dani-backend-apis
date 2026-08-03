@@ -46,9 +46,9 @@ const date = new Date();
     const hour = time.split(":")[0]
     const minute = time.split(":")[1]
 
-    const setTime = hours[hour] + (minute * 16)
+    const setTime = hours[hour] + minute * 16.619999999999994;
 
-    res.send(setTime)
+    res.send(Math.ceil(setTime));
 
 
 
