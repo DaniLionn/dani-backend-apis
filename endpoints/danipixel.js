@@ -43,10 +43,12 @@ const date = new Date();
     const timeString = date.toLocaleTimeString("en-US", options);
 
     const time = timeString.split(" ")[1];
-    const hour = time.split(":")[0]
+    let hour = time.split(":")[0]
     const minute = time.split(":")[1]
 
-    console.log(hour, minute, hours[hour])
+    if (hour < 10) {
+      hour = hour.split("")[1]
+    }
 
     const setTime = hours[hour] + minute * 16.619999999999994;
     res.type("text/plain");
