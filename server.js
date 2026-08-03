@@ -61,12 +61,12 @@ app.get("/", async function (_, res) {
 });
 
 app.listen(process.env.PORT || 3000);
-setImmediate(
-  startLoo().then(function () {
-
-  console.log("loo process exited!")
-
-}))
+// setImmediate(
+//   startLoo().then(function () {
+//
+//   console.log("loo process exited!")
+//
+// }))
 startLee().then(function () {
 
   console.log("Lee process exited!")
