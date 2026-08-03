@@ -1,3 +1,4 @@
+const { set } = require("express/lib/application");
 module.exports = {
   "get/danipixel/timeticks": function (req, res) {
 
@@ -50,7 +51,12 @@ const date = new Date();
       hour = hour.split("")[1]
     }
 
-    const setTime = hours[hour] + minute * 16.619999999999994;
+     let setTime = (hour * 1000 + (minute * 100) / 6 - 6000) % 24000;
+
+    if (setTime < 0) {
+      setTime += 24000
+    }
+
     res.type("text/plain");
     res.send(Math.ceil(setTime));
 
