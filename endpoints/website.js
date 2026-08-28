@@ -2,6 +2,8 @@ const axios = require("axios");
 const { Webhook } = require("discord-webhook-node");
 const websiteHook = new Webhook(process.env.WEBSITE_WEBHOOK_URL);
 const { getAverageColor } = require("fast-average-color-node");
+const { download } = require("../Lee-Bot/utils/scripts/utils");
+const path = require("node:path");
 const ignoreIDs = [1725640, 743410, 1451940]; //games to ignore and filter out of the list
 const includeIDs = [
   {
@@ -15,6 +17,13 @@ const includeIDs = [
 ]; //games i own that for some reason don't show up normally
 
 module.exports = {
+
+  "get/website/discordPFP": async function(req,res) {
+    await download("https://avatar-cyan.vercel.app/api/pfp/599641108116406300/smallimage","/var/data","danipfp.png").then((filePath)=> {
+      res.sendFile(path.resolve(__dirname, filePath));
+    })
+  },
+
   "get/website/message": async function (req, res) {
     const sender = req.query.name;
 
