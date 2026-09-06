@@ -60,7 +60,7 @@ app.get("/", async function (_, res) {
   res.sendFile(path.join(__dirname, "./index.htm"));
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 80);
 // setImmediate(
 //   startLoo().then(function () {
 //
