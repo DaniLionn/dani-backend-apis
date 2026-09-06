@@ -413,6 +413,11 @@ module.exports = {
           return;
         }
 
+        //update with random messages later i really want to play the wii right now instead
+            if (message.mentions.has(client.user)) {
+        await message.reply("PING 😡😡😡😡😡💢💢😤😤💢😤😤😡😠😡😡💢");
+    }
+
         //enforce the "no letter f" rule in the phighting channel in The Hakurei Family
         if (message.channel.id === "1417504755319701644") {
           //ignore links

@@ -67,6 +67,7 @@ app.listen(process.env.PORT || 3000);
 //   console.log("loo process exited!")
 //
 // }))
+setImmediate(startLoo)
 startLee().then(function () {
 
   console.log("Lee process exited!")
