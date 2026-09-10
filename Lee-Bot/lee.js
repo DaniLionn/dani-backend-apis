@@ -80,6 +80,10 @@ let randomStatuses = [
     ActivityType.Custom,
     "woah i thing i 'm adicted im adicted to lveo i'm otu of sync self inflicted but ut fits like a glove",
   ],
+    [
+    ActivityType.Custom,
+    "Hey, it's me! It's VeriLee!",
+  ],
 ];
 function randomizeBanner() {
   const banners = [
@@ -183,7 +187,14 @@ module.exports = {
                 "./assets/pfps/lee_voices.png",
               );
               turns = 0;
-            } else {
+            } else if (randomStatus[1] === "Hey, it's me! It's VeriLee!") {
+              await client.user.setAvatar(
+                "assets/banners/lee_verity.png",
+              );
+            } 
+            
+            
+            else {
               if (turns === 0) {
                 turns = Math.floor(Math.random() * 3) + 2;
                 if (Math.random() <= 0.15) {
