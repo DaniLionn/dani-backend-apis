@@ -191,6 +191,7 @@ module.exports = {
               await client.user.setAvatar(
                 "assets/banners/lee_verity.png",
               );
+              await client.user.setUsername("VeriLee");
             } 
             
             
