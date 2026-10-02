@@ -7,10 +7,6 @@ const path = require("node:path");
 const ignoreIDs = [1725640, 743410, 1451940]; //games to ignore and filter out of the list
 const includeIDs = [
   {
-    appid: 1522950,
-    playtime_forever: "N/A",
-  },
-  {
     appid: 1525320,
     playtime_forever: "N/A",
   },
