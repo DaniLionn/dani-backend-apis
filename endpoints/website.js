@@ -20,7 +20,7 @@ module.exports = {
     })
   },
 
-  "get/website/steampresence": async function (req,res) {
+  "get/website/switchpresence": async function (req,res) {
     res.send(`
       
 <html>
