@@ -155,7 +155,7 @@ module.exports = {
             }
 
                 await client.user.setAvatar("assets/pfps/lee_pride.png");
-              if (Math.random <= 0.15) {
+              if (Math.random() <= 0.15) {
                 randomStatus =   [ActivityType.Custom, 'It is that time of year the humans call "Pride Month". I support the gays.',]
               }
 
@@ -189,7 +189,7 @@ module.exports = {
               turns = 0;
             } else if (randomStatus[1] === "Hey, it's me! It's VeriLee!") {
               await client.user.setAvatar(
-                "assets/banners/lee_verity.png",
+                "assets/pfps/lee_verity.png",
               );
               await client.user.setUsername("VeriLee");
             } 

@@ -58,13 +58,17 @@ module.exports = {
         replace+="♡"
       })
 
+
+
       message.replace(word, replace)
+
+      console.log(word, replace, message)
 
     })
 
     await websiteHook.send(`${sender} says: "${message}"`);
 
-    res.redirect("https://danirs27.codeberg.page/");
+    res.redirect("https://danirs27.codeberg.page/?sent=true");
   },
 
   "get/website/steamgames": async function (req, res) {
