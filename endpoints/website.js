@@ -60,9 +60,8 @@ module.exports = {
 
 
 
-      message.replace(word, replace)
+      message = message.replace(word, replace)
 
-      console.log(word, replace, message)
 
     })
 
