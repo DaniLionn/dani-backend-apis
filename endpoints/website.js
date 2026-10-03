@@ -41,13 +41,30 @@ module.exports = {
   },
 
   "get/website/message": async function (req, res) {
+    //don't want people calling me slurs or other mean things!
+    const filterList = ["faggot", "hate faggots", "kys", "kill yourself"] 
     const sender = req.query.name;
 
-    const message = req.query.message;
+    let message = req.query.message;
+
+    filterList.forEach((word) => {
+
+      let replace = ""
+      const split = word.split("")
+
+      //steam style filter. if you've ever seen somebody swear on a steam review,
+      //it replaces the swear with hearts lmao
+      split.forEach(() => {
+        replace+="♡"
+      })
+
+      message.replace(word, replace)
+
+    })
 
     await websiteHook.send(`${sender} says: "${message}"`);
 
-    res.redirect("https://danilionn.github.io/daniellas-site/");
+    res.redirect("https://danirs27.codeberg.page/");
   },
 
   "get/website/steamgames": async function (req, res) {
