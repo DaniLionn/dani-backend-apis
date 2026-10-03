@@ -42,7 +42,7 @@ module.exports = {
 
   "get/website/message": async function (req, res) {
     //don't want people calling me slurs or other mean things!
-    const filterList = ["faggot", "hate faggots", "kys", "kill yourself"] 
+    const filterList = ["faggot", "hate faggots", "fag", "kys", "kill yourself"] 
     const sender = req.query.name;
 
     let message = req.query.message;
