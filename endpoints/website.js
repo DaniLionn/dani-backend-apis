@@ -20,6 +20,27 @@ module.exports = {
     })
   },
 
+  "get/website/steampresence": async function (req,res) {
+    res.send(`
+      
+<html>
+<head>
+    <title>Page Title</title>
+    <meta http-equiv="refresh" content="10">
+</head>
+<body>
+         <picture>
+            <source srcset="https://nxapi-presence.fancy.org.uk/api/presence/cc63b80b5e6d8739/embed?include-splatoon3=1&#38;theme=dark&#38;friend-code=6402-6494-9416&#38;show-splatoon3-fest-team=1" media="(prefers-color-scheme: dark)" />
+            <img src="https://nxapi-presence.fancy.org.uk/api/presence/cc63b80b5e6d8739/embed?include-splatoon3=1&#38;theme=light&#38;friend-code=6402-6494-9416&#38;show-splatoon3-fest-team=1" alt="Nintendo Switch presence" />
+            
+          </picture>
+</body>
+</html>
+       
+      
+      `)
+  },
+
   "get/website/message": async function (req, res) {
     const sender = req.query.name;
 
