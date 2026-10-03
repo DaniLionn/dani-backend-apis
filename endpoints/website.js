@@ -25,7 +25,6 @@ module.exports = {
       
 <html>
 <head>
-    <title>Page Title</title>
     <meta http-equiv="refresh" content="10">
 </head>
 <body>
