@@ -80,10 +80,10 @@ let randomStatuses = [
     ActivityType.Custom,
     "woah i thing i 'm adicted im adicted to lveo i'm otu of sync self inflicted but ut fits like a glove",
   ],
-    [
-    ActivityType.Custom,
-    "Hey, it's me! It's VeriLee!",
-  ],
+  //   [
+  //   ActivityType.Custom,
+  //   "Hey, it's me! It's VeriLee!",
+  // ],
 ];
 function randomizeBanner() {
   const banners = [
