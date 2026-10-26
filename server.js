@@ -76,7 +76,14 @@ function uploadToSplashcat() {
 
 
   process.stdout.on('data', (data) => {
-    console.log(`stdout: ${data.toString()}`);
+    const datastring = data.toString()
+
+
+    //block the "Killing time..." output in between uploads
+    if (!datastring.includes("Killing time...")) {
+      console.log(`stdout: ${datastring}`);
+    }
+    
   });
 
   process.stderr.on('data', (data) => {
