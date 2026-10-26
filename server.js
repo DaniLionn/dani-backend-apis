@@ -77,7 +77,7 @@ function uploadToSplashcat() {
 
   process.stdout.on('data', (data) => {
     const datastring = data.toString()
-  }
+  })
 }
 
 
