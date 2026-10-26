@@ -77,29 +77,7 @@ function uploadToSplashcat() {
 
   process.stdout.on('data', (data) => {
     const datastring = data.toString()
-
-
-    //block the "Killing time..." output in between uploads
-    if (!datastring.includes("Killing time...") && datastring !=` 
-`) {
-      console.log(`stdout: ${datastring}`);
-    }
-    
-  });
-
-  process.stderr.on('data', (data) => {
-    console.error(`stderr: ${data.toString()}`);
-  });
-
-
-  process.on('error', (error) => {
-    console.error(`Failed to start process: ${error.message}`);
-  });
-
-
-  process.on('close', (code) => {
-    console.log(`Child process exited with code ${code}`);
-  });
+  }
 }
 
 
