@@ -11,6 +11,15 @@ module.exports = {
       await interaction.editReply("Uploading splat3 data to splashcat")
   const process = spawn('deno', ['run', '-Ar', ' https://raw.githubusercontent.com/spacemeowx2/s3si.ts/main/s3si.ts', '-e', 'splashcat', '-p', '/var/data/s3siprofile.json']);
 
+process.stdout.on('data', (data) => {
+  console.log(`stdout: ${data.toString()}`);
+});
+
+
+process.stderr.on('data', (data) => {
+  console.error(`stderr: ${data.toString()}`);
+});
+
 process.on('error', async (error) => {
   await interaction.editReply(`Failed to start process: ${error.message}`);
 });

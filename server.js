@@ -75,6 +75,22 @@ function uploadToSplashcat() {
   const process = spawn('deno', ['run', '-Ar', ' https://raw.githubusercontent.com/spacemeowx2/s3si.ts/main/s3si.ts', '-e', 'splashcat', '-p', '/var/data/s3siprofile.json']);
 
 
+process.stdout.on('data', (data) => {
+  console.log(`stdout: ${data.toString()}`);
+});
+
+
+process.stderr.on('data', (data) => {
+  console.error(`stderr: ${data.toString()}`);
+});
+
+process.on('error', (err) => {
+  console.error(`Failed to start subprocess: ${err.message}`);
+});
+
+process.on('close', (code) => {
+  console.log(`Child process exited with code ${code}`);
+});
 }
 
 
