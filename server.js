@@ -80,7 +80,7 @@ function uploadToSplashcat() {
 
 
     //block the "Killing time..." output in between uploads
-    if (!datastring.includes("Killing time...") || datastring != "") {
+    if (!datastring.includes("Killing time...") && datastring != " ") {
       console.log(`stdout: ${datastring}`);
     }
     
