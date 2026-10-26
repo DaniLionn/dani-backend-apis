@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
   data: new SlashCommandBuilder().setName("splashcat-upload").setDescription("Manually upload Splatoon 3 data to Splashcat"),
   async execute(interaction) {
-    await interaction.deferRely()
+    await interaction.deferReply()
     if (interaction.user.id != "599641108116406300") {
         await interaction.reply("You can't use this command!");
     }
