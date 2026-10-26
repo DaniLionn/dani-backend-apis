@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-
+const { spawn } = require('child_process');
 module.exports = {
   data: new SlashCommandBuilder().setName("splashcat-upload").setDescription("Manually upload Splatoon 3 data to Splashcat"),
   async execute(interaction) {
