@@ -74,12 +74,23 @@ function uploadToSplashcat() {
   console.log("Uploading splat3 data to splashcat")
   const process = spawn('deno', ['run', '-Ar', ' https://raw.githubusercontent.com/spacemeowx2/s3si.ts/main/s3si.ts', '-e', 'splashcat', '-m', '-p', '/var/data/s3siprofile.json']);
 
-process.stderr.on('data', (data) => {
+
+child.stdout.on('data', (data) => {
+  console.log(`stdout: ${data.toString()}`);
+});
+
+child.stderr.on('data', (data) => {
   console.error(`stderr: ${data.toString()}`);
 });
 
-process.on('error', (error) => {
+
+child.on('error', (error) => {
   console.error(`Failed to start process: ${error.message}`);
+});
+
+
+child.on('close', (code) => {
+  console.log(`Child process exited with code ${code}`);
 });
 }
 
