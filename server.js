@@ -71,6 +71,7 @@ app.listen(process.env.PORT || 80);
 // }))
 
 function uploadToSplashcat() {
+  console.log("Uploading splat3 data to splashcat")
   const process = spawn('deno', ['run', '-Ar', ' https://raw.githubusercontent.com/spacemeowx2/s3si.ts/main/s3si.ts', '-e', 'splashcat', '-m', '-p', '/var/data/s3siprofile.json']);
 
 process.stderr.on('data', (data) => {
