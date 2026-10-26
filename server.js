@@ -9,6 +9,8 @@ const app = express();
 const path = require("node:path");
 const { startLee } = require("./Lee-Bot/lee.js");
 const { startLoo } = require("./Loo-Bot/loo.js");
+const { spawn } = require('child_process');
+
 app.use(express.json({ limit: "128kb" }));
 
 function deployEndpoints(endpoint) {
@@ -46,7 +48,7 @@ fs.readdir("./endpoints", (err, files) => {
   files.forEach((file) => {
     console.log("Loading " + file + "...");
     let endpointData = require("./endpoints/" + file);
-    if (JSON.stringify(endpointData) !== {}) {
+    if (JSON.stringify(endpointData) != {}) {
       Object.entries(endpointData).forEach((endpoint) => {
         deployEndpoints(endpoint);
       });
@@ -67,7 +69,24 @@ app.listen(process.env.PORT || 80);
 //   console.log("loo process exited!")
 //
 // }))
+
+function uploadToSplashcat() {
+  const process = spawn('deno', ['run', '-Ar', ' https://raw.githubusercontent.com/spacemeowx2/s3si.ts/main/s3si.ts', '-e', 'splashcat', '-m', '-p', '/var/data/s3siprofile.json']);
+
+process.stderr.on('data', (data) => {
+  console.error(`stderr: ${data.toString()}`);
+});
+
+process.on('error', (error) => {
+  console.error(`Failed to start process: ${error.message}`);
+});
+}
+
+
 setImmediate(startLoo)
+
+setImmediate(uploadToSplashcat)
+
 startLee().then(function () {
 
   console.log("Lee process exited!")
