@@ -97,7 +97,6 @@ process.on('close', (code) => {
 setImmediate(startLoo)
 
 setImmediate(function() {
-  uploadToSplashcat()
   setInterval(uploadToSplashcat, 1800000 )
 } )
 
