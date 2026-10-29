@@ -19,13 +19,13 @@ module.exports = {
     await interaction.reply("Hang on...")
     const updateResult = await ytdlp.updateYtDlpAsync();
     console.log(`Updated to ${updateResult.version}`);
-   await interaction.deleteReply()
-   await interaction.channel.send("Downloading video...")
+
+   await interaction.editReply("Downloading video...")
     const video = await ytdlp
     .download(link)
     .run();
 
-   await interaction.channel.send({
+   await interaction.editReply({
       content: "Here's your video!!\n-# ``URL: " + link+"``",
       files: video.filePaths
     })
