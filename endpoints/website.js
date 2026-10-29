@@ -28,49 +28,6 @@ function areFilesEqual(file1Path, file2Path) {
 
 module.exports = {
 
-  "get/website/discordPFP":async function(req,res) {
-    await download("https://avatar-cyan.vercel.app/api/pfp/599641108116406300/smallimage","/var/data/","dani_pfp.png").then(async (filePath)=> {
-      
-      if (fs.existsSync("dani_pfp.png")) {
-        if (areFilesEqual("/var/data/dani_pfp.png", filePath)) {
-          fs.unlink(filePath, async function () {
-            await res.sendFile(path.resolve(__dirname, "/var/data/dani_pfp.png"));
-          })
- 
-        } else {
-          fs.unlink("/var/data/dani_pfp.png", function() {
-            fs.rename(filePath, "/var/data/dani_pfp.png", async function() {
-              await res.sendFile(path.resolve(__dirname, "/var/data/dani_pfp.png"));
-            })
-          })
-      
-
-        }
-      }
-
-    })
-  },
-
-  "get/website/switchpresence": async function (req,res) {
-    res.send(`
-      
-<html>
-<head>
-    <meta http-equiv="refresh" content="10">
-</head>
-<body>
-         <picture>
-            <source srcset="https://nxapi-presence.fancy.org.uk/api/presence/cc63b80b5e6d8739/embed?include-splatoon3=1&#38;theme=dark&#38;friend-code=6402-6494-9416&#38;show-splatoon3-fest-team=1" media="(prefers-color-scheme: dark)" />
-            <img src="https://nxapi-presence.fancy.org.uk/api/presence/cc63b80b5e6d8739/embed?include-splatoon3=1&#38;theme=light&#38;friend-code=6402-6494-9416&#38;show-splatoon3-fest-team=1" alt="Nintendo Switch presence" />
-            
-          </picture>
-</body>
-</html>
-       
-      
-      `)
-  },
-
   "get/website/message": async function (req, res) {
     //don't want people calling me slurs or other mean things!
     const filterList = ["faggot", "hate faggots", "fag", "kys", "kill yourself"] 
