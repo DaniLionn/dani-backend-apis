@@ -1,4 +1,5 @@
 const axios = require("axios");
+const fs = require('fs')
 const { Webhook } = require("discord-webhook-node");
 const websiteHook = new Webhook(process.env.WEBSITE_WEBHOOK_URL);
 const { getAverageColor } = require("fast-average-color-node");
@@ -12,11 +13,41 @@ const includeIDs = [
   },
 ]; //games i own that for some reason don't show up normally
 
+function areFilesEqual(file1Path, file2Path) {
+
+  if (file1Path === file2Path) return true;
+
+  const stat1 = fs.statSync(file1Path);
+  const stat2 = fs.statSync(file2Path);
+  if (stat1.size !== stat2.size) return false;
+
+  const buf1 = fs.readFileSync(file1Path);
+  const buf2 = fs.readFileSync(file2Path);
+  return buf1.equals(buf2);
+}
+
 module.exports = {
 
-  "get/website/discordPFP": async function(req,res) {
-    await download("https://avatar-cyan.vercel.app/api/pfp/599641108116406300/smallimage","/var/data","danipfp.png").then((filePath)=> {
-      res.sendFile(path.resolve(__dirname, filePath));
+  "get/website/discordPFP":async function(req,res) {
+    await download("https://avatar-cyan.vercel.app/api/pfp/599641108116406300/smallimage","/var/data/","dani_pfp.png").then(async (filePath)=> {
+      
+      if (fs.existsSync("dani_pfp.png")) {
+        if (areFilesEqual("/var/data/dani_pfp.png", filePath)) {
+          fs.unlink(filePath, async function () {
+            await res.sendFile(path.resolve(__dirname, "/var/data/dani_pfp.png"));
+          })
+ 
+        } else {
+          fs.unlink("/var/data/dani_pfp.png", function() {
+            fs.rename(filePath, "/var/data/dani_pfp.png", async function() {
+              await res.sendFile(path.resolve(__dirname, "/var/data/dani_pfp.png"));
+            })
+          })
+      
+
+        }
+      }
+
     })
   },
 

@@ -23,6 +23,7 @@ module.exports = {
    await interaction.editReply("Downloading video...")
     const video = await ytdlp
     .download(link)
+    .cookies("/var/data/cookies.txt")
     .run();
 
    await interaction.editReply({
