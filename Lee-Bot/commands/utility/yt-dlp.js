@@ -4,7 +4,7 @@ const { YtDlp } = require('ytdlp-nodejs');
 
 const ytdlp = new YtDlp();
 module.exports = {
-  data: new SlashCommandBuilder().setName("ytdlp").setDescription("download videos with ytdlp")        .addStringOption((option) =>
+  data: new SlashCommandBuilder().setName("video-downloader").setDescription("download videos with ytdlp")        .addStringOption((option) =>
           option
             .setName("url")
             .setDescription(
@@ -26,7 +26,7 @@ module.exports = {
     .run();
 
    await interaction.channel.send({
-      content: "Here's your video!!\n-# URL: " + link,
+      content: "Here's your video!!\n-# ``URL: " + link+"``",
       files: video.filePaths
     })
   },
