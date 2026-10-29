@@ -27,7 +27,8 @@
     "nodejs-file-downloader": "^4.13.0",
     "npm": "^11.13.0",
     "octokit": "^5.0.5",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "ytdlp-nodejs": "^3.4.5"
   },
   "devDependencies": {
     "discord-webhook-node": "^1.1.8",
@@ -35,6 +36,7 @@
   },
   "allowScripts": {
     "sharp@0.34.5": true,
-    "deno@2.9.6": true
+    "deno@2.9.6": true,
+    "ytdlp-nodejs@3.4.5": true
   }
 }
