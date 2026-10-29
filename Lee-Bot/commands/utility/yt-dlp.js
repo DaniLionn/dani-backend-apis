@@ -4,7 +4,7 @@ const { YtDlp } = require('ytdlp-nodejs');
 
 const ytdlp = new YtDlp();
 module.exports = {
-  data: new SlashCommandBuilder().setName("yt-dlp").setDescription("download videos with ytdlp")        .addStringOption((option) =>
+  data: new SlashCommandBuilder().setName("ytdlp").setDescription("download videos with ytdlp")        .addStringOption((option) =>
           option
             .setName("url")
             .setDescription(
