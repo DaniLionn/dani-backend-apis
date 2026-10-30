@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { YtDlp } = require('ytdlp-nodejs');
 
-
+const fs = require("fs")
 const ytdlp = new YtDlp();
 module.exports = {
   data: new SlashCommandBuilder().setName("video-downloader").setDescription("download videos with ytdlp")        .addStringOption((option) =>
@@ -23,7 +23,7 @@ module.exports = {
    await interaction.editReply("Downloading video...")
     const video = await ytdlp
     .download(link)
-    .cookies("/var/data/cookies.txt")
+    .cookies(fs.readFileSync("/var/data/cookies.txt"))
     .run();
 
    await interaction.editReply({
