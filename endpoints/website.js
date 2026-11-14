@@ -3,7 +3,7 @@ const fs = require('fs')
 const { Webhook } = require("discord-webhook-node");
 const websiteHook = new Webhook(process.env.WEBSITE_WEBHOOK_URL);
 const { getAverageColor } = require("fast-average-color-node");
-const { download } = require("../Lee-Bot/utils/scripts/utils");
+
 const path = require("node:path");
 const ignoreIDs = [1725640, 743410, 1451940]; //games to ignore and filter out of the list
 const includeIDs = [
