@@ -14,7 +14,7 @@ const {
   randomUser,
   readUserData,
   writeUserData,
-} = require("/opt/render/project/src/Lee-Bot/utils/scripts/utils.js");
+} = require("/opt/render/project/src/utils/scripts/utils.js");
 
 const token = process.env.LEE_TOKEN;
 const { Octokit } = require("octokit");
