@@ -14,7 +14,7 @@ const {
   randomUser,
   readUserData,
   writeUserData,
-} = require("./utils/scripts/utils");
+} = require("../utils/scripts/utils");
 
 const token = process.env.LEE_TOKEN;
 const { Octokit } = require("octokit");
