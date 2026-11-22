@@ -7,7 +7,7 @@ const express = require("express");
 const fs = require("node:fs");
 const app = express();
 const path = require("node:path");
-// const { startLee } = require("./Lee-Bot/lee.js");
+const { startLee } = require("./Lee-Bot/lee.js");
 const { startLoo } = require("./Loo-Bot/loo.js");
 
 
