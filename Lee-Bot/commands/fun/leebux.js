@@ -1,4 +1,4 @@
-const { readUserData, writeUserData } = require(`../../utils/scripts/utils`);
+const { readUserData, writeUserData } = require(`/opt/render/project/src/utils/scripts/utils`);
 const {
   ActionRowBuilder,
   ButtonBuilder,
