@@ -3,7 +3,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const axios = require("axios");
 const sharp = require("sharp");
-const { download } = require("../../utils/scripts/utils");
+const { download } = require("/opt/render/project/src/utils/scripts/utils");
 const fs = require("node:fs");
 const fun_facts = [
   "Fun fact: I originally stayed up until 2 AM when programming the first version of this command.",

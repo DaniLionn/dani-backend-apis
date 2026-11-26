@@ -1,10 +1,10 @@
 const { SlashCommandBuilder } = require("discord.js");
-const { download } = require("../../utils/scripts/utils");
+const { download } = require("/opt/render/project/src/utils/scripts/utils");
 const { spawn } = require("node:child_process");
 const path = require("node:path");
 const fs = require("node:fs").promises;
 
-const customEmojis = require(`../../utils/references/lee-emojis`);
+const customEmojis = require(`/opt/render/project/src/utils/references/lee-emojis`);
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("jpeg-compression")

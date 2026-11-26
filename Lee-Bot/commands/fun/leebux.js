@@ -6,7 +6,7 @@ const {
   SlashCommandBuilder,
 } = require(`discord.js`);
 
-const customEmojis = require(`../../utils/references/lee-emojis`);
+const customEmojis = require(`/opt/render/project/src/utils/references/lee-emojis`);
 
 const crimes = [
   {

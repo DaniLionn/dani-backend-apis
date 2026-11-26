@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const animalCrossingData = require("animal-crossing");
-const { download } = require("../../utils/scripts/utils");
+const { download } = require("/opt/render/project/src/utils/scripts/utils");
 const fs = require("node:fs");
 const path = require("node:path");
 const ids = [
